@@ -1,32 +1,49 @@
 name: 'Jarvis'
-description: 'Installs the Jarvis theme and its full module stack (Canvas, AI, Backup & Migrate, media/crop/focal-point, and supporting utilities), sets Jarvis as the default theme, and applies the current theme settings as defaults. Composes the Jarvis AI recipe for the AI providers, agents and Key entities.'
+description: 'Bootstraps a new Drupal site with the Jarvis theme: custom modules, Canvas + media plumbing, the Blog/Basic/Landing content types, and curated demo content (home page, blog posts, about page, media). Installs the AI module stack unconfigured — ship your API keys separately via the private jarvis_ai recipe. Contains no secrets; safe to share.'
 type: 'Site'
-recipes:
-  # Brings in: key, ai (+ ckeditor/assistant/chatbot), ai_agents, ai_image_alt_text,
-  # ai_media_image, the Anthropic/OpenAI/Gemini providers, canvas and canvas_ai.
-  - jarvis_ai
 install:
-  # Supporting contrib not covered by jarvis_ai.
-  - asset_injector
-  - backup_migrate
-  - canvas_field_component
-  - crop
-  - elevenlabs
-  - focal_point
-  - modeler_api
-  - simple_gmap
-  - twig_tweak
+  # Core + contrib plumbing
+  - media
+  - media_library
+  - image
+  - menu_ui
+  - menu_link_content
+  - datetime
+  - options
+  - path
   - default_content
-  # Custom modules shipped in this codebase.
+  - twig_tweak
+  - crop
+  - focal_point
+  - canvas
+  - canvas_field_component
+  - backup_migrate
+  - asset_injector
+  - simple_gmap
+  - modeler_api
+  # AI stack — installed unconfigured, NO keys ship here
+  - key
+  - ai
+  - ai_agents
+  - ai_ckeditor
+  - ai_assistant_api
+  - ai_chatbot
+  - ai_image_alt_text
+  - ai_media_image
+  - ai_provider_anthropic
+  - ai_provider_openai
+  - gemini_provider
+  - canvas_ai
+  # Custom modules shipped in this codebase
   - jarvis_blocks
   - jarvis_canvas
-  # The theme itself.
+  # The theme
   - jarvis
-# jarvis.settings (colours, fonts, sizes, logo) ships in this recipe's config/
-# directory and is applied on install as the site default theme settings.
 config:
   actions:
-    # Make Jarvis the default front-end theme.
     system.theme:
       simpleConfigUpdate:
         default: jarvis
+    system.site:
+      simpleConfigUpdate:
+        page.front: /home
