@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.hero
+    - field.storage.block_content.field_overlay
+id: block_content.hero.field_overlay
+field_name: field_overlay
+entity_type: block_content
+bundle: hero
+label: 'Overlay opacity (%)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
+

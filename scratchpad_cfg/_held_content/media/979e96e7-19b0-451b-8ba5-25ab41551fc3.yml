@@ -1,0 +1,32 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 979e96e7-19b0-451b-8ba5-25ab41551fc3
+  bundle: image
+  default_langcode: en
+  depends:
+    4a1567a2-3de0-46b3-b253-826a6a70547e: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: jarvis-banner.png
+  path:
+    -
+      langcode: en
+      alias: null
+  field_media_image:
+    -
+      alt: 'jarvis theme banner'
+      title: ''
+      width: 1774
+      height: 887
+      entity: 4a1567a2-3de0-46b3-b253-826a6a70547e

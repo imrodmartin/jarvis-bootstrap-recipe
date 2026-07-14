@@ -1,0 +1,149 @@
+    block.block.jarvis_account_menu:
+      simpleConfigUpdate:
+        status: true
+        region: footer
+        weight: -4
+        settings:
+          id: 'system_menu_block:account'
+          label: 'User account menu'
+          label_display: '0'
+          provider: system
+          level: 1
+          depth: 1
+          expand_all_items: false
+        visibility: {  }
+    block.block.jarvis_breadcrumbs:
+      simpleConfigUpdate:
+        status: false
+        region: breadcrumb
+        weight: 0
+        settings:
+          id: system_breadcrumb_block
+          label: Breadcrumbs
+          label_display: '0'
+          provider: system
+        visibility: {  }
+    block.block.jarvis_content:
+      simpleConfigUpdate:
+        status: true
+        region: content
+        weight: 0
+        settings:
+          id: system_main_block
+          label: 'Main page content'
+          label_display: '0'
+          provider: system
+        visibility: {  }
+    block.block.jarvis_help:
+      simpleConfigUpdate:
+        status: true
+        region: highlighted
+        weight: -6
+        settings:
+          id: help_block
+          label: Help
+          label_display: '0'
+          provider: help
+        visibility: {  }
+    block.block.jarvis_main_menu:
+      simpleConfigUpdate:
+        status: true
+        region: primary_menu
+        weight: -5
+        settings:
+          id: 'system_menu_block:main'
+          label: 'Main navigation'
+          label_display: '0'
+          provider: system
+          level: 1
+          depth: 2
+          expand_all_items: true
+        visibility: {  }
+    block.block.jarvis_messages:
+      simpleConfigUpdate:
+        status: true
+        region: highlighted
+        weight: -4
+        settings:
+          id: system_messages_block
+          label: 'Status messages'
+          label_display: '0'
+          provider: system
+        visibility: {  }
+    block.block.jarvis_page_title:
+      simpleConfigUpdate:
+        status: true
+        region: page_title
+        weight: -6
+        settings:
+          id: page_title_block
+          label: 'Page title'
+          label_display: '0'
+          provider: core
+        visibility:
+          request_path:
+            id: request_path
+            negate: true
+            pages: '<front>'
+    block.block.jarvis_powered:
+      simpleConfigUpdate:
+        status: true
+        region: footer
+        weight: -5
+        settings:
+          id: system_powered_by_block
+          label: 'Powered by Drupal'
+          label_display: '0'
+          provider: system
+        visibility: {  }
+    block.block.jarvis_primary_admin_actions:
+      simpleConfigUpdate:
+        status: true
+        region: highlighted
+        weight: -5
+        settings:
+          id: local_actions_block
+          label: 'Primary admin actions'
+          label_display: '0'
+          provider: core
+        visibility: {  }
+    block.block.jarvis_primary_local_tasks:
+      simpleConfigUpdate:
+        status: true
+        region: highlighted
+        weight: -3
+        settings:
+          id: local_tasks_block
+          label: 'Primary tabs'
+          label_display: '0'
+          provider: core
+          primary: true
+          secondary: false
+        visibility: {  }
+    block.block.jarvis_secondary_local_tasks:
+      simpleConfigUpdate:
+        status: true
+        region: highlighted
+        weight: -2
+        settings:
+          id: local_tasks_block
+          label: 'Secondary tabs'
+          label_display: '0'
+          provider: core
+          primary: false
+          secondary: true
+        visibility: {  }
+    block.block.jarvis_site_branding:
+      simpleConfigUpdate:
+        status: true
+        region: primary_menu
+        weight: -6
+        settings:
+          id: system_branding_block
+          label: 'Site branding'
+          label_display: '0'
+          provider: system
+          use_site_logo: true
+          use_site_name: false
+          use_site_slogan: false
+        visibility: {  }

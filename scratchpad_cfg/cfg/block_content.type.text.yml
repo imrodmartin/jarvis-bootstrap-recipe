@@ -1,0 +1,8 @@
+uuid: 3161755f-547b-434c-80aa-3e20d0aa98e2
+langcode: en
+status: true
+dependencies: {  }
+id: text
+label: Text
+revision: false
+description: 'Jarvis Text component.'

@@ -1,0 +1,8 @@
+uuid: 2694be39-30c6-485d-81d3-d4f3c04c97b2
+langcode: en
+status: true
+dependencies: {  }
+id: image
+label: Image
+revision: false
+description: 'Jarvis Image component.'

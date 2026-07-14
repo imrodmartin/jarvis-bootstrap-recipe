@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: b7152776-3575-42fa-9cf7-abdc9ff34f54
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: 0708.png
+  uri:
+    -
+      value: 'public://2026-07/0708.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 2108186
+  status:
+    -
+      value: true

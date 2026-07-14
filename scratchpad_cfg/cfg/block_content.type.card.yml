@@ -1,0 +1,8 @@
+uuid: b53aacad-f128-414e-bbe6-18462909ba94
+langcode: en
+status: true
+dependencies: {  }
+id: card
+label: Card
+revision: false
+description: 'Jarvis Card component.'

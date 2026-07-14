@@ -1,0 +1,162 @@
+<?php
+
+/**
+ * @file
+ * Renders Jarvis content block types through their matching SDCs.
+ *
+ * A single preprocess hook covers both Layout Builder inline blocks and
+ * Block-layout placed content blocks: both return the block_content entity
+ * view build, so #block_content is present on $variables['content'].
+ */
+
+declare(strict_types=1);
+
+use Drupal\block_content\BlockContentInterface;
+
+/**
+ * Maps block_content bundle => SDC component id.
+ */
+function _jarvis_blocks_map(): array {
+  return [
+    'hero' => 'jarvis:hero',
+    'card' => 'jarvis:card',
+    'video' => 'jarvis:video',
+    'image' => 'jarvis:image',
+    'text' => 'jarvis:text',
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block.
+ */
+function jarvis_blocks_preprocess_block(array &$variables): void {
+  $content = $variables['content'] ?? [];
+  $bc = $content['#block_content'] ?? NULL;
+  if (!$bc instanceof BlockContentInterface) {
+    return;
+  }
+  $map = _jarvis_blocks_map();
+  $bundle = $bc->bundle();
+  if (empty($map[$bundle])) {
+    return;
+  }
+
+  $props = _jarvis_blocks_props($bundle, $bc);
+
+  // Replace the field-rendered body with the SDC render element. Keep the
+  // original cache metadata so block/entity cache tags still bubble up.
+  $component = [
+    '#type' => 'component',
+    '#component' => $map[$bundle],
+    '#props' => $props,
+  ];
+  if (!empty($content['#cache'])) {
+    $component['#cache'] = $content['#cache'];
+  }
+  $variables['content'] = $component;
+}
+
+/**
+ * Builds SDC props from a block_content entity's fields.
+ */
+function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc): array {
+  $has = static fn (string $f): bool => $bc->hasField($f) && !$bc->get($f)->isEmpty();
+  $str = static fn (string $f): ?string => $has($f) ? (string) $bc->get($f)->value : NULL;
+  $bool = static fn (string $f): bool => $has($f) ? (bool) $bc->get($f)->value : FALSE;
+  $int = static fn (string $f): ?int => $has($f) ? (int) $bc->get($f)->value : NULL;
+
+  $html = static function (string $f) use ($has, $bc): ?string {
+    if (!$has($f)) {
+      return NULL;
+    }
+    // Canvas's TextLongItemOverride drops the `processed` computed property,
+    // so run the text through check_markup() directly.
+    $item = $bc->get($f)->first();
+    return (string) check_markup($item->value, $item->format ?: NULL);
+  };
+
+  $image = static function (string $f) use ($has, $bc): ?array {
+    if (!$has($f)) {
+      return NULL;
+    }
+    $item = $bc->get($f)->first();
+    $file = $item->entity;
+    if (!$file) {
+      return NULL;
+    }
+    $url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+    $out = ['src' => $url, 'alt' => (string) ($item->alt ?? '')];
+    if (!empty($item->width)) {
+      $out['width'] = (int) $item->width;
+    }
+    if (!empty($item->height)) {
+      $out['height'] = (int) $item->height;
+    }
+    return $out;
+  };
+
+  $link = static function (string $f) use ($has, $bc): array {
+    if (!$has($f)) {
+      return [NULL, NULL];
+    }
+    $item = $bc->get($f)->first();
+    try {
+      $url = $item->getUrl()->toString();
+    }
+    catch (\Throwable $e) {
+      $url = $item->uri;
+    }
+    return [$url, $item->title ?: NULL];
+  };
+
+  switch ($bundle) {
+    case 'hero':
+      [$cta_href, $cta_text] = $link('field_cta');
+      return array_filter([
+        'heading' => $str('field_heading'),
+        'subheading' => $str('field_subheading'),
+        'cta_text' => $cta_text,
+        'cta_href' => $cta_href,
+        'image' => $image('field_media_image'),
+        'overlay' => $int('field_overlay') ?? 40,
+        'align' => $str('field_align') ?? 'center',
+      ], static fn ($v) => $v !== NULL);
+
+    case 'card':
+      [$link_href, $link_text] = $link('field_cta');
+      return array_filter([
+        'variant' => $str('field_variant') ?? 'image-top',
+        'image' => $image('field_media_image'),
+        'title' => $str('field_title'),
+        'body' => $html('field_body'),
+        'link_text' => $link_text,
+        'link_href' => $link_href,
+      ], static fn ($v) => $v !== NULL);
+
+    case 'video':
+      [$video_url] = $link('field_video_url');
+      return array_filter([
+        'video_url' => $video_url,
+        'aspect' => $str('field_aspect') ?? '16x9',
+        'full_width' => $bool('field_full_width'),
+        'autoplay' => $bool('field_autoplay'),
+        'muted' => $bool('field_muted'),
+      ], static fn ($v) => $v !== NULL);
+
+    case 'image':
+      return array_filter([
+        'image' => $image('field_media_image'),
+        'caption' => $str('field_caption'),
+        'full_width' => $bool('field_full_width'),
+      ], static fn ($v) => $v !== NULL);
+
+    case 'text':
+      return array_filter([
+        'body' => $html('field_body'),
+        'width' => $str('field_width') ?? 'normal',
+        'align' => $str('field_align') ?? 'start',
+      ], static fn ($v) => $v !== NULL);
+  }
+
+  return [];
+}

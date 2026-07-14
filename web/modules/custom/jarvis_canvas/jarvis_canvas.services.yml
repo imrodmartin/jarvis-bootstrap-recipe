@@ -1,0 +1,8 @@
+services:
+  jarvis_canvas.twig_extension:
+    class: Drupal\jarvis_canvas\JarvisCanvasTwigExtension
+    arguments:
+      - '@entity_type.manager'
+      - '@file_url_generator'
+    tags:
+      - { name: twig.extension }

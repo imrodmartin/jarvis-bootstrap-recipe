@@ -1,0 +1,33 @@
+uuid: 11d5e72f-3c70-4545-b71f-9bed32793f99
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.system_branding_block
+    - canvas.component.block.system_menu_block.main
+  theme:
+    - jarvis
+id: jarvis.primary_menu
+region: primary_menu
+theme: jarvis
+component_tree:
+  '0:54af95e8-ecb1-4ead-96ba-43aea786b548':
+    uuid: 54af95e8-ecb1-4ead-96ba-43aea786b548
+    component_id: block.system_menu_block.main
+    component_version: 322535c0078cf59c
+    inputs:
+      label: 'Main navigation'
+      label_display: '0'
+      level: 1
+      depth: 2
+      expand_all_items: true
+  '1:3ef4b12e-3bb0-4fb4-b977-299dd84fd493':
+    uuid: 3ef4b12e-3bb0-4fb4-b977-299dd84fd493
+    component_id: block.system_branding_block
+    component_version: 7d528e00f56b3abf
+    inputs:
+      label: 'Site branding'
+      label_display: '0'
+      use_site_logo: true
+      use_site_name: false
+      use_site_slogan: false

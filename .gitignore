@@ -1,0 +1,20 @@
+# Composer / Drupal scaffold — managed dependencies, not tracked.
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# Site-specific settings + generated files (may contain secrets).
+/web/sites/*/settings.php
+/web/sites/*/settings.local.php
+/web/sites/*/settings.ddev.php
+/web/sites/*/files/
+/web/sites/*/private/
+
+# OS / editor cruft.
+.DS_Store
+
+# Superpowers scratch (progress ledger lives here, git-ignored).
+/.superpowers/

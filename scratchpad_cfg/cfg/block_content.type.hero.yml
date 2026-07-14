@@ -1,0 +1,8 @@
+uuid: 932581c1-3a37-4194-9566-5cd71c622b3d
+langcode: en
+status: true
+dependencies: {  }
+id: hero
+label: 'Hero banner'
+revision: false
+description: 'Jarvis Hero banner component.'

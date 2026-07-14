@@ -1,0 +1,25 @@
+uuid: c0ddefd8-fae0-457c-adc3-25b05b76a1c4
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:hero:a9c442de-b115-4e43-9396-980cbcfc672e'
+  module:
+    - block_content
+active_version: fefec869257cc357
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'block_content:a9c442de-b115-4e43-9396-980cbcfc672e'
+        label: 'Demo hero'
+        label_display: '0'
+        provider: block_content
+        view_mode: full
+    fallback_metadata:
+      slot_definitions: null
+label: 'Demo hero'
+id: block.block_content.a9c442de-b115-4e43-9396-980cbcfc672e
+provider: block_content
+source: block
+source_local_id: 'block_content:a9c442de-b115-4e43-9396-980cbcfc672e'

@@ -1,0 +1,19 @@
+uuid: 7db36aa4-cbd7-425f-8711-db7ee054cd4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.hero
+    - field.storage.block_content.field_subheading
+id: block_content.hero.field_subheading
+field_name: field_subheading
+entity_type: block_content
+bundle: hero
+label: Subheading
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: card
+label: Card
+revision: false
+description: 'Jarvis Card component.'
+

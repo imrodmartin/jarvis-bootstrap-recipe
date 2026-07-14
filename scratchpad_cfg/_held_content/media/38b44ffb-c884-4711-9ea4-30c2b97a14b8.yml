@@ -1,0 +1,32 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 38b44ffb-c884-4711-9ea4-30c2b97a14b8
+  bundle: image
+  default_langcode: en
+  depends:
+    b7152776-3575-42fa-9cf7-abdc9ff34f54: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: 0708.png
+  path:
+    -
+      langcode: en
+      alias: null
+  field_media_image:
+    -
+      alt: 'rest for the weary banner'
+      title: ''
+      width: 1672
+      height: 941
+      entity: b7152776-3575-42fa-9cf7-abdc9ff34f54

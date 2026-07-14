@@ -1,0 +1,25 @@
+uuid: 6b62d92b-bd6a-4b48-9840-4c3856a89e39
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:card:4fe01b83-141c-456d-937a-2ff035c5400f'
+  module:
+    - block_content
+active_version: 499c04a45439dd36
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'block_content:4fe01b83-141c-456d-937a-2ff035c5400f'
+        label: 'Demo card'
+        label_display: '0'
+        provider: block_content
+        view_mode: full
+    fallback_metadata:
+      slot_definitions: null
+label: 'Demo card'
+id: block.block_content.4fe01b83-141c-456d-937a-2ff035c5400f
+provider: block_content
+source: block
+source_local_id: 'block_content:4fe01b83-141c-456d-937a-2ff035c5400f'

@@ -1,0 +1,10 @@
+uuid: 7ee00cff-7d24-41f4-95b6-ec9fb10c2aee
+langcode: en
+status: false
+dependencies:
+  theme:
+    - jarvis
+id: jarvis.sidebar_left
+region: sidebar_left
+theme: jarvis
+component_tree: {  }

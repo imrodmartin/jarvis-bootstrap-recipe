@@ -1,0 +1,17 @@
+uuid: 3a4ff21f-3837-42de-9d2c-4e1d22e7a074
+langcode: en
+status: true
+dependencies:
+  module:
+    - canvas_field_component
+active_version: d51828e603b0f85c
+versioned_properties:
+  active:
+    settings: {  }
+    fallback_metadata:
+      slot_definitions: null
+label: 'Field display'
+id: field_display.field_display
+provider: canvas_field_component
+source: field_display
+source_local_id: field_display

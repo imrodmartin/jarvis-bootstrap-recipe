@@ -1,0 +1,100 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.field_display.field_display
+    - canvas.component.sdc.jarvis.image
+    - canvas.component.sdc.jarvis.one-column
+    - canvas.component.sdc.jarvis.section
+    - canvas.component.sdc.jarvis.text
+    - canvas.component.sdc.navigation.message
+    - core.entity_view_mode.node.full
+    - field.field.media.image.field_media_image
+    - field.field.node.jarvis_sample.field_body
+    - field.field.node.jarvis_sample.field_hero_banner
+    - image.style.canvas_parametrized_width
+    - media.type.image
+    - node.type.jarvis_sample
+  module:
+    - file
+    - media
+    - node
+    - options
+id: node.jarvis_sample.full
+content_entity_type_id: node
+content_entity_type_bundle: jarvis_sample
+content_entity_type_view_mode: full
+component_tree:
+  '0:43c8216d-a659-4a34-84d1-ceaea417f829':
+    uuid: 43c8216d-a659-4a34-84d1-ceaea417f829
+    component_id: sdc.jarvis.image
+    component_version: 94ecc3b7ed5cc087
+    inputs:
+      image:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:jarvis_sample␝field_hero_banner␞␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+      image_style: hero_banner
+      image_uri:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:jarvis_sample␝field_hero_banner␞␟entity␜␜entity:media:image␝field_media_image␞␟entity␜␜entity:file␝uri␞␟value'
+      full_width: true
+      vertical_padding: true
+  '1:5e69aa5e-2b38-4d02-a8b3-a35af922909f':
+    uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
+    component_id: sdc.jarvis.section
+    component_version: f6ad88cf8afa2cd0
+    inputs:
+      width: normal
+      bg: none
+  '1:content:0:c3d9e532-8dac-4393-96d9-c1514c67d591':
+    parent_uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
+    slot: content
+    uuid: c3d9e532-8dac-4393-96d9-c1514c67d591
+    component_id: field_display.field_display
+    component_version: d51828e603b0f85c
+    inputs:
+      field_name: field_publication_date
+      entity_type_id: node
+      bundle: jarvis_sample
+      view_mode: full
+      formatter_id: datetime_default
+      formatter_settings:
+        format_type: long
+        timezone_override: ''
+      formatter_third_party_settings: {  }
+      label_display: hidden
+  '2:d8564a03-9673-4ef1-b3e7-8255671f659c':
+    uuid: d8564a03-9673-4ef1-b3e7-8255671f659c
+    component_id: sdc.jarvis.one-column
+    component_version: cebe394beabed617
+    inputs:
+      width: boxed
+      gap: normal
+      vertical_padding: true
+  '2:first:0:25a7619a-6c82-4747-845d-fda6030c5bfb':
+    parent_uuid: d8564a03-9673-4ef1-b3e7-8255671f659c
+    slot: first
+    uuid: 25a7619a-6c82-4747-845d-fda6030c5bfb
+    component_id: sdc.jarvis.text
+    component_version: 74579f1f6ddbb4f0
+    inputs:
+      body:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:jarvis_sample␝field_body␞␟processed'
+      width: wide
+      align: start
+      vertical_padding: true
+  '3:dc971e21-6e48-4638-bcf6-8cb3bf66a227':
+    uuid: dc971e21-6e48-4638-bcf6-8cb3bf66a227
+    component_id: sdc.jarvis.one-column
+    component_version: cebe394beabed617
+    inputs:
+      width: boxed
+      gap: normal
+      vertical_padding: true
+  '4:59877abc-45fb-4a7a-8fc2-f33bb9b7e391':
+    uuid: 59877abc-45fb-4a7a-8fc2-f33bb9b7e391
+    component_id: sdc.navigation.message
+    component_version: a860189644f260de
+    inputs: {  }
+exposed_slots: {  }

@@ -1,0 +1,28 @@
+uuid: b94afa36-5b8e-431d-9544-a3c513fbcaff
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:text:8fc6d865-0169-4527-a536-34bfdb97289b'
+  module:
+    - block_content
+    - system
+  theme:
+    - jarvis
+id: jarvis_demotext_2
+theme: jarvis
+region: sidebar_right
+weight: 0
+provider: null
+plugin: 'block_content:8fc6d865-0169-4527-a536-34bfdb97289b'
+settings:
+  id: 'block_content:8fc6d865-0169-4527-a536-34bfdb97289b'
+  label: 'Demo text'
+  label_display: visible
+  provider: block_content
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: /node/3

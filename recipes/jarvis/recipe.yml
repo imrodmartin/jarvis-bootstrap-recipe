@@ -1,0 +1,32 @@
+name: 'Jarvis'
+description: 'Installs the Jarvis theme and its full module stack (Canvas, AI, Backup & Migrate, media/crop/focal-point, and supporting utilities), sets Jarvis as the default theme, and applies the current theme settings as defaults. Composes the Jarvis AI recipe for the AI providers, agents and Key entities.'
+type: 'Site'
+recipes:
+  # Brings in: key, ai (+ ckeditor/assistant/chatbot), ai_agents, ai_image_alt_text,
+  # ai_media_image, the Anthropic/OpenAI/Gemini providers, canvas and canvas_ai.
+  - jarvis_ai
+install:
+  # Supporting contrib not covered by jarvis_ai.
+  - asset_injector
+  - backup_migrate
+  - canvas_field_component
+  - crop
+  - elevenlabs
+  - focal_point
+  - modeler_api
+  - simple_gmap
+  - twig_tweak
+  - default_content
+  # Custom modules shipped in this codebase.
+  - jarvis_blocks
+  - jarvis_canvas
+  # The theme itself.
+  - jarvis
+# jarvis.settings (colours, fonts, sizes, logo) ships in this recipe's config/
+# directory and is applied on install as the site default theme settings.
+config:
+  actions:
+    # Make Jarvis the default front-end theme.
+    system.theme:
+      simpleConfigUpdate:
+        default: jarvis

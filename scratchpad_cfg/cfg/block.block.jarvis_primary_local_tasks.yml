@@ -1,0 +1,22 @@
+uuid: c60632b4-813c-48aa-ab66-951765825add
+langcode: en
+status: true
+dependencies:
+  theme:
+    - jarvis
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: jarvis_primary_local_tasks
+theme: jarvis
+region: highlighted
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - options
+id: block_content.field_aspect
+field_name: field_aspect
+entity_type: block_content
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 16x9
+      label: '16:9'
+    -
+      value: 4x3
+      label: '4:3'
+    -
+      value: 21x9
+      label: '21:9'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
+

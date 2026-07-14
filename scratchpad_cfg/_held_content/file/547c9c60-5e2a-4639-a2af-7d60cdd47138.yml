@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 547c9c60-5e2a-4639-a2af-7d60cdd47138
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: jarvis-computer.png
+  uri:
+    -
+      value: 'public://2026-07/jarvis-computer.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 1639785
+  status:
+    -
+      value: true

@@ -1,0 +1,8 @@
+uuid: caa8dcf6-4bd8-4c4b-b996-f8d267fd45e3
+langcode: en
+status: true
+dependencies: {  }
+id: video
+label: Video
+revision: false
+description: 'Jarvis Video component.'

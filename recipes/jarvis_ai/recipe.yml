@@ -1,0 +1,17 @@
+name: 'Jarvis AI'
+description: 'Installs the AI stack for the Jarvis site: Drupal AI core, AI agents, CKEditor AI, alt-text + media image generation, the Anthropic/OpenAI/Gemini providers, Canvas AI, and the Key entities holding the API keys. Keys are captured as-is (config provider, plaintext) — private/personal use only, do not commit to a public repo.'
+type: 'Site'
+install:
+  - key
+  - ai
+  - ai_agents
+  - ai_ckeditor
+  - ai_assistant_api
+  - ai_chatbot
+  - ai_image_alt_text
+  - ai_media_image
+  - ai_provider_anthropic
+  - ai_provider_openai
+  - gemini_provider
+  - canvas
+  - canvas_ai

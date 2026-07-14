@@ -1,0 +1,33 @@
+uuid: 0ca279e5-4234-486b-8dc8-a22ac9c71bbd
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - options
+id: block_content.field_variant
+field_name: field_variant
+entity_type: block_content
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: image-top
+      label: 'Image on top'
+    -
+      value: image-left
+      label: 'Image on left'
+    -
+      value: image-right
+      label: 'Image on right'
+    -
+      value: background
+      label: 'Image as background'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

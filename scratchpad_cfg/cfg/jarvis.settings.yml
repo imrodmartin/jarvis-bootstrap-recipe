@@ -1,0 +1,36 @@
+features:
+  node_user_picture: 0
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: 1
+logo:
+  use_default: 0
+  path: 'public://jarvis-logo.png'
+favicon:
+  use_default: 1
+jarvis_color_primary: '#2d6cdf'
+jarvis_color_secondary: '#1b2a4a'
+jarvis_color_title_bg: '#2d6cdf'
+jarvis_color_title_text: '#ffffff'
+jarvis_color_footer_bg: '#000000'
+jarvis_color_footer_text: '#ffffff'
+jarvis_color_heading: '#2d6cdf'
+jarvis_color_header_bg: ''
+jarvis_color_header_text: ''
+jarvis_color_header_link: ''
+jarvis_font_base_family: 'Open Sans'
+jarvis_font_base_weight: '300'
+jarvis_font_base_selector: body
+jarvis_font_headings_family: 'Open Sans'
+jarvis_font_headings_weight: '600'
+jarvis_font_headings_selector: 'h1, h2, h3, .field--label, label, .page-title'
+jarvis_font_navigation_family: 'Open Sans'
+jarvis_font_navigation_weight: '300'
+jarvis_font_navigation_selector: 'nav, nav ul li, nav a'
+jarvis_font_site_name_family: 'Open Sans'
+jarvis_font_site_name_weight: '400'
+jarvis_font_site_name_selector: '.site-name, .navbar-brand,h4, h5, h6'
+jarvis_font_blockquote_family: 'Playpen Sans'
+jarvis_font_blockquote_weight: '300'
+jarvis_font_blockquote_selector: 'blockquote, blockquote p'
+preview: ''

@@ -1,0 +1,54 @@
+uuid: d4fcc000-27ca-4f7c-ad05-773ee7d3f4b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+  theme:
+    - jarvis
+active_version: a50eeac0e0c27af7
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        date:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-07-09'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        format:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'F j, Y'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        align:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value: null
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: Date
+id: sdc.jarvis.date
+provider: jarvis
+source: sdc
+source_local_id: 'jarvis:date'

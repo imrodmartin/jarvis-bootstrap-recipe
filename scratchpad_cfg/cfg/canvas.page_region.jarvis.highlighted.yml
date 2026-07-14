@@ -1,0 +1,62 @@
+uuid: 4296a630-0a96-4e70-89b6-904c24fecfeb
+langcode: en
+status: false
+dependencies:
+  config:
+    - canvas.component.block.help_block
+    - canvas.component.block.local_actions_block
+    - canvas.component.block.local_tasks_block
+    - canvas.component.block.page_title_block
+    - canvas.component.block.system_messages_block
+  theme:
+    - jarvis
+id: jarvis.highlighted
+region: highlighted
+theme: jarvis
+component_tree:
+  '0:058c5e4e-4006-4791-a58c-515856c0a06c':
+    uuid: 058c5e4e-4006-4791-a58c-515856c0a06c
+    component_id: block.help_block
+    component_version: 2fc02d0eb487e62e
+    inputs:
+      label: Help
+      label_display: '0'
+  '1:090d17c5-99d9-4499-a03d-ccf3454b342c':
+    uuid: 090d17c5-99d9-4499-a03d-ccf3454b342c
+    component_id: block.system_messages_block
+    component_version: 1609d44df6c8b26a
+    inputs:
+      label: 'Status messages'
+      label_display: '0'
+  '2:98ca6d03-d4db-4879-a65a-8de921610e00':
+    uuid: 98ca6d03-d4db-4879-a65a-8de921610e00
+    component_id: block.page_title_block
+    component_version: 9eea215a62e33427
+    inputs:
+      label: 'Page title'
+      label_display: '0'
+  '3:a5f8bd35-d90c-4935-b09b-abbb00753fb0':
+    uuid: a5f8bd35-d90c-4935-b09b-abbb00753fb0
+    component_id: block.local_actions_block
+    component_version: 8e3ae21ee61ff56d
+    inputs:
+      label: 'Primary admin actions'
+      label_display: '0'
+  '4:c60632b4-813c-48aa-ab66-951765825add':
+    uuid: c60632b4-813c-48aa-ab66-951765825add
+    component_id: block.local_tasks_block
+    component_version: fbd9367ece78bba5
+    inputs:
+      label: 'Primary tabs'
+      label_display: '0'
+      primary: true
+      secondary: false
+  '5:6b200326-e62e-49d7-8a60-1018f1727e72':
+    uuid: 6b200326-e62e-49d7-8a60-1018f1727e72
+    component_id: block.local_tasks_block
+    component_version: fbd9367ece78bba5
+    inputs:
+      label: 'Secondary tabs'
+      label_display: '0'
+      primary: false
+      secondary: true

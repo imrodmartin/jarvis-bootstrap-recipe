@@ -1,0 +1,17 @@
+uuid: b7299fd7-05c8-4b00-bf8e-d906fa9c27d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.block_content.30a93eeb-e035-40d4-b888-9928198bea55
+    - canvas.component.block.block_content.4fe01b83-141c-456d-937a-2ff035c5400f
+    - canvas.component.block.block_content.8fc6d865-0169-4527-a536-34bfdb97289b
+    - canvas.component.block.block_content.a9c442de-b115-4e43-9396-980cbcfc672e
+name: 'Content block'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.block_content.30a93eeb-e035-40d4-b888-9928198bea55
+  - block.block_content.4fe01b83-141c-456d-937a-2ff035c5400f
+  - block.block_content.8fc6d865-0169-4527-a536-34bfdb97289b
+  - block.block_content.a9c442de-b115-4e43-9396-980cbcfc672e

@@ -1,0 +1,25 @@
+uuid: 359145a2-9406-43c3-81b7-0b0485257ac4
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:video:30a93eeb-e035-40d4-b888-9928198bea55'
+  module:
+    - block_content
+active_version: 0a6ac5dd7c78f93f
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'block_content:30a93eeb-e035-40d4-b888-9928198bea55'
+        label: 'Demo video'
+        label_display: '0'
+        provider: block_content
+        view_mode: full
+    fallback_metadata:
+      slot_definitions: null
+label: 'Demo video'
+id: block.block_content.30a93eeb-e035-40d4-b888-9928198bea55
+provider: block_content
+source: block
+source_local_id: 'block_content:30a93eeb-e035-40d4-b888-9928198bea55'

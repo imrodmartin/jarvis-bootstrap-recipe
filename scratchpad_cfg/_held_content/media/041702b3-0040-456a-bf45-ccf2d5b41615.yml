@@ -1,0 +1,32 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 041702b3-0040-456a-bf45-ccf2d5b41615
+  bundle: image
+  default_langcode: en
+  depends:
+    6f34b50b-a74b-41c9-8bbe-2dd5ae43818d: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: 2026-07-10-hero.jpg
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  field_media_image:
+    -
+      alt: banner
+      title: ''
+      width: 1536
+      height: 1024
+      entity: 6f34b50b-a74b-41c9-8bbe-2dd5ae43818d

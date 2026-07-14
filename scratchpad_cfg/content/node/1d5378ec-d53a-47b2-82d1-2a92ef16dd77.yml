@@ -1,0 +1,45 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 1d5378ec-d53a-47b2-82d1-2a92ef16dd77
+  bundle: jarvis_sample
+  default_langcode: en
+  depends:
+    979e96e7-19b0-451b-8ba5-25ab41551fc3: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Test Blog'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  field_body:
+    -
+      value: '<p>this is the body field</p><p>Dolorem laudantium necessitatibus. In sequi quae. Consequatur unde accusantium. Possimus et eius. Incidunt harum et. Consequatur tempore vel. Officia aut autem. Reiciendis non quis. Nemo facilis consequuntur. Ut dolorum et. Et enim occaecati. Labore sed aut. Quos nobis qui. Velit eligendi explicabo. Nesciunt rerum cum. Nemo molestiae tempora. Perferendis aliquid qui. Doloribus iure porro. Sunt error temporibus. Quia enim voluptas.</p><p>Dolorem laudantium necessitatibus. In sequi quae. Consequatur unde accusantium. Possimus et eius. Incidunt harum et. Consequatur tempore vel. Officia aut autem. Reiciendis non quis. Nemo facilis consequuntur. Ut dolorum et. Et enim occaecati. Labore sed aut. Quos nobis qui. Velit eligendi explicabo. Nesciunt rerum cum. Nemo molestiae tempora. Perferendis aliquid qui. Doloribus iure porro. Sunt error temporibus. Quia enim voluptas.</p><p>Dolorem laudantium necessitatibus. In sequi quae. Consequatur unde accusantium. Possimus et eius. Incidunt harum et. Consequatur tempore vel. Officia aut autem. Reiciendis non quis. Nemo facilis consequuntur. Ut dolorum et. Et enim occaecati. Labore sed aut. Quos nobis qui. Velit eligendi explicabo. Nesciunt rerum cum. Nemo molestiae tempora. Perferendis aliquid qui. Doloribus iure porro. Sunt error temporibus. Quia enim voluptas.</p>'
+      format: basic_html
+      summary: ''
+  field_hero_banner:
+    -
+      entity: 979e96e7-19b0-451b-8ba5-25ab41551fc3
+  field_publication_date:
+    -
+      value: '2026-07-09'

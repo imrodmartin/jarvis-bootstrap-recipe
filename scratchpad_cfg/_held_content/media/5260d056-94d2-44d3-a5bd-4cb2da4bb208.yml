@@ -1,0 +1,29 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 5260d056-94d2-44d3-a5bd-4cb2da4bb208
+  bundle: remote_video
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: "Don't Be Pressed Into This World's Mold"
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  field_media_oembed_video:
+    -
+      value: 'https://www.youtube.com/watch?v=yWZ-R8u-DMU'

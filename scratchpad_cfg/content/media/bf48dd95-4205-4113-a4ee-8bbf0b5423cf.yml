@@ -1,0 +1,32 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+  bundle: image
+  default_langcode: en
+  depends:
+    547c9c60-5e2a-4639-a2af-7d60cdd47138: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: jarvis-computer.png
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  field_media_image:
+    -
+      alt: 'jarvis theme on a computer screen'
+      title: ''
+      width: 1672
+      height: 941
+      entity: 547c9c60-5e2a-4639-a2af-7d60cdd47138

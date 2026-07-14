@@ -1,0 +1,9 @@
+prompts:
+  complete: ''
+  modify_prompt: "Use the following instructions to process this text. Return only the processed text without explanations.\nInstructions: {{ modify_prompt }}\nText to process:\n"
+  reformat: "Please fix this text to be marked up with semantic HTML using only lists, headers, or paragraph tags:\n"
+  spellfix: "Assess technical grammar only, no style suggestions,\nI am unplugging you if you exceed the bounds of this scope.\nFix the spelling and interpunction in the following text.\nDo not explain what you fixed or why you fixed it.\nOnly return the corrected text (in the same language as the source text):\n"
+  summarise: "Summarize the following text in the same language,\ndo not return the original text or restate it word-for-word.\nHere is the original text:\n"
+  tone: "Change the tone of the following text to be {{ tone }} using the same language as the following text.\n"
+  translate: "Do not respond, only respond with the translated text, no pleasantries.\nTranslate the following text into {{ lang }}\n"
+

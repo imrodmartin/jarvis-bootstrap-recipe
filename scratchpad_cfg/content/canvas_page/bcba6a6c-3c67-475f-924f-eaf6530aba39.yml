@@ -1,0 +1,127 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: bcba6a6c-3c67-475f-924f-eaf6530aba39
+  default_langcode: en
+  depends:
+    4a1567a2-3de0-46b3-b253-826a6a70547e: file
+    979e96e7-19b0-451b-8ba5-25ab41551fc3: media
+    547c9c60-5e2a-4639-a2af-7d60cdd47138: file
+    bf48dd95-4205-4113-a4ee-8bbf0b5423cf: media
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: Welcome
+  components:
+    -
+      uuid: 21e6339b-81d4-4477-8658-4abcaa7a0afc
+      component_id: sdc.jarvis.one-column
+      inputs:
+        width: full
+        gap: normal
+        vertical_padding: true
+    -
+      parent_uuid: 21e6339b-81d4-4477-8658-4abcaa7a0afc
+      slot: first
+      uuid: 6874325c-cfa5-4219-87b9-78e0b24484fa
+      component_id: sdc.jarvis.hero
+      inputs:
+        heading: 'Build faster with Jarvis'
+        subheading: 'A component-driven Drupal theme for Canvas and Layout Builder.'
+        cta_text: 'Get started'
+        cta_href:
+          uri: 'internal:/node/1'
+          options: {  }
+        overlay: 60
+        align: center
+        vertical_padding: true
+        margin: none
+        text_color: light
+        image:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: 979e96e7-19b0-451b-8ba5-25ab41551fc3
+            target_type: media
+    -
+      uuid: 0fe71e35-31a0-4bc7-b83d-d730e18000e0
+      component_id: sdc.jarvis.one-column
+      inputs:
+        gap: normal
+        vertical_padding: false
+        width: full
+    -
+      parent_uuid: 0fe71e35-31a0-4bc7-b83d-d730e18000e0
+      slot: first
+      uuid: 7bf16dc1-2496-4536-8351-18bb7a9f47d6
+      component_id: sdc.jarvis.video
+      inputs:
+        video_url:
+          uri: 'https://youtu.be/CzsVnB6YQ3k?list=PL-uvhR-tfZnWEbxaDXMzQcrkbcmLpN421'
+          options: {  }
+        aspect: 16x9
+        full_width: true
+        autoplay: true
+        muted: true
+        vertical_padding: true
+    -
+      uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      component_id: sdc.jarvis.two-column
+      inputs:
+        gap: normal
+        ratio: even
+        vertical_padding: true
+    -
+      parent_uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      slot: first
+      uuid: ea794f06-e3b9-4064-a9f2-54244571537c
+      component_id: sdc.jarvis.card
+      inputs:
+        variant: image-top
+        title: 'Card title'
+        body:
+          value: '<p>Jarvis is a modern, SDC based theme for Drupal</p>'
+          format: canvas_html_block
+        link_text: 'Learn more'
+        link_href:
+          uri: 'internal:/node/1'
+          options: {  }
+        image:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+            target_type: media
+        vertical_padding: true
+    -
+      parent_uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      slot: second
+      uuid: 868d643e-3dea-449f-b8a2-56568e4c9a04
+      component_id: sdc.jarvis.card
+      inputs:
+        variant: image-top
+        title: 'Card title'
+        body:
+          value: '<p>Jarvis is a modern, SDC based theme for Drupal</p>'
+          format: canvas_html_block
+        link_text: 'Learn more'
+        link_href:
+          uri: 'internal:/node/1'
+          options: {  }
+        vertical_padding: true
+        image:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: 979e96e7-19b0-451b-8ba5-25ab41551fc3
+            target_type: media
+  path:
+    -
+      alias: /test-page
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true

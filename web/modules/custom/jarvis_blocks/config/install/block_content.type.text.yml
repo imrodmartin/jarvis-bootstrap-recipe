@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: text
+label: Text
+revision: false
+description: 'Jarvis Text component.'
+

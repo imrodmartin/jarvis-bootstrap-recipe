@@ -1,0 +1,23 @@
+uuid: ee729704-5a68-4f07-9807-34bc2ba09648
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: hero_banner
+label: 'Hero Banner'
+effects:
+  7ab75790-f125-4a14-b698-faee1008f147:
+    uuid: 7ab75790-f125-4a14-b698-faee1008f147
+    id: focal_point_scale_and_crop
+    weight: -9
+    data:
+      width: 2000
+      height: 500
+      crop_type: focal_point
+  a0c1eabc-d185-46de-becd-73b121d89158:
+    uuid: a0c1eabc-d185-46de-becd-73b121d89158
+    id: image_convert
+    weight: -10
+    data:
+      extension: webp
