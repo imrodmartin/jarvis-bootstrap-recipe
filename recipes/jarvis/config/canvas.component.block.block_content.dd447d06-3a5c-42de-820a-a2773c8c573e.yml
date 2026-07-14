@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:dd447d06-3a5c-42de-820a-a2773c8c573e'
+  module:
+    - block_content
+active_version: dde3702794aee2d3
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'block_content:dd447d06-3a5c-42de-820a-a2773c8c573e'
+        label: Alert
+        label_display: '0'
+        provider: block_content
+        view_mode: full
+    fallback_metadata:
+      slot_definitions: null
+  49df7c77872634b8:
+    settings:
+      default_settings:
+        id: 'block_content:dd447d06-3a5c-42de-820a-a2773c8c573e'
+        label: header
+        label_display: '0'
+        provider: block_content
+        view_mode: full
+    fallback_metadata:
+      slot_definitions: null
+label: Alert
+id: block.block_content.dd447d06-3a5c-42de-820a-a2773c8c573e
+provider: block_content
+source: block
+source_local_id: 'block_content:dd447d06-3a5c-42de-820a-a2773c8c573e'
