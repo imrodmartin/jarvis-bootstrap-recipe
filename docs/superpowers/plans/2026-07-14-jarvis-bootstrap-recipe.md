@@ -242,6 +242,7 @@ description: 'Throwaway module used only to export curated demo content. Delete 
 core_version_requirement: ^10 || ^11
 dependencies:
   - drupal:node
+  - drupal:block_content
   - drupal:default_content
 default_content:
   node:
@@ -251,7 +252,20 @@ default_content:
     - 450b9be5-b315-4109-b5b7-ec3f899ea807
     - f1649a96-c934-414d-b5fc-4d79defa029f
     - 5e4807b7-692a-4096-8ad4-54a836f50ca9
+  block_content:
+    - 8fc6d865-0169-4527-a536-34bfdb97289b
+    - dd447d06-3a5c-42de-820a-a2773c8c573e
+    - d30629df-1fff-4bd0-bf32-06db6a5aed74
+    - dc46c5be-4928-40b2-8559-ff6c091ac4b5
+    - a9c442de-b115-4e43-9396-980cbcfc672e
+    - 4fe01b83-141c-456d-937a-2ff035c5400f
+    - 30a93eeb-e035-40d4-b888-9928198bea55
 ```
+
+> The 7 `block_content` entities are the theme's component-library demo blocks.
+> The first four are placed site-wide by shipped `block.block.jarvis_*` config
+> (text/Alert/Bottom Block/more); the last three are hero/card/video component
+> examples. `dcemr` will also pull any media they reference.
 
 - [ ] **Step 2: Enable it and export with references**
 
@@ -517,11 +531,12 @@ Expected: module uninstalled and directory gone.
 ```bash
 cd /Users/rodmartin/code/drupaltheme
 echo "nodes (want 6):"; ls recipes/jarvis/content/node | wc -l
+echo "block_content (want 7):"; ls recipes/jarvis/content/block_content | wc -l
 echo "menu links (want 5):"; ls recipes/jarvis/content/menu_link_content | wc -l
 echo "aliases (want 5):"; ls recipes/jarvis/content/path_alias | wc -l
 echo "no jarvis_sample content (want 0):"; grep -rl jarvis_sample recipes/jarvis/content | wc -l
 ```
-Expected: 6, 5, 5, 0.
+Expected: 6, 7, 5, 5, 0.
 
 - [ ] **Step 10: Commit**
 
