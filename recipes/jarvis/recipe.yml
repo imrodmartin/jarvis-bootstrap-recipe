@@ -6,13 +6,20 @@ install:
   - media
   - media_library
   - image
+  - link
   - menu_ui
   - menu_link_content
   - datetime
   - options
   - path
+  - block_content
+  - layout_builder
+  - editor
+  - ckeditor5
+  - help
   - default_content
   - twig_tweak
+  - linkit
   - crop
   - focal_point
   - canvas

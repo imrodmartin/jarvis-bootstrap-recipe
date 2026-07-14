@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.card
+    - field.field.block_content.card.field_body
+    - field.field.block_content.card.field_cta
+    - field.field.block_content.card.field_media_image
+    - field.field.block_content.card.field_title
+    - field.field.block_content.card.field_variant
+id: block_content.card.default
+targetEntityType: block_content
+bundle: card
+mode: default
+content:
+  field_body:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_cta:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media_image:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_title:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_variant:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

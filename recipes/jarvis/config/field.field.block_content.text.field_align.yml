@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.text
+    - field.storage.block_content.field_align
+  module:
+    - options
+id: block_content.text.field_align
+field_name: field_align
+entity_type: block_content
+bundle: text
+label: Alignment
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

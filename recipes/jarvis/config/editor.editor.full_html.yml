@@ -1,0 +1,157 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+  module:
+    - ckeditor5
+format: full_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - aickeditor
+      - drupalMedia
+      - bold
+      - italic
+      - strikethrough
+      - superscript
+      - subscript
+      - removeFormat
+      - specialCharacters
+      - link
+      - bulletedList
+      - numberedList
+      - heading
+      - alignment
+      - indent
+      - outdent
+      - horizontalLine
+      - '-'
+      - insertTable
+      - blockQuote
+      - codeBlock
+      - tokenBrowser
+      - code
+      - sourceEditing
+  plugins:
+    ai_ckeditor_ai:
+      dialog:
+        autoresize: 'min-width: 600px'
+        height: '750'
+        width: '900'
+        dialog_class: ai-ckeditor-modal
+      plugins:
+        ai_agents_ckeditor:
+          agents: {  }
+          enabled: true
+        ai_automators_ckeditor:
+          enabled: true
+          workflows: {  }
+        ai_ckeditor_completion:
+          enabled: true
+          provider: openai__gpt-5.5-pro
+        ai_ckeditor_help:
+          enabled: false
+        ai_ckeditor_modify_prompt:
+          enabled: true
+          provider: openai__gpt-5.5
+        ai_ckeditor_reformat_html:
+          enabled: true
+          provider: openai__gpt-5.2
+        ai_ckeditor_spellfix:
+          enabled: true
+          provider: openai__gpt-5.2
+        ai_ckeditor_summarize:
+          enabled: true
+          provider: openai__gpt-5.2
+        ai_ckeditor_tone:
+          enabled: false
+          provider: openai__gpt-5.2
+          autocreate: false
+          tone_vocabulary: tags
+          use_description: false
+        ai_ckeditor_translate:
+          enabled: false
+          provider: openai__gpt-5.2
+          language_source: tax
+          autocreate: false
+          translate_vocabulary: tags
+          use_description: false
+    ckeditor5_alignment:
+      enabled_alignments:
+        - center
+        - justify
+        - left
+        - right
+    ckeditor5_codeBlock:
+      languages:
+        -
+          label: 'Plain text'
+          language: plaintext
+        -
+          label: C
+          language: c
+        -
+          label: 'C#'
+          language: cs
+        -
+          label: C++
+          language: cpp
+        -
+          label: CSS
+          language: css
+        -
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      properties:
+        reversed: true
+        startIndex: true
+        styles: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+    media_media:
+      allow_view_mode_override: false
+    token_filter_token_browser:
+      token_types: {  }
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: null
+  max_dimensions:
+    width: null
+    height: null

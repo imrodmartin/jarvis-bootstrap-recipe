@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.video
+    - field.storage.block_content.field_aspect
+  module:
+    - options
+id: block_content.video.field_aspect
+field_name: field_aspect
+entity_type: block_content
+bundle: video
+label: 'Aspect ratio'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

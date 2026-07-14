@@ -1,0 +1,31 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - filter.format.canvas_html_block
+  module:
+    - ckeditor5
+  enforced:
+    module:
+      - canvas
+format: canvas_html_block
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - bold
+      - italic
+      - underline
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+  plugins:
+    ckeditor5_list:
+      properties:
+        reversed: false
+        startIndex: false
+        styles: false
+      multiBlock: false
+image_upload:
+  status: false
