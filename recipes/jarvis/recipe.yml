@@ -21,6 +21,8 @@ install:
   - default_content
   - twig_tweak
   - linkit
+  - token
+  - token_filter
   - crop
   - focal_point
   - canvas
