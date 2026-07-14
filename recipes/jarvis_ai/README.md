@@ -12,14 +12,22 @@ Captures the full AI stack added to the Jarvis site.
 - **ai_provider_anthropic**, **ai_provider_openai**, **gemini_provider** — LLM providers
 - **canvas_ai** — Canvas AI settings (requires `canvas`)
 
-## Apply
+Private overlay — apply **after** the `jarvis` bootstrap recipe, on your local
+machine only:
+
 ```bash
-ddev drush recipe recipes/jarvis_ai
+ddev drush recipe recipes/jarvis      # full site, no secrets
+ddev drush recipe recipes/jarvis_ai   # local only — adds AI config + your keys
 ddev drush cr
 ```
 
-## ⚠️ Keys are plaintext
-`config/key.key.*.yml` embed live API keys (key module `config` provider, plaintext).
-Personal/private use only. **Do not commit to a public repo or share.** Add
-`recipes/jarvis_ai/config/key.key.*.yml` to `.gitignore` if this repo goes public,
-or swap the key entities to the `env`/`file` provider first.
+## ⚠️ Keys are gitignored (plaintext)
+`config/key.key.{claude,openai,gemini,elevenlabs}.yml` embed live API keys (key
+module `config` provider, plaintext). They are **gitignored** (`/recipes/jarvis_ai/config/`)
+and are NOT tracked or committed — the rest of the AI config (agents, providers)
+ships normally.
+
+On a fresh clone the key files are absent, so the providers install unconfigured.
+To enable AI, create the four `key.key.*.yml` files locally with your own
+credentials (copy the shape of the other `config/*.yml`), or set the key entities
+to the `env`/`file` provider and point them at your secrets.

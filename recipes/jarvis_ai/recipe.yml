@@ -1,5 +1,5 @@
-name: 'Jarvis AI'
-description: 'Installs the AI stack for the Jarvis site: Drupal AI core, AI agents, CKEditor AI, alt-text + media image generation, the Anthropic/OpenAI/Gemini providers, Canvas AI, and the Key entities holding the API keys. Keys are captured as-is (config provider, plaintext) — private/personal use only, do not commit to a public repo.'
+name: 'Jarvis AI (private overlay)'
+description: 'PRIVATE, LOCAL-ONLY overlay for the Jarvis AI stack: Drupal AI core, AI agents, CKEditor AI, alt-text + media image generation, the Anthropic/OpenAI/Gemini providers, and Canvas AI. Apply on top of the jarvis bootstrap recipe. The Key entities that hold API credentials live in config/key.key.*.yml and are GITIGNORED (plaintext, never committed) — supply your own before applying, or the providers install unconfigured. Not composed by the jarvis recipe.'
 type: 'Site'
 install:
   - key
