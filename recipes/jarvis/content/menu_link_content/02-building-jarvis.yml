@@ -1,0 +1,18 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: 8c000000-0000-4a00-9000-000000000002
+  default_langcode: en
+default:
+  title:
+    - value: 'Building Jarvis'
+  link:
+    - uri: 'internal:/blog/building-jarvis-one-source-truth-your-markup'
+  menu_name:
+    - value: main
+  weight:
+    - value: -8
+  enabled:
+    - value: true
+  langcode:
+    - value: en

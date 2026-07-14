@@ -1,0 +1,30 @@
+_meta:
+  version: '1.0'
+  entity_type: block_content
+  uuid: 30a93eeb-e035-40d4-b888-9928198bea55
+  bundle: video
+  default_langcode: en
+default:
+  status:
+    -
+      value: true
+  info:
+    -
+      value: 'Demo video'
+  reusable:
+    -
+      value: true
+  field_aspect:
+    -
+      value: 16x9
+      label: '16:9'
+  field_full_width:
+    -
+      value: false
+  field_video_url:
+    -
+      uri: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
+      resolvable_uri: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
+      title: ''
+      options: {  }
+      url: 'https://www.youtube.com/embed/aqz-KE-bpKQ'

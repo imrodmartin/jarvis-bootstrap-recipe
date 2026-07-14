@@ -1,0 +1,36 @@
+_meta:
+  version: '1.0'
+  entity_type: block_content
+  uuid: a9c442de-b115-4e43-9396-980cbcfc672e
+  bundle: hero
+  default_langcode: en
+default:
+  status:
+    -
+      value: true
+  info:
+    -
+      value: 'Demo hero'
+  reusable:
+    -
+      value: true
+  field_align:
+    -
+      value: center
+      label: Center
+  field_cta:
+    -
+      uri: 'internal:/node/1'
+      resolvable_uri: /node/1
+      title: 'Get started'
+      options: {  }
+      url: /node/1
+  field_heading:
+    -
+      value: 'Build faster with Jarvis'
+  field_overlay:
+    -
+      value: 40
+  field_subheading:
+    -
+      value: 'A component-driven Drupal theme for Canvas and Layout Builder.'

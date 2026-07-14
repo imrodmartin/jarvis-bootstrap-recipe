@@ -1,0 +1,18 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: 8c000000-0000-4a00-9000-000000000004
+  default_langcode: en
+default:
+  title:
+    - value: 'Creating a Drupal 11 Theme'
+  link:
+    - uri: 'internal:/blog/creating-drupal-11-theme-single-directory-components'
+  menu_name:
+    - value: main
+  weight:
+    - value: -6
+  enabled:
+    - value: true
+  langcode:
+    - value: en

@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5d62d981-588f-4e4e-a9b4-f534d3207460
+  bundle: basic
+  default_langcode: en
+  depends:
+    bf48dd95-4205-4113-a4ee-8bbf0b5423cf: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  title:
+    -
+      value: Home
+  created:
+    -
+      value: 1783687216
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  path:
+    -
+      alias: ''
+      langcode: en
+      pathauto: 0
+  field_body:
+    -
+      value: '<p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p>'
+      format: basic_html
+      summary: ''
+  field_hero_banner:
+    -
+      entity: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+      target_uuid: ''
+      url: ''

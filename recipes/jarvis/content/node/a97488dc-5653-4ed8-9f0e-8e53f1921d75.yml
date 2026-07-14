@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: a97488dc-5653-4ed8-9f0e-8e53f1921d75
+  bundle: basic
+  default_langcode: en
+default:
+  revision_uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  title:
+    -
+      value: 'About Jarvis'
+  created:
+    -
+      value: 1783971903
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  path:
+    -
+      alias: ''
+      langcode: en
+      pathauto: 0
+  field_body:
+    -
+      value: '<p>hi there</p>'
+      format: basic_html
+      summary: ''

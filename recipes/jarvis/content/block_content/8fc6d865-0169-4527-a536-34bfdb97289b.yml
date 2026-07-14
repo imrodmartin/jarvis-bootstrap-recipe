@@ -1,0 +1,28 @@
+_meta:
+  version: '1.0'
+  entity_type: block_content
+  uuid: 8fc6d865-0169-4527-a536-34bfdb97289b
+  bundle: text
+  default_langcode: en
+default:
+  status:
+    -
+      value: true
+  info:
+    -
+      value: 'Demo text'
+  reusable:
+    -
+      value: true
+  field_align:
+    -
+      value: center
+      label: Center
+  field_body:
+    -
+      value: '<h2>Rich text section</h2><p>Basic text block with width and alignment controls.</p>'
+      format: basic_html
+  field_width:
+    -
+      value: normal
+      label: Normal

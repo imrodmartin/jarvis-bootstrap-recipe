@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5e4807b7-692a-4096-8ad4-54a836f50ca9
+  bundle: landing_page
+  default_langcode: en
+default:
+  revision_uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  title:
+    -
+      value: 'This is a landing page'
+  created:
+    -
+      value: 1783769100
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  path:
+    -
+      alias: ''
+      langcode: en
+      pathauto: 0
+  field_body:
+    -
+      value: '<p>this is the body</p>'
+      format: basic_html
+      summary: ''

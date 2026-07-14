@@ -1,0 +1,20 @@
+_meta:
+  version: '1.0'
+  entity_type: block_content
+  uuid: d30629df-1fff-4bd0-bf32-06db6a5aed74
+  bundle: basic
+  default_langcode: en
+default:
+  status:
+    -
+      value: true
+  info:
+    -
+      value: 'Bottom Block across all pages'
+  reusable:
+    -
+      value: true
+  body:
+    -
+      value: '<p>&nbsp;</p><p>Thanks for checking out Jarvis - a Drupal 11 theme for Canvas - with ADA Compliance built in!</p>'
+      format: basic_html

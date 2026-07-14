@@ -1,0 +1,18 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: 8c000000-0000-4a00-9000-000000000003
+  default_langcode: en
+default:
+  title:
+    - value: 'The Jarvis Components'
+  link:
+    - uri: 'internal:/blog/jarvis-components-flexible-design-accessible-default'
+  menu_name:
+    - value: main
+  weight:
+    - value: -7
+  enabled:
+    - value: true
+  langcode:
+    - value: en

@@ -1,0 +1,14 @@
+_meta:
+  version: '1.0'
+  entity_type: path_alias
+  uuid: 7b3f1e2a-0000-4a00-9000-000000000001
+  default_langcode: en
+default:
+  path:
+    - value: '/node/4'
+  alias:
+    - value: '/home'
+  langcode:
+    - value: en
+  status:
+    - value: true
