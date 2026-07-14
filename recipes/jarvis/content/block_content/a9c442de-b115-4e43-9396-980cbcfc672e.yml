@@ -20,7 +20,7 @@ default:
       label: Center
   field_cta:
     -
-      uri: 'internal:/node/1'
+      uri: 'internal:/'
       resolvable_uri: /node/1
       title: 'Get started'
       options: {  }
