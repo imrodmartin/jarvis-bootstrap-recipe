@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - jarvis
+id: jarvis.hero
+region: hero
+theme: jarvis
+component_tree: {  }

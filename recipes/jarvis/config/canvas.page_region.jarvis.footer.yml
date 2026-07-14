@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.system_menu_block.account
+    - canvas.component.block.system_powered_by_block
+    - canvas.component.sdc.jarvis.two-column
+  module:
+    - options
+  theme:
+    - jarvis
+id: jarvis.footer
+region: footer
+theme: jarvis
+component_tree:
+  6f53c86f-b15b-4352-83f3-14c225f282dd:
+    uuid: 6f53c86f-b15b-4352-83f3-14c225f282dd
+    component_id: sdc.jarvis.two-column
+    component_version: bc2112224d2c7c81
+    inputs:
+      gap: normal
+      ratio: even
+  f325d4bb-77a5-4fa8-8af7-95efb1705e07:
+    parent_uuid: 6f53c86f-b15b-4352-83f3-14c225f282dd
+    slot: first
+    uuid: f325d4bb-77a5-4fa8-8af7-95efb1705e07
+    component_id: block.system_powered_by_block
+    component_version: 5d275553b2355691
+    inputs:
+      label: 'Powered by Drupal'
+      label_display: '0'
+  211bb53f-e029-483a-bb7c-9f492f047b11:
+    parent_uuid: 6f53c86f-b15b-4352-83f3-14c225f282dd
+    slot: second
+    uuid: 211bb53f-e029-483a-bb7c-9f492f047b11
+    component_id: block.system_menu_block.account
+    component_version: bc0ea0dab4832c55
+    inputs:
+      label: 'User account menu'
+      label_display: '0'
+      level: 1
+      depth: 1
+      expand_all_items: false

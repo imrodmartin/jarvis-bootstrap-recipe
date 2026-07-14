@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.sdc.jarvis.wysiwyg
+    - core.entity_view_mode.node.full
+    - field.field.node.basic.field_body
+    - node.type.basic
+  module:
+    - node
+    - options
+id: node.basic.full
+content_entity_type_id: node
+content_entity_type_bundle: basic
+content_entity_type_view_mode: full
+component_tree:
+  2815ea4e-be5c-457a-93b7-3896c02f4d52:
+    uuid: 2815ea4e-be5c-457a-93b7-3896c02f4d52
+    component_id: sdc.jarvis.wysiwyg
+    component_version: 3ce297f5c6365761
+    inputs:
+      body:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:basic␝field_body␞␟processed'
+      measure: readable
+      vertical_padding: true
+exposed_slots: {  }

@@ -1,0 +1,117 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.field_display.field_display
+    - canvas.component.sdc.jarvis.image
+    - canvas.component.sdc.jarvis.one-column
+    - canvas.component.sdc.jarvis.section
+    - canvas.component.sdc.jarvis.text
+    - canvas.component.sdc.navigation.message
+    - core.entity_view_mode.node.full
+    - field.field.media.image.field_media_image
+    - field.field.node.blog.field_body
+    - field.field.node.blog.field_hero_banner
+    - image.style.canvas_parametrized_width
+    - media.type.image
+    - node.type.blog
+  module:
+    - file
+    - media
+    - node
+    - options
+id: node.blog.full
+content_entity_type_id: node
+content_entity_type_bundle: blog
+content_entity_type_view_mode: full
+component_tree:
+  43c8216d-a659-4a34-84d1-ceaea417f829:
+    uuid: 43c8216d-a659-4a34-84d1-ceaea417f829
+    component_id: sdc.jarvis.image
+    component_version: 9535595f15c220ab
+    inputs:
+      image:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:blog␝field_hero_banner␞␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+      image_style: hero_banner
+      image_uri:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:blog␝field_hero_banner␞␟entity␜␜entity:media:image␝field_media_image␞␟entity␜␜entity:file␝uri␞␟value'
+      full_width: true
+      vertical_padding: true
+  5e69aa5e-2b38-4d02-a8b3-a35af922909f:
+    uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
+    component_id: sdc.jarvis.section
+    component_version: 561f60bab22c5940
+    inputs:
+      width: normal
+      bg: none
+  c3d9e532-8dac-4393-96d9-c1514c67d591:
+    parent_uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
+    slot: content
+    uuid: c3d9e532-8dac-4393-96d9-c1514c67d591
+    component_id: field_display.field_display
+    component_version: d51828e603b0f85c
+    inputs:
+      field_name: field_publication_date
+      entity_type_id: node
+      bundle: blog
+      view_mode: full
+      formatter_id: datetime_default
+      formatter_settings:
+        format_type: default_long_date
+        timezone_override: ''
+      formatter_third_party_settings: {  }
+      label_display: hidden
+  d8564a03-9673-4ef1-b3e7-8255671f659c:
+    uuid: d8564a03-9673-4ef1-b3e7-8255671f659c
+    component_id: sdc.jarvis.one-column
+    component_version: f83c0c95a7c359e9
+    inputs:
+      width: boxed
+      gap: normal
+      vertical_padding: true
+  25a7619a-6c82-4747-845d-fda6030c5bfb:
+    parent_uuid: d8564a03-9673-4ef1-b3e7-8255671f659c
+    slot: first
+    uuid: 25a7619a-6c82-4747-845d-fda6030c5bfb
+    component_id: sdc.jarvis.text
+    component_version: ea8cfd6e6dca35c5
+    inputs:
+      body:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:blog␝field_body␞␟processed'
+      width: wide
+      align: start
+      vertical_padding: true
+  dc971e21-6e48-4638-bcf6-8cb3bf66a227:
+    uuid: dc971e21-6e48-4638-bcf6-8cb3bf66a227
+    component_id: sdc.jarvis.one-column
+    component_version: f83c0c95a7c359e9
+    inputs:
+      width: boxed
+      gap: normal
+      vertical_padding: true
+  5749f627-88bb-4f18-8ed7-4919933b9c12:
+    parent_uuid: dc971e21-6e48-4638-bcf6-8cb3bf66a227
+    slot: first
+    uuid: 5749f627-88bb-4f18-8ed7-4919933b9c12
+    component_id: field_display.field_display
+    component_version: d51828e603b0f85c
+    inputs:
+      field_name: field_video
+      entity_type_id: node
+      bundle: blog
+      view_mode: full
+      formatter_id: entity_reference_entity_view
+      formatter_settings:
+        view_mode: default
+        link: checked
+      formatter_third_party_settings: {  }
+      label_display: hidden
+  59877abc-45fb-4a7a-8fc2-f33bb9b7e391:
+    uuid: 59877abc-45fb-4a7a-8fc2-f33bb9b7e391
+    component_id: sdc.navigation.message
+    component_version: a860189644f260de
+    inputs: {  }
+exposed_slots: {  }

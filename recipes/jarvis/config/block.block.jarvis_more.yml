@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:dc46c5be-4928-40b2-8559-ff6c091ac4b5'
+  module:
+    - block_content
+  theme:
+    - jarvis
+id: jarvis_more
+theme: jarvis
+region: sidebar_right
+weight: 0
+provider: null
+plugin: 'block_content:dc46c5be-4928-40b2-8559-ff6c091ac4b5'
+settings:
+  id: 'block_content:dc46c5be-4928-40b2-8559-ff6c091ac4b5'
+  label: more
+  label_display: visible
+  provider: block_content
+  view_mode: full
+visibility: {  }

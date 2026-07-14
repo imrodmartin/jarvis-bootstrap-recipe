@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:dd447d06-3a5c-42de-820a-a2773c8c573e'
+  module:
+    - block_content
+  theme:
+    - jarvis
+id: jarvis_header
+theme: jarvis
+region: header
+weight: 0
+provider: null
+plugin: 'block_content:dd447d06-3a5c-42de-820a-a2773c8c573e'
+settings:
+  id: 'block_content:dd447d06-3a5c-42de-820a-a2773c8c573e'
+  label: header
+  label_display: visible
+  provider: block_content
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.page_title_block
+  theme:
+    - jarvis
+id: jarvis.page_title
+region: page_title
+theme: jarvis
+component_tree:
+  98ca6d03-d4db-4879-a65a-8de921610e00:
+    uuid: 98ca6d03-d4db-4879-a65a-8de921610e00
+    component_id: block.page_title_block
+    component_version: 9eea215a62e33427
+    inputs:
+      label: 'Page title'
+      label_display: '0'

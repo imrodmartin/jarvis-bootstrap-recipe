@@ -7,7 +7,7 @@ features:
   node_user_picture: false
 logo:
   path: 'public://jarvis-logo.png'
-  use_default: false
+  use_default: true
 jarvis_color_primary: '#2d6cdf'
 jarvis_color_secondary: '#1b2a4a'
 jarvis_color_title_bg: '#2d6cdf'
@@ -15,9 +15,9 @@ jarvis_color_title_text: '#ffffff'
 jarvis_color_footer_bg: '#000000'
 jarvis_color_footer_text: '#ffffff'
 jarvis_color_heading: '#2d6cdf'
-jarvis_color_header_bg: ''
-jarvis_color_header_text: ''
-jarvis_color_header_link: ''
+jarvis_color_header_bg: '#fa0000'
+jarvis_color_header_text: '#ffffff'
+jarvis_color_header_link: '#eeff00'
 jarvis_font_base_family: 'Open Sans'
 jarvis_font_base_weight: '300'
 jarvis_font_base_selector: body
@@ -50,4 +50,3 @@ jarvis_fs_mobile_h6: 1.0
 preview: ''
 jarvis_color_bg_1: '#fa6400'
 jarvis_color_bg_2: '#00bd42'
-

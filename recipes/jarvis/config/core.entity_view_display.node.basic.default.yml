@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.basic.field_body
+    - field.field.node.basic.field_hero_banner
+    - image.style.hero_banner
+    - node.type.basic
+  module:
+    - layout_builder
+    - media
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.basic.default
+targetEntityType: node
+bundle: basic
+mode: default
+content:
+  field_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_hero_banner:
+    type: media_thumbnail
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: hero_banner
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  layout_builder__layout: true
+  links: true

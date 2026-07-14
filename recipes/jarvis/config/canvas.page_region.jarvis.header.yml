@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - jarvis
+id: jarvis.header
+region: header
+theme: jarvis
+component_tree:
+  734eb2a3-9803-4fe1-90ce-17b9b50ab317:
+    uuid: 734eb2a3-9803-4fe1-90ce-17b9b50ab317
+    component_id: block.block_content.dd447d06-3a5c-42de-820a-a2773c8c573e
+    component_version: 49df7c77872634b8
+    inputs:
+      label: header
+      label_display: '0'
+      view_mode: full

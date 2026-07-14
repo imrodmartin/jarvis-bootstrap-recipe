@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - jarvis
+id: jarvis.content_bottom
+region: content_bottom
+theme: jarvis
+component_tree:
+  6097e848-dc8f-45c9-a65e-c82c7e7edee9:
+    uuid: 6097e848-dc8f-45c9-a65e-c82c7e7edee9
+    component_id: block.block_content.d30629df-1fff-4bd0-bf32-06db6a5aed74
+    component_version: 64f4ee8084b42eff
+    inputs:
+      label: ''
+      label_display: '0'
+      view_mode: full

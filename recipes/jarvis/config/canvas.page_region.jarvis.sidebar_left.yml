@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - jarvis
+id: jarvis.sidebar_left
+region: sidebar_left
+theme: jarvis
+component_tree: {  }

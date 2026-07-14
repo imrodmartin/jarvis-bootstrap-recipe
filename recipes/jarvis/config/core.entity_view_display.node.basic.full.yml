@@ -1,0 +1,25 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.basic.field_body
+    - field.field.node.basic.field_hero_banner
+    - node.type.basic
+  module:
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.basic.full
+targetEntityType: node
+bundle: basic
+mode: full
+content: {  }
+hidden:
+  field_body: true
+  field_hero_banner: true
+  layout_builder__layout: true
+  links: true
