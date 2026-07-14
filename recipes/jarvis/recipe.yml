@@ -12,6 +12,7 @@ install:
   - datetime
   - options
   - path
+  - navigation
   - block_content
   - layout_builder
   - editor
