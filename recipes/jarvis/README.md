@@ -38,10 +38,14 @@ Designed for a **fresh / empty site** (validated on the `minimal` profile):
 
 ```bash
 composer install
-drush site:install minimal -y     # or start from an empty site
-drush recipe recipes/jarvis       # run from the project root
-drush cache:rebuild
+ddev drush site:install minimal -y
+# NOTE: under ddev, drush's working dir is the docroot (web/), but recipes/ lives
+# at the project root — pass the absolute in-container path:
+ddev drush recipe /var/www/html/recipes/jarvis
+ddev drush cache:rebuild
 ```
+
+Without ddev (drush run from the project root), the path is just `recipes/jarvis`.
 
 > **Profile caveat:** the recipe ships a few config objects under stock names
 > (`filter.format.basic_html`/`full_html`/`restricted_html`,

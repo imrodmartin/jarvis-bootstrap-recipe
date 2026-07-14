@@ -1,4 +1,6 @@
-name: jarvis
+# Project name intentionally NOT set here — ddev derives it from the directory
+# name so clones don't collide. This working copy pins `name: jarvis` via the
+# gitignored config.local.yaml.
 type: drupal11
 docroot: web
 php_version: "8.4"
