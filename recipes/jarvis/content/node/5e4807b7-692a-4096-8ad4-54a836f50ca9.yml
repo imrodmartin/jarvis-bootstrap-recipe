@@ -34,7 +34,6 @@ default:
     -
       alias: ''
       langcode: en
-      pathauto: 0
   field_body:
     -
       value: '<p>this is the body</p>'

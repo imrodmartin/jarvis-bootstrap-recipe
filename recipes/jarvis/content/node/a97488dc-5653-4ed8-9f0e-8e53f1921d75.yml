@@ -32,9 +32,8 @@ default:
       value: false
   path:
     -
-      alias: ''
+      alias: /about
       langcode: en
-      pathauto: 0
   field_body:
     -
       value: '<p>hi there</p>'
