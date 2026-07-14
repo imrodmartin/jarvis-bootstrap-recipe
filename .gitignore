@@ -19,5 +19,6 @@
 # Superpowers scratch (progress ledger lives here, git-ignored).
 /.superpowers/
 
-# jarvis_ai overlay holds PLAINTEXT API keys — local-only, never commit.
-/recipes/jarvis_ai/config/
+# jarvis_ai overlay key entities hold PLAINTEXT API keys — local-only, never
+# commit. Scoped to the key files so other AI config (agents/providers) tracks.
+/recipes/jarvis_ai/config/key.key.*.yml
