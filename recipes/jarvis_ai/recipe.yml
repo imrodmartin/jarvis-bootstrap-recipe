@@ -11,6 +11,9 @@ config:
   # land via a partial config import — see README.
   strict: false
 install:
+  # Core config module: drush config:import --partial (step 2 of the apply
+  # flow) refuses to run without it.
+  - config
   - key
   - ai
   - ai_agents
