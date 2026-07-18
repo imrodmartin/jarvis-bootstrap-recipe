@@ -1,45 +1,55 @@
 # Jarvis site recipe
 
-Self-contained bootstrap recipe: stands up a fresh Drupal site with the Jarvis
-theme, the custom modules, the Blog/Basic/Landing content types, all the
-Canvas/media plumbing, and a curated set of demo content (home page, three blog
-posts, an about page, media, and the component-library block content).
+Self-contained bootstrap recipe: stands up a **fully functional Drupal site**
+with the Jarvis theme — Canvas visual editing, demo content, forms, editorial
+workflow, SEO, an accessibility checker, admin UX, and a configured AI stack.
 
-Validated end-to-end: applies cleanly to a fresh `minimal` install and renders
-(home, blog posts with hero images, and the about page all return 200).
+Validated end-to-end on fresh `minimal` **and** `standard` installs: the
+recipe applies with zero warnings and every demo page (nodes and Canvas
+pages) renders. See the repository-root README for the quick start.
 
 ## What it does
 
-- **Installs modules**: media/media_library/image/link, menu + path, Canvas
-  (canvas, canvas_field_component) and its deps (block_content, layout_builder,
-  editor, ckeditor5, navigation, help), crop + focal_point, linkit, token +
-  token_filter, twig_tweak, backup_migrate, asset_injector, simple_gmap,
-  modeler_api, default_content, editoria11y (editorial accessibility checker),
-  and the custom `jarvis_blocks` + `jarvis_canvas`.
-- **Installs and configures the AI stack**: ai, ai_agents, ai_ckeditor,
-  ai_provider_anthropic/openai, gemini_provider, canvas_ai, key — including
-  default providers, the Canvas AI agents, CKEditor AI, and alt-text/media
-  image settings. **No API keys ship here** — add them via the private
-  jarvis_ai overlay (see the AI section below). Until keys exist the
-  providers simply run unconfigured.
 - **Installs the Jarvis theme** and sets it as the default; applies the theme
-  settings (colours, fonts, sizes, logo).
-- **Imports config**: the three content types + fields + form/view displays,
-  Canvas content templates + page regions + components, the six block_content
-  component types, image styles, media types, editor/filter formats, blocks.
-- **Imports demo content** (via default_content, shipped in `content/`): 6 nodes
-  (Home, About Jarvis, 3 blog posts, 1 landing demo), **2 Canvas pages** (the
-  component showcase page and a Test Page), 7 block_content entities, the
-  referenced media + image files, and the main-menu links. Node URL aliases
-  are carried inline on the nodes, so they attach correctly regardless of the
-  imported node IDs. The front page is set to `/home`.
+  settings (colours, fonts, sizes, logo). Claro becomes the admin theme and
+  content is edited in it, like the standard profile.
+- **Canvas, fully wired**: canvas + canvas_field_component, component config
+  for the theme's 16 SDCs and the block/views components the library folders
+  use, content templates for the three content types, page regions, 5
+  reusable patterns, and the custom `jarvis_blocks` + `jarvis_canvas` glue
+  modules. Component folders are organised by `jarvis_canvas` on every cache
+  rebuild (they cannot ship as config — Canvas auto-creates folders during
+  component sync and an item may only live in one folder).
+- **Admin experience**: core Navigation sidebar with shortcuts, and
+  `config.import` pulls each module's admin views (content/media/files/
+  people/blocks listings), the media-library style/widget, menus, and the
+  shortcut set — recipes skip module-shipped config entities by design, so
+  the import list is what makes the admin UI whole.
+- **Site features**: webform stack (contact form included), workflows +
+  content_moderation (Editorial workflow ships unassigned), metatag
+  (+ Open Graph/Twitter Cards) with module defaults, editoria11y, antibot,
+  extlink, back_to_top, coffee, save_edit, better_exposed_filters,
+  better_social_sharing_buttons, field_ui/views_ui, big_pipe, automated_cron.
+- **Installs and configures the AI stack**: ai, ai_agents, ai_automators,
+  ai_ckeditor, ai_assistant_api, ai_chatbot, ai_image_alt_text,
+  ai_media_image, the Anthropic/OpenAI/Gemini/ElevenLabs providers, and
+  canvas_ai with nine Canvas agents. **No API keys ship here** — add them via
+  the private jarvis_ai overlay (see the AI section below). Until keys exist
+  the providers idle.
+- **Imports demo content** (core Default Content format, shipped in
+  `content/`): 7 nodes (Home, About, Accessibility Statement, 3 blog posts,
+  1 landing demo), **2 Canvas pages** (the component showcase and a Test
+  Page), 7 block_content entities, the referenced media + files, and the
+  main-menu links. Node URL aliases are carried inline, so they attach
+  regardless of imported node IDs. The front page is set to `/home`.
 
 Every module is required in the project `composer.json`, so `composer install`
 downloads them; the recipe enables + configures.
 
 ## Apply
 
-Designed for a **fresh / empty site** (validated on the `minimal` profile).
+Designed for a **fresh / empty site** (validated on the `minimal` and
+`standard` profiles).
 
 The Jarvis theme lives in its own repository, wired in as a git submodule at
 `web/themes/custom/jarvis` — clone with `--recurse-submodules` or the theme
