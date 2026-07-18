@@ -163,3 +163,142 @@ function jarvis_canvas_node_type_delete(NodeTypeInterface $type): void {
     $template->delete();
   }
 }
+
+/**
+ * Implements hook_rebuild().
+ *
+ * Organize Canvas components and patterns into the Jarvis folder structure.
+ * Folders can NOT ship as recipe config: Canvas auto-creates provider folders
+ * during component sync, and an item may only live in one folder — imported
+ * folder entities collide ("It is impossible for an item to exist in multiple
+ * Folders"). So this runs on cache rebuild instead (the recipe's documented
+ * final step), is idempotent, and converges: find-or-create each folder by
+ * name, move only the listed items into it (API-side, deduped), leave
+ * everything else where Canvas put it. Items whose component/pattern does not
+ * exist are skipped, so partial installs are safe.
+ */
+function jarvis_canvas_rebuild(): void {
+  if (!\Drupal::moduleHandler()->moduleExists('canvas')) {
+    return;
+  }
+  $etm = \Drupal::entityTypeManager();
+  if (!$etm->hasDefinition('folder')) {
+    return;
+  }
+
+  // name => [configEntityTypeId, weight, items].
+  $plan = [
+    'Content' => ['component', 0, [
+      'sdc.jarvis.button', 'sdc.jarvis.card', 'sdc.jarvis.card-full-image',
+      'sdc.jarvis.cta', 'sdc.jarvis.hero', 'sdc.jarvis.image',
+      'sdc.jarvis.map', 'sdc.jarvis.person', 'sdc.jarvis.stat',
+      'sdc.jarvis.text', 'sdc.jarvis.video', 'sdc.jarvis.wysiwyg',
+      'sdc.navigation.message', 'sdc.navigation.title',
+    ]],
+    'Sections' => ['component', 1, [
+      'sdc.jarvis.one-column', 'sdc.jarvis.section',
+      'sdc.jarvis.three-column', 'sdc.jarvis.two-column',
+    ]],
+    'Content Type' => ['component', 2, ['field_display.field_display']],
+    'Forms' => ['component', 3, ['block.user_login_block']],
+    'core' => ['component', 4, [
+      'block.local_actions_block', 'block.local_tasks_block', 'block.page_title_block',
+    ]],
+    'Menus' => ['component', 5, [
+      'block.system_menu_block.account', 'block.system_menu_block.admin',
+      'block.system_menu_block.content', 'block.system_menu_block.footer',
+      'block.system_menu_block.main', 'block.system_menu_block.navigation-user-links',
+      'block.system_menu_block.tools',
+    ]],
+    'User' => ['component', 6, ['block.views_block.who_s_new-block_1']],
+    'Help' => ['component', 7, ['block.help_block']],
+    'System' => ['component', 8, [
+      'block.system_branding_block', 'block.system_breadcrumb_block',
+      'block.system_clear_cache_block', 'block.system_messages_block',
+      'block.system_powered_by_block',
+    ]],
+    'Lists (Views)' => ['component', 9, [
+      'block.views_block.blog-block_1', 'block.views_block.content_recent-block_1',
+      'block.views_block.ed11y_result-block_most_issues',
+      'block.views_block.who_s_online-who_s_online_block',
+    ]],
+    'Editoria11y' => ['component', 10, [
+      'block.views_block.ed11y_action-recent_dismissals',
+      'block.views_block.ed11y_result-block_recent_issues',
+      'block.views_block.ed11y_result-block_top_issues',
+    ]],
+    'Webform' => ['component', 11, ['block.webform_block']],
+    'Better Social Sharing Buttons' => ['component', 12, ['block.social_sharing_buttons_block']],
+    'Navigation' => ['component', 13, [
+      'block.navigation_link', 'block.navigation_shortcuts', 'block.navigation_user',
+    ]],
+    'Card Patterns' => ['pattern', 0, ['2cards']],
+    'Person Patterns' => ['pattern', 1, ['personcards2column', 'personcards3column']],
+  ];
+
+  $folder_storage = $etm->getStorage('folder');
+  $component_storage = $etm->getStorage('component');
+  $pattern_storage = $etm->hasDefinition('pattern') ? $etm->getStorage('pattern') : NULL;
+  $all_folders = $folder_storage->loadMultiple();
+  $dirty = [];
+
+  foreach ($plan as $name => [$type, $weight, $items]) {
+    // Only organize items whose target entity actually exists.
+    $items = array_values(array_filter($items, static fn (string $id): bool =>
+      $type === 'component'
+        ? $component_storage->load($id) !== NULL
+        : ($pattern_storage !== NULL && $pattern_storage->load($id) !== NULL)
+    ));
+    if (!$items) {
+      continue;
+    }
+
+    // Find-or-create the target folder by name + type.
+    $target = NULL;
+    foreach ($all_folders as $folder) {
+      if ($folder->label() === $name && $folder->get('configEntityTypeId') === $type) {
+        $target = $folder;
+        break;
+      }
+    }
+    if ($target === NULL) {
+      $target = $folder_storage->create([
+        'name' => $name,
+        'configEntityTypeId' => $type,
+        'weight' => $weight,
+        'items' => [],
+      ]);
+      $all_folders[] = $target;
+    }
+
+    // Move each item: pull it out of any other folder, add it here.
+    $target_items = $target->get('items') ?? [];
+    foreach ($items as $item) {
+      foreach ($all_folders as $other) {
+        if ($other === $target) {
+          continue;
+        }
+        if ($other->get('configEntityTypeId') !== $type) {
+          continue;
+        }
+        $other_items = $other->get('items') ?? [];
+        if (in_array($item, $other_items, TRUE)) {
+          $other->set('items', array_values(array_diff($other_items, [$item])));
+          $dirty[spl_object_id($other)] = $other;
+        }
+      }
+      if (!in_array($item, $target_items, TRUE)) {
+        $target_items[] = $item;
+      }
+    }
+    if ($target_items !== ($target->get('items') ?? []) || $target->isNew() || $target->get('weight') !== $weight) {
+      $target->set('items', $target_items);
+      $target->set('weight', $weight);
+      $dirty[spl_object_id($target)] = $target;
+    }
+  }
+
+  foreach ($dirty as $folder) {
+    $folder->save();
+  }
+}
