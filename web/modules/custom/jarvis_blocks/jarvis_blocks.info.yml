@@ -1,7 +1,7 @@
 name: 'Jarvis Blocks'
 type: module
 description: 'Content block types that render Jarvis SDCs — usable in Layout Builder and the Block layout.'
-package: Custom
+package: Jarvis
 core_version_requirement: ^11 || ^12
 dependencies:
   - drupal:block_content

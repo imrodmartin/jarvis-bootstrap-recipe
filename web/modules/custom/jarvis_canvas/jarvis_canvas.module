@@ -35,13 +35,13 @@ function jarvis_canvas_canvas_storable_prop_shape_alter(CandidateStorablePropSha
 /**
  * Implements hook_form_FORM_ID_alter() for entity_view_display_edit_form.
  *
- * Canvas ships a "Create with Canvas" CTA on the node display edit form, but its
- * route check (canvas/src/Hook/FieldUiHooks.php) is hardcoded to the pre-11.4
- * route `entity.entity_view_display.node.default`. Drupal 11.4 split "Manage
- * display" into a controller-based overview plus per-view-mode edit forms
- * (route `entity.entity_view_display.node.view_mode`), so Canvas's CTA never
- * renders and new content types can't get a Canvas template through the UI.
- * Re-add the CTA on the view-mode edit form until upstream fixes it.
+ * Canvas ships a "Create with Canvas" CTA on the node display edit form, but
+ * its route check (canvas/src/Hook/FieldUiHooks.php) is hardcoded to the
+ * pre-11.4 route `entity.entity_view_display.node.default`. Drupal 11.4 split
+ * "Manage display" into a controller-based overview plus per-view-mode edit
+ * forms (route `entity.entity_view_display.node.view_mode`), so Canvas's CTA
+ * never renders and new content types can't get a Canvas template through the
+ * UI. Re-add the CTA on the view-mode edit form until upstream fixes it.
  *
  * @see https://www.drupal.org/project/canvas/issues/3498525
  */
@@ -76,7 +76,8 @@ function jarvis_canvas_form_entity_view_display_edit_form_alter(array &$form, Fo
   if (!$entity_type_manager->getAccessControlHandler('content_template')->createAccess()) {
     return;
   }
-  // The boot URL Canvas's own CTA links to: opens the editor for a new template.
+  // The boot URL Canvas's own CTA links to: opens the editor for a new
+  // template.
   $url = Url::fromRoute('canvas.boot.empty', [], [
     'query' => [
       'from' => 'manage_display',
@@ -109,10 +110,10 @@ function jarvis_canvas_form_entity_view_display_edit_form_alter(array &$form, Fo
  * so the Canvas editor is immediately usable at
  * `/canvas/template/node/<bundle>/full` (Manage display → Full content tab).
  *
- * Canvas's own "Create with Canvas" flow is broken on Drupal 11.4: its CTA route
- * check misses the per-view-mode forms, and even when clicked its boot opens the
- * generic Canvas shell WITHOUT creating a template. This closes that gap so new
- * types don't need the manual clone-an-existing-template workaround.
+ * Canvas's own "Create with Canvas" flow is broken on Drupal 11.4: its CTA
+ * route check misses the per-view-mode forms, and even when clicked its boot
+ * opens the generic Canvas shell WITHOUT creating a template. This closes that
+ * gap so new types don't need the manual clone-an-existing-template workaround.
  *
  * The tree is empty (no field references) so it is valid for ANY bundle,
  * including brand-new types that have no body field yet — the editor is where
@@ -145,10 +146,10 @@ function jarvis_canvas_node_type_insert(NodeTypeInterface $type): void {
  * Implements hook_ENTITY_TYPE_delete() for node_type.
  *
  * Remove the auto-created Full-content template when its content type is
- * deleted. An empty template has no config dependency on the bundle (nothing in
- * its component tree references the bundle's fields), so Drupal won't cascade the
- * delete — without this the template is orphaned, pointing at a bundle that no
- * longer exists.
+ * deleted. An empty template has no config dependency on the bundle (nothing
+ * in its component tree references the bundle's fields), so Drupal won't
+ * cascade the delete — without this the template is orphaned, pointing at a
+ * bundle that no longer exists.
  */
 function jarvis_canvas_node_type_delete(NodeTypeInterface $type): void {
   // During config sync the config system handles deletions itself.

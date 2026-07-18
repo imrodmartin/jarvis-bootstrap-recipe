@@ -7,7 +7,6 @@ namespace Drupal\jarvis_canvas;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\file\FileInterface;
-use Drupal\image\Entity\ImageStyle;
 use Drupal\image\ImageStyleInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -56,7 +55,8 @@ final class JarvisCanvasTwigExtension extends AbstractExtension {
     if (!$src) {
       return NULL;
     }
-    $image_style = ImageStyle::load($style);
+    $image_style = $this->entityTypeManager->getStorage('image_style')
+      ->load($style);
     if (!$image_style instanceof ImageStyleInterface) {
       return NULL;
     }
