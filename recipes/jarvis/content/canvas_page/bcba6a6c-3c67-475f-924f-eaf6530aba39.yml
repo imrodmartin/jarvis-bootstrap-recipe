@@ -428,7 +428,6 @@ default:
     -
       alias: /test-page
       langcode: en
-      pathauto: 0
   created:
     -
       value: 1783595786

@@ -346,7 +346,6 @@ default:
     -
       alias: /jarvis-drupal-theme-flexible-sdc-based-design-with-20-components
       langcode: en
-      pathauto: 0
   created:
     -
       value: 1783816383

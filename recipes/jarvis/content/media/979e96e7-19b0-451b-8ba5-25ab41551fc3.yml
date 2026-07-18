@@ -28,7 +28,6 @@ default:
     -
       alias: ''
       langcode: en
-      pathauto: 0
   field_media_image:
     -
       entity: 4a1567a2-3de0-46b3-b253-826a6a70547e
