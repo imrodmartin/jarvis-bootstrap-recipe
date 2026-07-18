@@ -1,0 +1,438 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: bcba6a6c-3c67-475f-924f-eaf6530aba39
+  default_langcode: en
+  depends:
+    979e96e7-19b0-451b-8ba5-25ab41551fc3: media
+default:
+  revision_user:
+    -
+      target_id: 1
+      target_uuid: ''
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+      target_uuid: ''
+  title:
+    -
+      value: 'Test Page'
+  description:
+    -
+      value: 'Welcome to Jarvis— a component-driven Drupal theme for Canvas and Layout Builder. Explore features, watch the demo, and get started fast with flexible layouts.'
+  components:
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 29cdf992-0e75-450e-acb5-51758d41626e
+      component_id: sdc.navigation.title
+      component_version: f7072e7d10fc2cb1
+      inputs: '{"modifiers":["xs"],"extra_classes":["this is the title"],"html_tag":"span"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 21e6339b-81d4-4477-8658-4abcaa7a0afc
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"width":"full","gap":"normal","vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: 21e6339b-81d4-4477-8658-4abcaa7a0afc
+      slot: first
+      uuid: 6874325c-cfa5-4219-87b9-78e0b24484fa
+      component_id: sdc.jarvis.hero
+      component_version: 306d97bd4098200d
+      inputs: '{"heading":"Build faster with Jarvis","subheading":"A component-driven Drupal theme for Canvas and Layout Builder.","cta_text":"Get started","cta_href":{"uri":"internal:\/node\/1","options":[]},"overlay":60,"align":"start","vertical_padding":true,"margin":"bottom","text_color":"light","heading_level":"h1","margin_size":"large","image":{"target_id":"5"}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 85155c45-121a-4a28-87e2-20dd3df30802
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"width":"full","background":"dark","gap":"normal","ratio":"even","vertical_padding":true,"margin":"none","padding":"left","padding_size":"large","text_color":"black"}'
+      label: ''
+    -
+      parent_uuid: 85155c45-121a-4a28-87e2-20dd3df30802
+      slot: first
+      uuid: bf55308d-eba5-424f-9375-7ef906bbfac9
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EFreeform heading\u003C\/h2\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E","format":"jarvis_html"},"padding":"left","vertical_padding":true,"padding_size":"medium"}'
+      label: ''
+    -
+      parent_uuid: 85155c45-121a-4a28-87e2-20dd3df30802
+      slot: first
+      uuid: 61c49da5-4eab-4c2c-8e80-b49a632ab1fa
+      component_id: sdc.jarvis.button
+      component_version: ccfd9f5ca8a3a005
+      inputs: '{"text":"Get started","href":{"uri":"internal:\/node\/1","options":[]},"variant":"outline-primary","size":"large","new_tab":true}'
+      label: ''
+    -
+      parent_uuid: 85155c45-121a-4a28-87e2-20dd3df30802
+      slot: second
+      uuid: 2f822aee-31be-47f0-affd-7986c77e0385
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"full_width":true,"priority":true,"vertical_padding":false,"image":{"target_id":"5"},"image_style":"original"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 0fe71e35-31a0-4bc7-b83d-d730e18000e0
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"gap":"normal","vertical_padding":false,"width":"full"}'
+      label: ''
+    -
+      parent_uuid: 0fe71e35-31a0-4bc7-b83d-d730e18000e0
+      slot: first
+      uuid: 7bf16dc1-2496-4536-8351-18bb7a9f47d6
+      component_id: sdc.jarvis.video
+      component_version: 1c41ffb22bc71844
+      inputs: '{"video_url":{"uri":"https:\/\/youtu.be\/CzsVnB6YQ3k?list=PL-uvhR-tfZnWEbxaDXMzQcrkbcmLpN421","options":[]},"aspect":"16x9","full_width":true,"autoplay":true,"muted":true,"vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: ef1bd3b8-3d09-4eca-b3ff-1222b0a39781
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal"}'
+      label: ''
+    -
+      parent_uuid: ef1bd3b8-3d09-4eca-b3ff-1222b0a39781
+      slot: first
+      uuid: 8ab861e8-8b29-4dcc-a835-62e8cc1a24d8
+      component_id: block.views_block.blog-block_1
+      component_version: a5a614bb8c19b09f
+      inputs: '{"label":"Blog","label_display":"0","views_label":"","items_per_page":null}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 523a22d9-6398-4024-b125-ed2996d205fb
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"width":"full","background":"none","text_color":"inherit","gap":"normal","vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: 523a22d9-6398-4024-b125-ed2996d205fb
+      slot: first
+      uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+      component_id: sdc.jarvis.card-full-image
+      component_version: b878bb5cfac9dba1
+      inputs: '{"image_right":true,"background":"secondary","fade_edge":true}'
+      label: ''
+    -
+      parent_uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+      slot: media
+      uuid: 24c0e4e3-bd09-44b3-8dbd-24aaca78c9e8
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"6"},"full_width":true,"priority":true,"vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+      slot: content
+      uuid: 4e396d6e-9079-42de-89a2-100dbac38b27
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EFreeform heading\u003C\/h2\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.Edit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.Edit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E\u003Cp\u003E\u0026nbsp;\u003C\/p\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E","format":"jarvis_html"},"vertical_padding":true,"align":"start"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 88b66527-74b7-4f07-bc42-764ed52afe81
+      component_id: sdc.jarvis.cta
+      component_version: 07008b82dbd56b53
+      inputs: '{"subtitle":"Get started","heading":"Ready to Get Started?","text":"Take the next step and discover how we can help you achieve your goals.","vertical_padding":true,"heading_level":"h2"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 52fdcaeb-66bf-4fc3-a60e-10c14cf132cd
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"gap":"normal","vertical_padding":true,"overlay":0,"background_image":{"target_id":"15"},"text_color":"black"}'
+      label: ''
+    -
+      parent_uuid: 52fdcaeb-66bf-4fc3-a60e-10c14cf132cd
+      slot: first
+      uuid: bfb8fe96-cdc5-4a9a-a1d5-8c8db54e915d
+      component_id: sdc.jarvis.person
+      component_version: b24b59350722bdfe
+      inputs: '{"variant":"card","name":"Jane Doe","position":"Chief Executive Officer","phone":"+1 555 123 4567","email":"jane@example.com","link_text":"View profile","link_href":{"uri":"internal:\/node\/1","options":[]},"padding":"none","margin":"none","vertical_padding":true,"linkedin":{"uri":"https:\/\/linkedin.com","options":[]},"image":{"target_id":"6"}}'
+      label: ''
+    -
+      parent_uuid: 52fdcaeb-66bf-4fc3-a60e-10c14cf132cd
+      slot: second
+      uuid: 4f4433f4-b040-446f-bc14-ff55268e8e71
+      component_id: sdc.jarvis.person
+      component_version: b24b59350722bdfe
+      inputs: '{"variant":"card","image":{"target_id":"5"},"name":"Jane Doe","position":"Chief Executive Officer","phone":"+1 555 123 4567","email":"jane@example.com","link_text":"View profile","link_href":{"uri":"internal:\/node\/1","options":[]},"padding":"none","margin":"none","vertical_padding":true,"linkedin":{"uri":"https:\/\/linkedin.com","options":[]}}'
+      label: ''
+    -
+      parent_uuid: 52fdcaeb-66bf-4fc3-a60e-10c14cf132cd
+      slot: third
+      uuid: 859850b7-4ee0-420e-91d2-73dc740db143
+      component_id: sdc.jarvis.person
+      component_version: b24b59350722bdfe
+      inputs: '{"variant":"card","image":{"target_id":"5"},"name":"Jane Doe","position":"Chief Executive Officer","phone":"+1 555 123 4567","email":"jane@example.com","link_text":"View profile","link_href":{"uri":"internal:\/node\/1","options":[]},"padding":"none","margin":"none","vertical_padding":true,"linkedin":{"uri":"https:\/\/linkedin.com","options":[]}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: faf3f4e6-6a5b-4105-92e9-2c6898d6d0ec
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"gap":"normal","vertical_padding":true,"text_color":"white","background":"primary"}'
+      label: ''
+    -
+      parent_uuid: faf3f4e6-6a5b-4105-92e9-2c6898d6d0ec
+      slot: first
+      uuid: 12cdea90-4ba3-4471-9244-b14c34932b07
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"1,200+","number_color":"secondary","body":{"value":"\u003Cp\u003EHappy customers served\u003C\/p\u003E","format":"canvas_html_block"},"count_up":true,"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: faf3f4e6-6a5b-4105-92e9-2c6898d6d0ec
+      slot: second
+      uuid: 28da4fa4-d420-4173-a63b-7af670d3ae90
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"1,200+","number_color":"secondary","count_up":true,"body":{"value":"\u003Cp\u003EHappy customers served\u003C\/p\u003E","format":"canvas_html_block"},"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: faf3f4e6-6a5b-4105-92e9-2c6898d6d0ec
+      slot: third
+      uuid: 93cb826c-f413-439a-893d-f26190c97633
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"1,200+","number_color":"secondary","count_up":true,"body":{"value":"\u003Cp\u003EHappy customers served\u003C\/p\u003E","format":"canvas_html_block"},"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: ed09f554-ee92-4bf9-bb73-26da04810c7a
+      component_id: sdc.jarvis.map
+      component_version: 450820c4912b8f8a
+      inputs: '{"address":"11237 W. County Line Road, Dillsboro, IN","show_link":true,"link_text":"View on Google Maps","vertical_padding":true,"zoom":14}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 408d3b26-906c-4c6c-838c-9490909bec3b
+      component_id: sdc.jarvis.cta
+      component_version: 07008b82dbd56b53
+      inputs: '{"subtitle":"Get started","heading":"Ready to Get Started?","text":"Take the next step and discover how we can help you achieve your goals.","vertical_padding":true,"button_text":"learn more","button_href":{"uri":"entity:node\/3","options":[]},"bg":"secondary"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 90de8d93-f2dc-4624-951c-ac3020583f2c
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal","ratio":"even","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 90de8d93-f2dc-4624-951c-ac3020583f2c
+      slot: first
+      uuid: ec13ed57-7784-4b3c-9a39-38f930f21d9b
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"text_color":"black","title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"14"}}'
+      label: ''
+    -
+      parent_uuid: 90de8d93-f2dc-4624-951c-ac3020583f2c
+      slot: second
+      uuid: 45e1be76-b80e-44cc-8ca1-b9d359d53281
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"background","overlay":0,"title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":true,"text_color":"black","image":{"target_id":"8"}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"gap":"normal","ratio":"even","vertical_padding":false,"background":"none","overlay":0,"background_image":{"target_id":"11"}}'
+      label: ''
+    -
+      parent_uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      slot: first
+      uuid: d2a19376-56cf-4f6f-baf7-07d318e816c1
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"4"}}'
+      label: ''
+    -
+      parent_uuid: c89d25de-4a33-41eb-bc8f-f7aee7587d5b
+      slot: second
+      uuid: 4f7cc553-04db-481c-8686-7dc6a97c4e1b
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"4"}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: e56d5486-3973-4c23-b178-06aea57d07c5
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"gap":"normal","ratio":"even","vertical_padding":true,"background":"none","overlay":0,"background_image":{"target_id":"12"}}'
+      label: ''
+    -
+      parent_uuid: e56d5486-3973-4c23-b178-06aea57d07c5
+      slot: first
+      uuid: f7d6fffe-334e-4bbd-8301-9e26e84a72ae
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"4"}}'
+      label: ''
+    -
+      parent_uuid: e56d5486-3973-4c23-b178-06aea57d07c5
+      slot: second
+      uuid: 45f6ee7b-aaf1-4bac-bc93-34f696844148
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"4"}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 59a4113c-1cb9-4bf1-b55a-e24e650828a6
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal"}'
+      label: ''
+    -
+      parent_uuid: 59a4113c-1cb9-4bf1-b55a-e24e650828a6
+      slot: first
+      uuid: c367f386-fe06-4f5d-98cd-18c8d9adf98e
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-left","overlay":0,"text_color":"light","title":"Card title","body":{"value":"\u003Cp\u003EShort supporting copy for this card.\u003C\/p\u003E","format":"canvas_html_block"},"link_text":"Learn more","link_href":{"uri":"internal:\/node\/1","options":[]},"vertical_padding":false,"image":{"target_id":"21"}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 54ae3a87-4c36-4b16-8c83-d9bb1c411954
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"width":"boxed","gap":"normal","padding":"none","margin":"top","vertical_padding":true,"overlay":0,"background":"secondary","text_color":"black","margin_size":"large"}'
+      label: ''
+    -
+      parent_uuid: 54ae3a87-4c36-4b16-8c83-d9bb1c411954
+      slot: first
+      uuid: 11f9c009-f772-4361-8581-06eb427c5f02
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EThis is placeholder paragraph\u0026nbsp;\u003C\/h2\u003E\u003Cp\u003Etext intended to demonstrate layout and typography. It can be replaced with your final content once messaging and tone are confirmed. Use it to preview spacing, line length, and rhythm across different screen sizes.\u003C\/p\u003E\u003Cdrupal-media data-entity-type=\u0022media\u0022 data-entity-uuid=\u00225260d056-94d2-44d3-a5bd-4cb2da4bb208\u0022\u003E\u0026nbsp;\u003C\/drupal-media\u003E","format":"jarvis_html"},"measure":"full","align":"start","padding":"none","margin":"none","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 51450a8c-1e2c-4fd2-93ce-672eeae524e1
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"gap":"normal","vertical_padding":true,"overlay":0,"background":"none","text_color":"white"}'
+      label: ''
+    -
+      parent_uuid: 51450a8c-1e2c-4fd2-93ce-672eeae524e1
+      slot: first
+      uuid: 06c75d56-b675-4f02-be4b-66b061282347
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003ESection heading\u003C\/h2\u003E\u003Cp\u003EBody copy with \u003Cstrong\u003Erich text\u003C\/strong\u003E support.\u003C\/p\u003E","format":"canvas_html_block"},"width":"normal","align":"start","color":"black","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 51450a8c-1e2c-4fd2-93ce-672eeae524e1
+      slot: second
+      uuid: 996e1b1c-1943-4388-ae19-c8e502396355
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003ESection heading\u003C\/h2\u003E\u003Cp\u003EBody copy with \u003Cstrong\u003Erich text\u003C\/strong\u003E support.\u003C\/p\u003E","format":"canvas_html_block"},"width":"normal","align":"start","color":"primary","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 51450a8c-1e2c-4fd2-93ce-672eeae524e1
+      slot: third
+      uuid: c412098b-01c2-43d0-82aa-638200b414de
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003ESection heading\u003C\/h2\u003E\u003Cp\u003EBody copy with \u003Cstrong\u003Erich text\u003C\/strong\u003E support.\u003C\/p\u003E","format":"canvas_html_block"},"width":"normal","align":"start","color":"secondary","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 08fab640-d423-4045-aaa0-05cd15140a20
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"width":"full","gap":"normal","vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: 08fab640-d423-4045-aaa0-05cd15140a20
+      slot: first
+      uuid: 8c05ba40-59c4-428c-aa4a-fa5334edc766
+      component_id: sdc.jarvis.hero
+      component_version: 306d97bd4098200d
+      inputs: '{"heading":"Ready to take the next step?","heading_level":"h2","cta_text":"Talk to our team","cta_href":{"uri":"https:\/\/example.com","options":[]},"image":{"target_id":"5"},"overlay":60,"align":"center","text_color":"light","padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 9cbf846a-6744-41c4-a2c8-f2fb4f385f08
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"background":"none","background_image":{"target_id":"11"},"text_color":"black","gap":"normal","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 9cbf846a-6744-41c4-a2c8-f2fb4f385f08
+      slot: first
+      uuid: 02c61bb5-015b-465c-b23a-131a84ad47e2
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"20"},"caption":"Photo caption goes here.","full_width":true,"priority":true,"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 9cbf846a-6744-41c4-a2c8-f2fb4f385f08
+      slot: first
+      uuid: 6f8731fe-59e1-4d99-8fcd-0f661ae323b4
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EFreeform heading\u003C\/h2\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E","format":"jarvis_html"}}'
+      label: ''
+    -
+      parent_uuid: 9cbf846a-6744-41c4-a2c8-f2fb4f385f08
+      slot: first
+      uuid: 1d651fb2-5324-4d01-bcb4-1fdeaeecb982
+      component_id: sdc.jarvis.cta
+      component_version: 07008b82dbd56b53
+      inputs: '{"subtitle":"Get started","heading":"Ready to Get Started?","text":"Take the next step and discover how we can help you achieve your goals.","button_text":"Get started","button_href":{"uri":"internal:\/node\/1","options":[]}}'
+      label: ''
+    -
+      parent_uuid: 9cbf846a-6744-41c4-a2c8-f2fb4f385f08
+      slot: first
+      uuid: f0c37925-a436-4f43-b63f-0097c9e3d117
+      component_id: sdc.jarvis.cta
+      component_version: 07008b82dbd56b53
+      inputs: '{"subtitle":"Get started","heading":"Ready to Get Started?","text":"Take the next step and discover how we can help you achieve your goals.","button_text":"Get started","button_href":{"uri":"internal:\/node\/1","options":[]}}'
+      label: ''
+  path:
+    -
+      alias: /test-page
+      langcode: en
+      pathauto: 0
+  created:
+    -
+      value: 1783595786
+  image:
+    -
+      entity: 979e96e7-19b0-451b-8ba5-25ab41551fc3
+      target_uuid: ''

@@ -1,0 +1,54 @@
+langcode: en
+status: true
+dependencies:
+  module:
+  - options
+  theme:
+  - jarvis
+active_version: b878bb5cfac9dba1
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        image_right:
+          required: false
+          field_type: boolean
+          field_storage_settings: {}
+          field_instance_settings: {}
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {}
+        fade_edge:
+          required: false
+          field_type: boolean
+          field_storage_settings: {}
+          field_instance_settings: {}
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {}
+        background:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {}
+          field_widget: options_select
+          default_value:
+          - value: none
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {}
+    fallback_metadata:
+      slot_definitions:
+        media:
+          title: Image
+          description: Drop an Image component here. It fills the column on all sides.
+        content:
+          title: Content
+          description: Drop a Text / WYSIWYG component here. Gets 20px left/right padding.
+label: Card Full Image
+id: sdc.jarvis.card-full-image
+provider: jarvis
+source: sdc
+source_local_id: jarvis:card-full-image

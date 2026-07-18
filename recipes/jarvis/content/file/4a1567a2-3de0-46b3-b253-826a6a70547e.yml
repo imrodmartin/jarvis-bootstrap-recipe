@@ -8,7 +8,6 @@ default:
     -
       target_id: 1
       target_uuid: ''
-      url: ''
   filename:
     -
       value: jarvis-banner.png

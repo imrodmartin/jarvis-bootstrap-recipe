@@ -11,7 +11,6 @@ default:
     -
       target_id: 1
       target_uuid: ''
-      url: ''
   status:
     -
       value: true
@@ -19,7 +18,6 @@ default:
     -
       target_id: 1
       target_uuid: ''
-      url: ''
   name:
     -
       value: jarvis-banner.png
@@ -30,13 +28,12 @@ default:
     -
       alias: ''
       langcode: en
+      pathauto: 0
   field_media_image:
     -
       entity: 4a1567a2-3de0-46b3-b253-826a6a70547e
-      alt: 'jarvis theme banner'
+      alt: 'person using computer with Jarvis template'
       title: ''
       width: 1774
       height: 887
       srcset_candidate_uri_template: '/sites/default/files/styles/canvas_parametrized_width--{width}/public/2026-07/jarvis-banner.png.avif?itok=Xv0UWRda'
-      src_with_alternate_widths: '/sites/default/files/2026-07/jarvis-banner.png?alternateWidths=/sites/default/files/styles/canvas_parametrized_width--%7Bwidth%7D/public/2026-07/jarvis-banner.png.avif%3Fitok%3DXv0UWRda'
-      src: '/sites/default/files/2026-07/jarvis-banner.png?alternateWidths=/sites/default/files/styles/canvas_parametrized_width--%7Bwidth%7D/public/2026-07/jarvis-banner.png.avif%3Fitok%3DXv0UWRda'

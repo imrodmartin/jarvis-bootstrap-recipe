@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-  - field.field.media.jarvis_image.field_media_image
-  - image.style.canvas_parametrized_width
-  - media.type.jarvis_image
+    - field.field.media.jarvis_image.field_media_image
+    - image.style.canvas_parametrized_width
+    - media.type.jarvis_image
   module:
-  - file
-  - media
-  - media_library
-  - options
+    - file
+    - media
+    - media_library
+    - options
   theme:
-  - jarvis
-active_version: 684ed73d0cfc8b2a
+    - jarvis
+active_version: 0d1d1f09c94cc7f1
 versioned_properties:
   active:
     settings:
@@ -22,125 +22,134 @@ versioned_properties:
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         background:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: none
+            -
+              value: none
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         background_image:
           required: false
           field_type: entity_reference
           field_storage_settings:
             target_type: media
           field_instance_settings:
-            handler: default:media
+            handler: 'default:media'
             handler_settings:
               target_bundles:
                 jarvis_image: jarvis_image
           field_widget: media_library_widget
-          default_value: {}
-          expression: ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}
-          derived_schema_metadata: {}
+          default_value: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          derived_schema_metadata: {  }
         overlay:
           required: false
           field_type: integer
-          field_storage_settings: {}
+          field_storage_settings: {  }
           field_instance_settings:
             min: 0
             max: 100
           field_widget: number
           default_value: null
           expression: ℹ︎integer␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         text_color:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: inherit
+            -
+              value: inherit
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         gap:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: normal
+            -
+              value: normal
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         vertical_padding:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
     fallback_metadata:
       slot_definitions:
         first:
-          title: Column
-          description: Components placed in this column.
-label: 1 Column
-id: sdc.jarvis.one-column
+          title: 'Column 1'
+          description: 'First column.'
+        second:
+          title: 'Column 2'
+          description: 'Second column.'
+        third:
+          title: 'Column 3'
+          description: 'Third column.'
+label: '3 Columns'
+id: sdc.jarvis.three-column
 provider: jarvis
 source: sdc
-source_local_id: jarvis:one-column
+source_local_id: 'jarvis:three-column'

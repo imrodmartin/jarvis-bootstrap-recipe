@@ -28,8 +28,9 @@ Validated end-to-end: applies cleanly to a fresh `minimal` install and renders
   Canvas content templates + page regions + components, the six block_content
   component types, image styles, media types, editor/filter formats, blocks.
 - **Imports demo content** (via default_content, shipped in `content/`): 6 nodes
-  (Home, About Jarvis, 3 blog posts, 1 landing demo), 7 block_content entities,
-  the referenced media + image files, and the main-menu links. Node URL aliases
+  (Home, About Jarvis, 3 blog posts, 1 landing demo), **2 Canvas pages** (the
+  component showcase page and a Test Page), 7 block_content entities, the
+  referenced media + image files, and the main-menu links. Node URL aliases
   are carried inline on the nodes, so they attach correctly regardless of the
   imported node IDs. The front page is set to `/home`.
 
@@ -61,7 +62,7 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 
 > **Existing sites:** everything the recipe ships is namespaced away from the
 > standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
-> (not `basic_html`/`full_html`), the media types are `jarvis_image`/`jarvis_video`,
+> (Drupal's own Basic/Full HTML are untouched), the media types are `jarvis_image`/`jarvis_video`,
 > the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
 > applying to a site created with the standard profile no longer collides with
 > or overwrites its formats, media types, or block types. Shared field storages

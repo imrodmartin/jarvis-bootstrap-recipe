@@ -1,0 +1,352 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: c59c9f00-833c-4f2f-b035-93d8731b707e
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+      target_uuid: ''
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+      target_uuid: ''
+  title:
+    -
+      value: 'Jarvis Drupal Theme: Flexible SDC-Based Design with ADA Compliance Built In'
+  description:
+    -
+      value: 'Discover Jarvis, a flexible SDC-based Drupal theme with 20 reusable components, versatile layouts, and easy customization to match your brand and build faster.'
+  components:
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 958a0ea7-b744-43a9-9599-9d46a33ead03
+      component_id: sdc.jarvis.hero
+      component_version: 306d97bd4098200d
+      inputs: '{"heading":"Jarvis \u2014 the flexible SDC theme for Drupal","heading_level":"h1","subheading":"Build faster with a modern Single Directory Components (SDC) foundation, production-ready components, and layout freedom that scales from landing pages to full sites.","cta_text":"Get This Theme","overlay":79,"align":"center","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"image":{"target_id":"5"},"cta_href":{"uri":"internal:\/node1","options":[]}}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+      component_id: sdc.jarvis.one-column
+      component_version: 684ed73d0cfc8b2a
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal"}'
+      label: ''
+    -
+      parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+      slot: first
+      uuid: e6b6b5b8-2e31-4ca9-aa46-fad5ac16e2cd
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"caption":"Photo caption goes here.","full_width":false}'
+      label: ''
+    -
+      parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+      slot: first
+      uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal","ratio":"even"}'
+      label: ''
+    -
+      parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+      slot: first
+      uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"background":"none","text_color":"inherit","gap":"normal","ratio":"even","vertical_padding":false,"width":"full"}'
+      label: ''
+    -
+      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+      slot: first
+      uuid: 549d8093-83cb-4dc8-8c3a-c101fd711dbd
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"18"},"full_width":true,"priority":true,"vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+      slot: first
+      uuid: b9afb374-e53d-47e3-b81b-41f4df560786
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"19"},"full_width":true,"priority":true,"vertical_padding":false,"image_style":"medium"}'
+      label: ''
+    -
+      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+      slot: second
+      uuid: c9fc332c-e68c-4a24-a0e6-073be8e43aba
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"18"},"full_width":true,"priority":true,"vertical_padding":false,"image_style":"medium"}'
+      label: ''
+    -
+      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+      slot: second
+      uuid: 09372614-178a-4375-b64e-4830e6ebff75
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"full_width":true,"priority":true,"vertical_padding":false,"image_style":"medium","image":{"target_id":"19"}}'
+      label: ''
+    -
+      parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+      slot: second
+      uuid: 01e8ff49-e1ad-41e7-b5c0-58e38de71858
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"18"},"full_width":false,"priority":true,"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+      component_id: sdc.jarvis.section
+      component_version: 561f60bab22c5940
+      inputs: '{"width":"normal","bg":"none","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"no_padding":false}'
+      label: ''
+    -
+      parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+      slot: content
+      uuid: aa0e7a0e-5ace-4c3e-b365-f074d6324427
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003EEverything you need to ship a component-driven Drupal site\u003C\/h2\u003E\n\u003Cp\u003EJarvis is designed for teams who want a clean SDC workflow, a library of reusable UI building blocks, and the freedom to compose pages in Layout Builder\/Canvas without fighting the theme.\u003C\/p\u003E\n","format":"canvas_html_block"},"width":"wide","align":"center","color":"inherit","padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+      slot: content
+      uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"width":"boxed","background":"none","text_color":"inherit","gap":"normal","padding":"top","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+      slot: first
+      uuid: 0a3d1ef5-cfae-4eb0-a7d5-e05eb46296fc
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"text_color":"black","title":"SDC-based by design","body":{"value":"\u003Cp\u003EOrganize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_text":"Read the approach","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":false,"link_href":{"uri":"entity:node\/8","options":[]},"heading_level":"h2","image":{"target_id":"6"}}'
+      label: ''
+    -
+      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+      slot: second
+      uuid: 7908fbcc-f6d2-4c39-843c-cde634e57fa6
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"text_color":"black","title":"SDC-based by design","body":{"value":"\u003Cp\u003EOrganize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_text":"Read the approach","padding":"none","margin":"none","margin_size":"medium","vertical_padding":false,"link_href":{"uri":"entity:node\/8","options":[]},"heading_level":"h2","image":{"target_id":"20"}}'
+      label: ''
+    -
+      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+      slot: third
+      uuid: 3c0c382b-3cd0-4ea1-a407-2be8219c95e6
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"image-top","overlay":40,"text_color":"black","title":"Layout freedom","body":{"value":"\u003Cp\u003EBoxed or full-width sections, responsive columns, and flexible content patterns that look great on any device \u2014 no custom templates required.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_text":"See layout examples","link_href":{"uri":"https:\/\/example.com","options":[]},"padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":false,"image":{"target_id":"19"},"heading_level":"h2"}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+      component_id: sdc.jarvis.section
+      component_version: 561f60bab22c5940
+      inputs: '{"width":"full","bg":"body-tertiary","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"no_padding":false}'
+      label: ''
+    -
+      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+      slot: content
+      uuid: f06db30d-57e8-4e55-a7cc-16b9798c94ac
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003EComponent showcase\u003C\/h2\u003E\n\u003Cp\u003EJarvis ships with a focused set of \u003Cstrong\u003E20 components\u003C\/strong\u003E that cover the most common marketing and editorial patterns \u2014 so you can assemble pages quickly and keep designs consistent.\u003C\/p\u003E\n","format":"canvas_html_block"},"width":"wide","align":"center","color":"inherit","padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+      slot: content
+      uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"width":"boxed","background":"none","text_color":"inherit","gap":"normal","padding":"top","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+      slot: first
+      uuid: debc4430-5a30-4201-b599-9bd56bd3a365
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"background","overlay":0,"text_color":"black","title":"Hero + CTA","body":{"value":"\u003Cp\u003ELead with a clear message and a primary conversion action \u2014 perfect for front pages and campaign landing pages.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_href":{"uri":"https:\/\/example.com","options":[]},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true,"image":{"target_id":"15"}}'
+      label: ''
+    -
+      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+      slot: second
+      uuid: 432a98c5-c8c0-40ff-b058-54494592bcdb
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"background","overlay":0,"text_color":"black","title":"Cards + grids","body":{"value":"\u003Cp\u003EHighlight features, services, or content collections with flexible cards that work in columns and sections.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_href":{"uri":"https:\/\/example.com","options":[]},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true,"image":{"target_id":"16"}}'
+      label: ''
+    -
+      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+      slot: third
+      uuid: f342623e-d462-4c72-8233-004b7e03fe12
+      component_id: sdc.jarvis.card
+      component_version: dd1d2c7cdd1581eb
+      inputs: '{"variant":"background","overlay":55,"title":"Media + story","body":{"value":"\u003Cp\u003EBlend images, video, and rich text to tell a product story that feels modern and intentional.\u003C\/p\u003E\n","format":"canvas_html_block"},"link_href":{"uri":"https:\/\/example.com","options":[]},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true,"image":{"target_id":"17"},"text_color":"black"}'
+      label: ''
+    -
+      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+      slot: content
+      uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+      component_id: sdc.jarvis.two-column
+      component_version: 7d4b54492d164019
+      inputs: '{"width":"boxed","background":"none","text_color":"inherit","gap":"large","ratio":"wide-left","padding":"top","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+      slot: first
+      uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+      component_id: sdc.jarvis.card-full-image
+      component_version: b878bb5cfac9dba1
+      inputs: '{"image_right":true,"fade_edge":true,"background":"primary"}'
+      label: ''
+    -
+      parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+      slot: media
+      uuid: f39f10f7-9edd-4652-b39b-004fcd7d0cf5
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image":{"target_id":"6"},"full_width":true,"priority":true,"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+      slot: content
+      uuid: ecb15855-2b90-4503-8daf-cf9fdd1f88f5
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EFreeform heading\u003C\/h2\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E\u003Cp\u003E\u0026nbsp;\u003C\/p\u003E\u003Cp\u003EEdit this with the full CKEditor toolbar, including \u003Cstrong\u003Ebold\u003C\/strong\u003E, lists, and links.\u003C\/p\u003E","format":"jarvis_html"},"vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+      slot: second
+      uuid: 25da63fd-eae4-4456-9312-98f727f8b54a
+      component_id: sdc.jarvis.video
+      component_version: 1c41ffb22bc71844
+      inputs: '{"video_url":{"uri":"https:\/\/www.youtube.com\/embed\/aqz-KE-bpKQ","options":[]},"title":"Product demo video","aspect":"16x9","full_width":true,"autoplay":false,"muted":false,"vertical_padding":false}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+      component_id: sdc.jarvis.section
+      component_version: 561f60bab22c5940
+      inputs: '{"width":"normal","bg":"none","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"no_padding":false}'
+      label: ''
+    -
+      parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+      slot: content
+      uuid: 12a0aa06-8f45-41e8-8b4c-4248fc482538
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Ch2\u003EFlexible layouts without custom templates\u003C\/h2\u003E\n\u003Cp\u003ECompose pages from sections and responsive column components. Keep content editors productive and ensure the design system stays consistent across every page.\u003C\/p\u003E\n","format":"canvas_html_block"},"width":"wide","align":"center","color":"inherit","padding":"none","padding_size":"medium","margin":"bottom","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+      slot: content
+      uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+      component_id: sdc.jarvis.three-column
+      component_version: 0d1d1f09c94cc7f1
+      inputs: '{"width":"boxed","background":"none","text_color":"inherit","gap":"normal","padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+      slot: first
+      uuid: 2ab8a76c-58fe-4746-8c1c-982bbdfd0061
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"17","number_color":"primary","count_up":true,"body":{"value":"\u003Cp\u003EComponents included for modern marketing and editorial pages\u003C\/p\u003E\n","format":"canvas_html_block"},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+      slot: second
+      uuid: ef88ef4d-4c04-4b62-845b-b2fd426133b3
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"1, 2 or 3","number_color":"secondary","count_up":true,"body":{"value":"\u003Cp\u003EResponsive column layouts you can mix and match in minutes\u003C\/p\u003E\n","format":"canvas_html_block"},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+      slot: third
+      uuid: 6e5c8356-38cb-4a60-872e-3de9f5737522
+      component_id: sdc.jarvis.stat
+      component_version: 7d4b0edb87c59d05
+      inputs: '{"title":"SDC","number_color":"primary","count_up":false,"body":{"value":"\u003Cp\u003EComponent architecture that makes theming and reuse straightforward\u003C\/p\u003E\n","format":"canvas_html_block"},"padding":"all","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
+      component_id: sdc.jarvis.section
+      component_version: 561f60bab22c5940
+      inputs: '{"width":"full","bg":"dark","padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":true,"no_padding":true}'
+      label: ''
+    -
+      parent_uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
+      slot: content
+      uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+      component_id: sdc.jarvis.card-full-image
+      component_version: b878bb5cfac9dba1
+      inputs: '{"image_right":true,"fade_edge":true,"background":"dark"}'
+      label: ''
+    -
+      parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+      slot: media
+      uuid: b4976bec-b094-462b-b4f6-ca99ec2961b4
+      component_id: sdc.jarvis.image
+      component_version: 19b4a9ad4295dcfa
+      inputs: '{"image_style":"wide","caption":"Photo caption goes here.","full_width":true,"priority":true,"padding":"none","padding_size":"medium","margin":"none","margin_size":"medium","vertical_padding":false,"image":{"target_id":"6"}}'
+      label: ''
+    -
+      parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+      slot: content
+      uuid: 176dacb7-42e6-4ae6-bcfa-a6b016c8095d
+      component_id: sdc.jarvis.wysiwyg
+      component_version: 63ab709e1d7d8792
+      inputs: '{"body":{"value":"\u003Ch2\u003EMake it yours: theming and customization\u003C\/h2\u003E\u003Cp\u003EJarvis is built to be customized. Adjust look and feel through component props, theme settings, and SDC overrides \u2014 without losing the benefits of a consistent system.\u003C\/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\u0022edfde7c8cf2df47c71d2ff51d8eceac54\u0022\u003ESwap section backgrounds and spacing per page\u003C\/li\u003E\u003Cli data-list-item-id=\u0022e2be2eeb06bf366d256189e2ed5623d0d\u0022\u003EChoose component variants (cards, columns, CTAs)\u003C\/li\u003E\u003Cli data-list-item-id=\u0022ed4e0c5f1d46739fd2f5ab6cfa029bcce\u0022\u003EExtend the library with your own SDC components\u003C\/li\u003E\u003C\/ul\u003E","format":"jarvis_html"},"measure":"readable","align":"start","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
+      component_id: sdc.jarvis.section
+      component_version: 561f60bab22c5940
+      inputs: '{"width":"normal","bg":"none","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"no_padding":false}'
+      label: ''
+    -
+      parent_uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
+      slot: content
+      uuid: 77b906fe-c991-4a42-aba3-080b87e632eb
+      component_id: sdc.jarvis.text
+      component_version: ea8cfd6e6dca35c5
+      inputs: '{"body":{"value":"\u003Cp\u003ETrusted by people who value speed and consistency\u003C\/p\u003E\u003Cp\u003EWhen the design system is component-first, we move faster \u2014 with fewer regressions and more predictable results.\u003C\/p\u003E","format":"canvas_html_block"},"width":"wide","align":"center","color":"inherit","padding":"none","padding_size":"medium","margin":"bottom","margin_size":"medium","vertical_padding":true}'
+      label: ''
+    -
+      parent_uuid: ''
+      slot: ''
+      uuid: 2bf7d150-e55b-4a27-9662-178dfa016459
+      component_id: sdc.jarvis.cta
+      component_version: 07008b82dbd56b53
+      inputs: '{"subtitle":"Get Jarvis","heading":"Build your next Drupal site with Jarvis","heading_level":"h2","text":"Start with a flexible SDC foundation, leverage 20 included components, and ship pages that look consistent across every breakpoint.","button_text":"Get Jarvis","bg":"primary","padding":"all","padding_size":"large","margin":"none","margin_size":"medium","vertical_padding":true,"button_href":{"uri":"internal:\/node\/1","options":[]}}'
+      label: ''
+  path:
+    -
+      alias: /jarvis-drupal-theme-flexible-sdc-based-design-with-20-components
+      langcode: en
+      pathauto: 0
+  created:
+    -
+      value: 1783816383
