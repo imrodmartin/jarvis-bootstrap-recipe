@@ -1,11 +1,11 @@
 _meta:
   version: '1.0'
   entity_type: media
-  uuid: cb024184-dd25-4929-acc4-e025132142aa
+  uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
   bundle: jarvis_image
   default_langcode: en
   depends:
-    1c204e6b-fa01-4a7e-b7d2-ee158340b82d: file
+    aa7be51b-8fd9-4898-8731-4a0c6895278b: file
 default:
   revision_user:
     -
@@ -18,7 +18,7 @@ default:
       target_id: 1
   name:
     -
-      value: jarvis-banner-1.jpg
+      value: jarvis-banner-2.jpg
   revision_translation_affected:
     -
       value: true
@@ -28,8 +28,8 @@ default:
       alias: null
   field_media_image:
     -
-      alt: 'Jarvis logo and headline “Build better digital experiences with Drupal” beside laptop on desk'
+      alt: 'Jarvis website hero banner showing “Modern, Flexible, Built for Drupal” with team at table'
       title: ''
-      width: 1774
-      height: 887
-      entity: 1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+      width: 1731
+      height: 909
+      entity: aa7be51b-8fd9-4898-8731-4a0c6895278b

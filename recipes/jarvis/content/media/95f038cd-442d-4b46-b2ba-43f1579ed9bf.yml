@@ -1,11 +1,11 @@
 _meta:
   version: '1.0'
   entity_type: media
-  uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+  uuid: 95f038cd-442d-4b46-b2ba-43f1579ed9bf
   bundle: jarvis_image
   default_langcode: en
   depends:
-    547c9c60-5e2a-4639-a2af-7d60cdd47138: file
+    d27be5c3-3419-44a0-bed2-d446c9fbbf90: file
 default:
   status:
     -
@@ -15,7 +15,7 @@ default:
       target_id: 1
   name:
     -
-      value: jarvis-computer.png
+      value: bg-green-sweeping.jpg
   revision_translation_affected:
     -
       value: true
@@ -25,8 +25,8 @@ default:
       alias: null
   field_media_image:
     -
-      alt: 'jarvis theme on a computer screen'
+      alt: 'Abstract green wave gradient background graphic'
       title: ''
-      width: 1672
-      height: 941
-      entity: 547c9c60-5e2a-4639-a2af-7d60cdd47138
+      width: 1536
+      height: 1024
+      entity: d27be5c3-3419-44a0-bed2-d446c9fbbf90

@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: file
-  uuid: 1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+  uuid: d32c7111-a816-4223-b3c5-32e6f010c7ab
   default_langcode: en
 default:
   uid:
@@ -9,16 +9,16 @@ default:
       target_id: 1
   filename:
     -
-      value: jarvis-banner-1.jpg
+      value: bg-sweeping-curves-padding.jpg
   uri:
     -
-      value: 'public://2026-07/jarvis-banner-1.jpg'
+      value: 'public://2026-07/bg-sweeping-curves-padding.jpg'
   filemime:
     -
       value: image/jpeg
   filesize:
     -
-      value: 328596
+      value: 131952
   status:
     -
       value: true

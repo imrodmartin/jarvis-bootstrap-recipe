@@ -7,14 +7,12 @@ default:
   uid:
     -
       target_id: 1
-      target_uuid: ''
   filename:
     -
       value: jarvis-banner.png
   uri:
     -
       value: 'public://2026-07/jarvis-banner.png'
-      url: /sites/default/files/2026-07/jarvis-banner.png
   filemime:
     -
       value: image/png
@@ -24,6 +22,3 @@ default:
   status:
     -
       value: true
-  created:
-    -
-      value: 1783624605

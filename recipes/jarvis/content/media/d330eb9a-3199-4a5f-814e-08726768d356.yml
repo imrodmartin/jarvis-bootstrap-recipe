@@ -1,11 +1,11 @@
 _meta:
   version: '1.0'
   entity_type: media
-  uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+  uuid: d330eb9a-3199-4a5f-814e-08726768d356
   bundle: jarvis_image
   default_langcode: en
   depends:
-    547c9c60-5e2a-4639-a2af-7d60cdd47138: file
+    1b2193be-43ca-4f8d-b616-53268c8b1afb: file
 default:
   status:
     -
@@ -15,7 +15,7 @@ default:
       target_id: 1
   name:
     -
-      value: jarvis-computer.png
+      value: sweeping-curves-padding.png
   revision_translation_affected:
     -
       value: true
@@ -25,8 +25,8 @@ default:
       alias: null
   field_media_image:
     -
-      alt: 'jarvis theme on a computer screen'
+      alt: 'Abstract blue wave gradient on a white background'
       title: ''
-      width: 1672
-      height: 941
-      entity: 547c9c60-5e2a-4639-a2af-7d60cdd47138
+      width: 1536
+      height: 1024
+      entity: 1b2193be-43ca-4f8d-b616-53268c8b1afb

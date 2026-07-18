@@ -1,11 +1,11 @@
 _meta:
   version: '1.0'
   entity_type: media
-  uuid: cb024184-dd25-4929-acc4-e025132142aa
+  uuid: de3bde27-604d-4908-aaa2-422f24282173
   bundle: jarvis_image
   default_langcode: en
   depends:
-    1c204e6b-fa01-4a7e-b7d2-ee158340b82d: file
+    91c6e656-8321-43ba-9924-1d3a454ab508: file
 default:
   revision_user:
     -
@@ -18,7 +18,7 @@ default:
       target_id: 1
   name:
     -
-      value: jarvis-banner-1.jpg
+      value: jarvis-banner-3.jpg
   revision_translation_affected:
     -
       value: true
@@ -28,8 +28,8 @@ default:
       alias: null
   field_media_image:
     -
-      alt: 'Jarvis logo and headline “Build better digital experiences with Drupal” beside laptop on desk'
+      alt: 'Jarvis logo with website mockup '
       title: ''
-      width: 1774
-      height: 887
-      entity: 1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+      width: 1690
+      height: 931
+      entity: 91c6e656-8321-43ba-9924-1d3a454ab508

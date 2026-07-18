@@ -10,29 +10,26 @@ default:
   revision_user:
     -
       target_id: 1
-      target_uuid: ''
   status:
     -
       value: true
   uid:
     -
       target_id: 1
-      target_uuid: ''
   name:
     -
       value: jarvis-banner.png
-  created:
+  revision_translation_affected:
     -
-      value: 1783624605
+      value: true
   path:
     -
-      alias: ''
       langcode: en
+      alias: null
   field_media_image:
     -
-      entity: 4a1567a2-3de0-46b3-b253-826a6a70547e
       alt: 'person using computer with Jarvis template'
       title: ''
       width: 1774
       height: 887
-      srcset_candidate_uri_template: '/sites/default/files/styles/canvas_parametrized_width--{width}/public/2026-07/jarvis-banner.png.avif?itok=Xv0UWRda'
+      entity: 4a1567a2-3de0-46b3-b253-826a6a70547e

@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: file
-  uuid: 1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+  uuid: aa7be51b-8fd9-4898-8731-4a0c6895278b
   default_langcode: en
 default:
   uid:
@@ -9,16 +9,16 @@ default:
       target_id: 1
   filename:
     -
-      value: jarvis-banner-1.jpg
+      value: jarvis-banner-2.jpg
   uri:
     -
-      value: 'public://2026-07/jarvis-banner-1.jpg'
+      value: 'public://2026-07/jarvis-banner-2.jpg'
   filemime:
     -
       value: image/jpeg
   filesize:
     -
-      value: 328596
+      value: 379007
   status:
     -
       value: true

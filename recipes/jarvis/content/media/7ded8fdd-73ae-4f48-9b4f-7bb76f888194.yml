@@ -1,11 +1,11 @@
 _meta:
   version: '1.0'
   entity_type: media
-  uuid: cb024184-dd25-4929-acc4-e025132142aa
+  uuid: 7ded8fdd-73ae-4f48-9b4f-7bb76f888194
   bundle: jarvis_image
   default_langcode: en
   depends:
-    1c204e6b-fa01-4a7e-b7d2-ee158340b82d: file
+    b0f9c85c-0252-4054-8865-d0bff9f25cac: file
 default:
   revision_user:
     -
@@ -18,7 +18,7 @@ default:
       target_id: 1
   name:
     -
-      value: jarvis-banner-1.jpg
+      value: blue-green-grandient.png
   revision_translation_affected:
     -
       value: true
@@ -28,8 +28,8 @@ default:
       alias: null
   field_media_image:
     -
-      alt: 'Jarvis logo and headline “Build better digital experiences with Drupal” beside laptop on desk'
+      alt: 'Blue-to-white gradient background with soft diagonal light streak'
       title: ''
-      width: 1774
-      height: 887
-      entity: 1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+      width: 1672
+      height: 941
+      entity: b0f9c85c-0252-4054-8865-d0bff9f25cac
