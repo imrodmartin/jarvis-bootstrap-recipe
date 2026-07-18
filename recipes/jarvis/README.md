@@ -16,9 +16,12 @@ Validated end-to-end: applies cleanly to a fresh `minimal` install and renders
   token_filter, twig_tweak, backup_migrate, asset_injector, simple_gmap,
   modeler_api, default_content, editoria11y (editorial accessibility checker),
   and the custom `jarvis_blocks` + `jarvis_canvas`.
-- **Installs the AI stack unconfigured**: ai, ai_agents, ai_ckeditor,
-  ai_provider_anthropic/openai, gemini_provider, canvas_ai, key — enabled but
-  with **no keys and no AI config**. See the AI section below.
+- **Installs and configures the AI stack**: ai, ai_agents, ai_ckeditor,
+  ai_provider_anthropic/openai, gemini_provider, canvas_ai, key — including
+  default providers, the Canvas AI agents, CKEditor AI, and alt-text/media
+  image settings. **No API keys ship here** — add them via the private
+  jarvis_ai overlay (see the AI section below). Until keys exist the
+  providers simply run unconfigured.
 - **Installs the Jarvis theme** and sets it as the default; applies the theme
   settings (colours, fonts, sizes, logo).
 - **Imports config**: the three content types + fields + form/view displays,
@@ -66,16 +69,13 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 
 ## AI keys (optional, private)
 
-The bootstrap recipe installs the AI modules but ships **no keys and no AI
-config** — it contains no secrets and is safe to share. To enable AI, apply the
-private overlay locally after this recipe. Two steps: the recipe ensures
-modules and imports your local key entities; the partial config import lays the
-overlay's provider/agent settings over the module defaults (recipes never
-update existing config):
+The bootstrap recipe installs and configures the AI stack but ships **no
+keys** — it contains no secrets and is safe to share. To activate the
+providers, put your gitignored `key.key.*.yml` files in
+`recipes/jarvis_ai/config/` and apply the keys-only overlay:
 
 ```bash
 ddev drush recipe /var/www/html/recipes/jarvis_ai
-ddev drush config:import --partial --source=/var/www/html/recipes/jarvis_ai/config -y
 ddev drush cache:rebuild
 ```
 

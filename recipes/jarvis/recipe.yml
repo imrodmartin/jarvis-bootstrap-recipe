@@ -1,5 +1,5 @@
 name: 'Jarvis'
-description: 'Bootstraps a new Drupal site with the Jarvis theme: custom modules, Canvas + media plumbing, the Blog/Basic/Landing content types, and curated demo content (home page, blog posts, about page, media). Installs the AI module stack unconfigured — ship your API keys separately via the private jarvis_ai recipe. Contains no secrets; safe to share.'
+description: 'Bootstraps a new Drupal site with the Jarvis theme: custom modules, Canvas + media plumbing, the Blog/Basic/Landing content types, and curated demo content (home page, blog posts, about page, media). Installs AND configures the AI stack (providers, Canvas agents, CKEditor AI, alt-text) — everything except API keys, which ship separately via the private jarvis_ai overlay. Contains no secrets; safe to share.'
 type: 'Site'
 install:
   # Core + contrib plumbing

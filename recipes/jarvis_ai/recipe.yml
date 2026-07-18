@@ -1,29 +1,10 @@
-name: 'Jarvis AI (private overlay)'
-description: 'PRIVATE, LOCAL-ONLY overlay for the Jarvis AI stack: Drupal AI core, AI agents, CKEditor AI, alt-text + media image generation, the Anthropic/OpenAI/Gemini providers, and Canvas AI. Apply on top of the jarvis bootstrap recipe. The Key entities that hold API credentials live in config/key.key.*.yml and are GITIGNORED (plaintext, never committed) — supply your own before applying, or the providers install unconfigured. Not composed by the jarvis recipe.'
+name: 'Jarvis AI keys (private overlay)'
+description: 'PRIVATE, LOCAL-ONLY overlay: imports the Key entities holding API credentials for the AI providers the jarvis recipe installs and configures. The key.key.*.yml files are GITIGNORED (plaintext, never committed) — supply your own in config/, then apply this after the jarvis recipe. Without the files this recipe is a harmless no-op and the providers simply run unconfigured.'
 type: 'Site'
 config:
-  # The jarvis bootstrap recipe already installs the AI modules, so their
-  # default simple config and shipped agent entities exist by the time this
-  # overlay runs — strict checking would fail with "exists already and does
-  # not match". Non-strict: existing config is left alone (recipes never
-  # update existing config) and only missing config (the gitignored key
-  # entities, when present locally) is imported. The overlay's real values
-  # land via a partial config import — see README.
+  # Non-strict so re-applying after a key value changed does not hard-fail;
+  # recipes never update existing config, so edit keys via the Key UI (or
+  # delete + re-apply) once imported.
   strict: false
 install:
-  # Core config module: drush config:import --partial (step 2 of the apply
-  # flow) refuses to run without it.
-  - config
   - key
-  - ai
-  - ai_agents
-  - ai_ckeditor
-  - ai_assistant_api
-  - ai_chatbot
-  - ai_image_alt_text
-  - ai_media_image
-  - ai_provider_anthropic
-  - ai_provider_openai
-  - gemini_provider
-  - canvas
-  - canvas_ai
