@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - better_social_sharing_buttons
+active_version: 14cc6a7596f18909
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: social_sharing_buttons_block
+        label: 'Better Social Sharing Buttons'
+        label_display: '0'
+        provider: better_social_sharing_buttons
+    fallback_metadata:
+      slot_definitions: null
+label: 'Better Social Sharing Buttons'
+id: block.social_sharing_buttons_block
+provider: better_social_sharing_buttons
+source: block
+source_local_id: social_sharing_buttons_block
+

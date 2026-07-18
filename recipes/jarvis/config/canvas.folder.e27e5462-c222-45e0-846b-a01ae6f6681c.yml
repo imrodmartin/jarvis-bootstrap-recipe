@@ -1,0 +1,16 @@
+uuid: e27e5462-c222-45e0-846b-a01ae6f6681c
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.navigation_link
+    - canvas.component.block.navigation_shortcuts
+    - canvas.component.block.navigation_user
+name: Navigation
+configEntityTypeId: component
+weight: 12
+items:
+  - block.navigation_link
+  - block.navigation_shortcuts
+  - block.navigation_user
+

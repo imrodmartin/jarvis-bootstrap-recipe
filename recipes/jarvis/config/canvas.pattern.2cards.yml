@@ -1,0 +1,87 @@
+uuid: a041e5de-1d47-4681-a155-f9548f0a50da
+langcode: en
+status: true
+dependencies:
+  config:
+  - canvas.component.sdc.jarvis.card
+  - canvas.component.sdc.jarvis.text
+  - canvas.component.sdc.jarvis.two-column
+  - field.field.media.jarvis_image.field_media_image
+  - filter.format.jarvis_html
+  - filter.format.canvas_html_block
+  - filter.format.jarvis_full_html
+  - image.style.canvas_parametrized_width
+  - media.type.jarvis_image
+  content:
+  - file:file:547c9c60-5e2a-4639-a2af-7d60cdd47138
+  - file:file:c4aced91-90bc-4205-a978-6ede6027f950
+  - media:image:bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+  - media:image:d46a49f9-c5c4-418b-a235-bdc072e309ee
+  module:
+  - file
+  - link
+  - media
+  - options
+  - text
+id: 2cards
+label: 2 Cards
+component_tree:
+  5f8d5744-93cc-4f42-a8d4-9c9c244f0cf7:
+    uuid: 5f8d5744-93cc-4f42-a8d4-9c9c244f0cf7
+    component_id: sdc.jarvis.two-column
+    component_version: 7d4b54492d164019
+    inputs:
+      gap: normal
+      ratio: even
+      vertical_padding: true
+  1d5521f1-2977-4c11-9c4e-6e5d639fc8a0:
+    parent_uuid: 5f8d5744-93cc-4f42-a8d4-9c9c244f0cf7
+    slot: first
+    uuid: 1d5521f1-2977-4c11-9c4e-6e5d639fc8a0
+    component_id: sdc.jarvis.card
+    component_version: dd1d2c7cdd1581eb
+    inputs:
+      variant: image-top
+      image:
+        target_id: '6'
+      title: Card title
+      body:
+        value: <p>Short supporting copy for this card.</p>
+        format: canvas_html_block
+      link_text: Learn more
+      link_href:
+        uri: internal:/node/1
+        options: {}
+  5d65916b-f6a8-4316-971b-55ff5a589bfa:
+    parent_uuid: 5f8d5744-93cc-4f42-a8d4-9c9c244f0cf7
+    slot: first
+    uuid: 5d65916b-f6a8-4316-971b-55ff5a589bfa
+    component_id: sdc.jarvis.text
+    component_version: ea8cfd6e6dca35c5
+    inputs:
+      body:
+        value: <h2>Section heading</h2><p>Body copy with <strong>rich text</strong> support.</p>
+        format: jarvis_html
+      width: normal
+      align: start
+  76030381-db39-4222-9c64-15999c763fa4:
+    parent_uuid: 5f8d5744-93cc-4f42-a8d4-9c9c244f0cf7
+    slot: second
+    uuid: 76030381-db39-4222-9c64-15999c763fa4
+    component_id: sdc.jarvis.card
+    component_version: dd1d2c7cdd1581eb
+    inputs:
+      variant: image-top
+      overlay: 40
+      text_color: light
+      image:
+        target_id: '5'
+      title: Card title
+      body:
+        value: <p>Short supporting copy for this card.</p>
+        format: jarvis_html
+      link_text: Learn more
+      link_href:
+        uri: internal:/node/1
+        options: {}
+      vertical_padding: false

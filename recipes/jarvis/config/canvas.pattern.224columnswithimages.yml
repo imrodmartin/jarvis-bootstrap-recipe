@@ -1,0 +1,107 @@
+uuid: b32c9b06-735c-43a7-bed8-53dd57792c6a
+langcode: en
+status: true
+dependencies:
+  config:
+  - canvas.component.sdc.jarvis.image
+  - canvas.component.sdc.jarvis.two-column
+  - field.field.media.jarvis_image.field_media_image
+  - image.style.canvas_parametrized_width
+  - media.type.jarvis_image
+  content:
+  - file:file:1c204e6b-fa01-4a7e-b7d2-ee158340b82d
+  - file:file:aa7be51b-8fd9-4898-8731-4a0c6895278b
+  - media:image:2ecce779-6a6c-4386-8351-ddd85d91700a
+  - media:image:cb024184-dd25-4929-acc4-e025132142aa
+  module:
+  - file
+  - media
+  - options
+id: 224columnswithimages
+label: 2-2-4 columns with images
+component_tree:
+  163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7:
+    uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    component_id: sdc.jarvis.two-column
+    component_version: 7d4b54492d164019
+    inputs:
+      background: none
+      text_color: inherit
+      gap: normal
+      ratio: even
+  ee9541cd-2970-40d5-b271-4a7bca31ec33:
+    parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    slot: first
+    uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    component_id: sdc.jarvis.two-column
+    component_version: 7d4b54492d164019
+    inputs:
+      width: full
+      background: none
+      text_color: inherit
+      gap: normal
+      ratio: even
+      vertical_padding: false
+  549d8093-83cb-4dc8-8c3a-c101fd711dbd:
+    parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: first
+    uuid: 549d8093-83cb-4dc8-8c3a-c101fd711dbd
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '18'
+      full_width: true
+      priority: true
+      vertical_padding: false
+  b9afb374-e53d-47e3-b81b-41f4df560786:
+    parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: first
+    uuid: b9afb374-e53d-47e3-b81b-41f4df560786
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '19'
+      image_style: medium
+      full_width: true
+      priority: true
+      vertical_padding: false
+  c9fc332c-e68c-4a24-a0e6-073be8e43aba:
+    parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: second
+    uuid: c9fc332c-e68c-4a24-a0e6-073be8e43aba
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '18'
+      image_style: medium
+      full_width: true
+      priority: true
+      vertical_padding: false
+  09372614-178a-4375-b64e-4830e6ebff75:
+    parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: second
+    uuid: 09372614-178a-4375-b64e-4830e6ebff75
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '19'
+      image_style: medium
+      full_width: true
+      priority: true
+      vertical_padding: false
+  01e8ff49-e1ad-41e7-b5c0-58e38de71858:
+    parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    slot: second
+    uuid: 01e8ff49-e1ad-41e7-b5c0-58e38de71858
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '18'
+      full_width: false
+      priority: true
+      vertical_padding: true

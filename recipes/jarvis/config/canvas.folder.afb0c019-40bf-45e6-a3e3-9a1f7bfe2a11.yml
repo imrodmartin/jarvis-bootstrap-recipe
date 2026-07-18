@@ -1,0 +1,14 @@
+uuid: afb0c019-40bf-45e6-a3e3-9a1f7bfe2a11
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.pattern.personcards2column
+    - canvas.pattern.personcards3column
+name: 'Person Patterns'
+configEntityTypeId: pattern
+weight: 1
+items:
+  - personcards2column
+  - personcards3column
+

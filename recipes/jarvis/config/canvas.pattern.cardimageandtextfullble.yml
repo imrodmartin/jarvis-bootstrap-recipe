@@ -1,0 +1,54 @@
+uuid: 6255afc9-93ef-44ee-9fff-6b99256db7ea
+langcode: en
+status: true
+dependencies:
+  config:
+  - canvas.component.sdc.jarvis.card-full-image
+  - canvas.component.sdc.jarvis.image
+  - canvas.component.sdc.jarvis.wysiwyg
+  - field.field.media.jarvis_image.field_media_image
+  - filter.format.jarvis_html
+  - filter.format.jarvis_full_html
+  - image.style.canvas_parametrized_width
+  - media.type.jarvis_image
+  content:
+  - file:file:c4aced91-90bc-4205-a978-6ede6027f950
+  - media:image:d46a49f9-c5c4-418b-a235-bdc072e309ee
+  module:
+  - file
+  - media
+  - options
+  - text
+id: cardimageandtextfullble
+label: Card - Image and Text full bleed
+component_tree:
+  c2f2e6b3-c41f-418c-8503-e7e3613b337a:
+    uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+    component_id: sdc.jarvis.card-full-image
+    component_version: b878bb5cfac9dba1
+    inputs:
+      image_right: false
+      background: secondary
+  24c0e4e3-bd09-44b3-8dbd-24aaca78c9e8:
+    parent_uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+    slot: media
+    uuid: 24c0e4e3-bd09-44b3-8dbd-24aaca78c9e8
+    component_id: sdc.jarvis.image
+    component_version: 19b4a9ad4295dcfa
+    inputs:
+      image:
+        target_id: '6'
+      full_width: true
+      priority: true
+      vertical_padding: false
+  4e396d6e-9079-42de-89a2-100dbac38b27:
+    parent_uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
+    slot: content
+    uuid: 4e396d6e-9079-42de-89a2-100dbac38b27
+    component_id: sdc.jarvis.wysiwyg
+    component_version: 63ab709e1d7d8792
+    inputs:
+      body:
+        value: <h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>&nbsp;</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>
+        format: jarvis_html
+      vertical_padding: true

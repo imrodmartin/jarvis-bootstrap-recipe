@@ -1,0 +1,78 @@
+uuid: 51bee134-7434-4d0e-a9ca-82b131caedde
+langcode: en
+status: true
+dependencies:
+  config:
+  - canvas.component.sdc.jarvis.person
+  - canvas.component.sdc.jarvis.two-column
+  - field.field.media.jarvis_image.field_media_image
+  - image.style.canvas_parametrized_width
+  - media.type.jarvis_image
+  content:
+  - file:file:547c9c60-5e2a-4639-a2af-7d60cdd47138
+  - media:image:bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+  module:
+  - file
+  - link
+  - media
+  - options
+id: personcards2column
+label: Person Cards - 2 Column
+component_tree:
+  6cae201c-8bab-4f7b-b821-ceb0576fd1ec:
+    uuid: 6cae201c-8bab-4f7b-b821-ceb0576fd1ec
+    component_id: sdc.jarvis.two-column
+    component_version: 7d4b54492d164019
+    inputs:
+      width: boxed
+      gap: normal
+      ratio: even
+      vertical_padding: true
+  bfb8fe96-cdc5-4a9a-a1d5-8c8db54e915d:
+    parent_uuid: 6cae201c-8bab-4f7b-b821-ceb0576fd1ec
+    slot: first
+    uuid: bfb8fe96-cdc5-4a9a-a1d5-8c8db54e915d
+    component_id: sdc.jarvis.person
+    component_version: b24b59350722bdfe
+    inputs:
+      variant: card
+      image:
+        target_id: '5'
+      name: Jane Doe
+      position: Chief Executive Officer
+      phone: +1 555 123 4567
+      email: jane@example.com
+      link_text: View profile
+      link_href:
+        uri: internal:/node/1
+        options: {}
+      linkedin:
+        uri: https://linkedin.com
+        options: {}
+      padding: none
+      margin: none
+      vertical_padding: true
+  4f4433f4-b040-446f-bc14-ff55268e8e71:
+    parent_uuid: 6cae201c-8bab-4f7b-b821-ceb0576fd1ec
+    slot: second
+    uuid: 4f4433f4-b040-446f-bc14-ff55268e8e71
+    component_id: sdc.jarvis.person
+    component_version: b24b59350722bdfe
+    inputs:
+      variant: card
+      image:
+        target_id: '5'
+      name: Jane Doe
+      position: Chief Executive Officer
+      phone: +1 555 123 4567
+      email: jane@example.com
+      link_text: View profile
+      link_href:
+        uri: internal:/node/1
+        options: {}
+      linkedin:
+        uri: https://linkedin.com
+        options: {}
+      padding: none
+      margin: none
+      vertical_padding: true

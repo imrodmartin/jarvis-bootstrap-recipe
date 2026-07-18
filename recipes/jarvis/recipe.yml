@@ -119,6 +119,9 @@ config:
       # Explicit: user/optional also ships search.page.user_search, whose
       # search-module dependency is not installed here.
       - views.view.user_admin_people
+      # The User / Lists component folders reference these views' blocks.
+      - views.view.who_s_new
+      - views.view.who_s_online
   actions:
     system.theme:
       simpleConfigUpdate:
