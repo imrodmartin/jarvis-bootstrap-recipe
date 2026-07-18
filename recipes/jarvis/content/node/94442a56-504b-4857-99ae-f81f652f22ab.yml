@@ -1,0 +1,41 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 94442a56-504b-4857-99ae-f81f652f22ab
+  bundle: basic
+  default_langcode: en
+default:
+  revision_uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+      target_uuid: ''
+      url: ''
+  title:
+    -
+      value: 'Accessibility Statement'
+  created:
+    -
+      value: 1784422800
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  path:
+    -
+      alias: /accessibility-statement
+      langcode: en
+  field_body:
+    -
+      value: '<p>We want everyone to be able to use this website. This site is built with the Jarvis theme for Drupal, which is designed to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a> at Level AA.</p><h2>What we do to keep this site accessible</h2><ul><li>Text and background colour combinations are checked for sufficient contrast automatically, and image overlays darken as needed so that text stays readable.</li><li>All pages can be navigated with a keyboard alone, including menus, and a visible focus indicator shows where you are.</li><li>Pages use a logical heading structure, descriptive link text, and text alternatives for images.</li><li>Animation is disabled for visitors who have asked their device to reduce motion.</li><li>Our editors run an automated accessibility check on content before publishing.</li></ul><h2>Known limitations</h2><p>Content embedded from third-party services (such as video platforms or maps) may not meet the same standard. Where possible we provide captions and text alternatives.</p><h2>Feedback</h2><p>If you have trouble using any part of this site, or find content that is not accessible, please tell us. Contact us at <strong>[your contact email]</strong> and include the address of the page. We aim to respond within five business days.</p><p><em>This statement was last reviewed on 18 July 2026. Replace the contact placeholder and review date when you launch your site.</em></p>'
+      format: basic_html
+      summary: ''
