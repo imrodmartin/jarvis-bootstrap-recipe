@@ -49,11 +49,40 @@ install:
   - ai_provider_anthropic
   - ai_provider_openai
   - gemini_provider
+  # TTS provider — ai.settings' default text_to_speech points at it; the
+  # shipped elevenlabs.settings references the key entity id `elevenlabs`
+  # (supplied by the private jarvis_ai overlay), not a secret.
+  - elevenlabs
   - canvas_ai
   # Admin UX: the navigation sidebar's Shortcuts block needs the shortcut
   # module; Claro is the admin theme (set in config actions below).
   - shortcut
   - claro
+  # Site-builder UIs + stock performance/cron (standard-profile parity).
+  - field_ui
+  - views_ui
+  - big_pipe
+  - automated_cron
+  # Editorial workflow.
+  - workflows
+  - content_moderation
+  # SEO: metatag defaults (global/node/front/403/404 etc.) via config.import.
+  - metatag
+  - metatag_open_graph
+  - metatag_twitter_cards
+  # Forms.
+  - webform
+  - webform_node
+  - webform_ui
+  - webform_submission_export_import
+  # UX/editor helpers.
+  - antibot
+  - extlink
+  - back_to_top
+  - coffee
+  - save_edit
+  - better_exposed_filters
+  - better_social_sharing_buttons
   # Custom modules shipped in this codebase
   - jarvis_blocks
   - jarvis_canvas
@@ -69,6 +98,10 @@ config:
   # config/install + config/optional.
   import:
     ai_automators: '*'
+    metatag: '*'
+    webform: '*'
+    content_moderation: '*'
+    workflows: '*'
     navigation: '*'
     shortcut: '*'
     node: '*'
