@@ -68,11 +68,15 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 
 The bootstrap recipe installs the AI modules but ships **no keys and no AI
 config** — it contains no secrets and is safe to share. To enable AI, apply the
-private overlay locally after this recipe:
+private overlay locally after this recipe. Two steps: the recipe ensures
+modules and imports your local key entities; the partial config import lays the
+overlay's provider/agent settings over the module defaults (recipes never
+update existing config):
 
 ```bash
-drush recipe recipes/jarvis_ai    # local only — adds AI config + your API keys
-drush cache:rebuild
+ddev drush recipe /var/www/html/recipes/jarvis_ai
+ddev drush config:import --partial --source=/var/www/html/recipes/jarvis_ai/config -y
+ddev drush cache:rebuild
 ```
 
 The overlay's `key.key.*.yml` (plaintext credentials) are gitignored and are not

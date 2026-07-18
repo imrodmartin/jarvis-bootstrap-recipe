@@ -13,13 +13,20 @@ Captures the full AI stack added to the Jarvis site.
 - **canvas_ai** — Canvas AI settings (requires `canvas`)
 
 Private overlay — apply **after** the `jarvis` bootstrap recipe, on your local
-machine only:
+machine only.
+
+Two steps, because the bootstrap recipe already installed the AI modules and
+Drupal recipes never *update* existing config (the recipe runs non-strict: it
+ensures modules and imports your local key entities; the partial config import
+then lays this overlay's values over the module defaults):
 
 ```bash
-ddev drush recipe recipes/jarvis      # full site, no secrets
-ddev drush recipe recipes/jarvis_ai   # local only — adds AI config + your keys
+ddev drush recipe /var/www/html/recipes/jarvis_ai
+ddev drush config:import --partial --source=/var/www/html/recipes/jarvis_ai/config -y
 ddev drush cr
 ```
+
+Without ddev, drop the `/var/www/html/` prefix and run from the project root.
 
 ## ⚠️ Keys are gitignored (plaintext)
 `config/key.key.{claude,openai,gemini,elevenlabs}.yml` embed live API keys (key
