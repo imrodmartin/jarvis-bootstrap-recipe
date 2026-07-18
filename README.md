@@ -56,10 +56,39 @@ HTML format, block types, and media types are left untouched.
 
 Cloned without submodules by accident? `git submodule update --init` fixes it.
 
-## Add Jarvis to an existing Drupal project
+## Add Jarvis to an existing Drupal project (composer package — recommended)
 
-If you have your own composer project instead of cloning this repo, assemble
-the four pieces, then apply:
+The recipe is published as a composer `drupal-recipe` package that pulls in
+the theme, the custom modules, and every contrib module. From your project
+root (any docroot name — `web`, `public_html`, whatever your installer-paths
+say):
+
+```bash
+composer config repositories.jarvis-recipe vcs https://github.com/imrodmartin/jarvis-recipe
+composer config repositories.jarvis-theme vcs https://github.com/imrodmartin/jarvis
+composer config repositories.jarvis-modules vcs https://github.com/imrodmartin/jarvis-modules
+composer require imrodmartin/jarvis-recipe drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
+
+drush recipe recipes/jarvis-recipe
+drush cache:rebuild
+```
+
+Verified end-to-end on a blank `drupal/recommended-project` with the standard
+profile: theme lands in `themes/contrib/jarvis`, the custom modules in
+`modules/custom/jarvis-modules` (Drupal discovers both nested modules), the
+recipe in `recipes/jarvis-recipe`, and the apply produces the full site.
+Notes:
+
+- The two extra packages on the `require` line carry stability flags
+  (`@beta`/`@alpha`) that only work in the root `composer.json` — that's why
+  they're spelled out.
+- No drush yet? Add `drush/drush` to the same require.
+- The three `repositories` lines disappear once the packages are on
+  Packagist.
+
+## Add Jarvis by hand (no composer package)
+
+Prefer to vendor the pieces yourself? Assemble the four pieces, then apply:
 
 ```bash
 # 1. Theme (its own repository)
