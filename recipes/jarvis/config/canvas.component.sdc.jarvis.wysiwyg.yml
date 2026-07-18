@@ -10,7 +10,7 @@ dependencies:
     - text
   theme:
     - jarvis
-active_version: 3ce297f5c6365761
+active_version: 63ab709e1d7d8792
 versioned_properties:
   active:
     settings:
@@ -189,7 +189,7 @@ versioned_properties:
           derived_schema_metadata: {  }
     fallback_metadata:
       slot_definitions: {  }
-  3ce297f5c6365761:
+  63ab709e1d7d8792:
     settings:
       prop_field_definitions:
         body:

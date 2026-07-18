@@ -17,7 +17,7 @@ component_tree:
   2815ea4e-be5c-457a-93b7-3896c02f4d52:
     uuid: 2815ea4e-be5c-457a-93b7-3896c02f4d52
     component_id: sdc.jarvis.wysiwyg
-    component_version: 3ce297f5c6365761
+    component_version: 63ab709e1d7d8792
     inputs:
       body:
         sourceType: entity-field

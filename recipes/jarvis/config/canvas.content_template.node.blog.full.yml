@@ -28,7 +28,7 @@ component_tree:
   43c8216d-a659-4a34-84d1-ceaea417f829:
     uuid: 43c8216d-a659-4a34-84d1-ceaea417f829
     component_id: sdc.jarvis.image
-    component_version: 9535595f15c220ab
+    component_version: 19b4a9ad4295dcfa
     inputs:
       image:
         sourceType: entity-field
@@ -66,7 +66,7 @@ component_tree:
   d8564a03-9673-4ef1-b3e7-8255671f659c:
     uuid: d8564a03-9673-4ef1-b3e7-8255671f659c
     component_id: sdc.jarvis.one-column
-    component_version: f83c0c95a7c359e9
+    component_version: 684ed73d0cfc8b2a
     inputs:
       width: boxed
       gap: normal
@@ -87,7 +87,7 @@ component_tree:
   dc971e21-6e48-4638-bcf6-8cb3bf66a227:
     uuid: dc971e21-6e48-4638-bcf6-8cb3bf66a227
     component_id: sdc.jarvis.one-column
-    component_version: f83c0c95a7c359e9
+    component_version: 684ed73d0cfc8b2a
     inputs:
       width: boxed
       gap: normal

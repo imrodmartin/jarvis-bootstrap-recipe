@@ -16,7 +16,7 @@ component_tree:
   6f53c86f-b15b-4352-83f3-14c225f282dd:
     uuid: 6f53c86f-b15b-4352-83f3-14c225f282dd
     component_id: sdc.jarvis.two-column
-    component_version: bc2112224d2c7c81
+    component_version: 7d4b54492d164019
     inputs:
       gap: normal
       ratio: even
