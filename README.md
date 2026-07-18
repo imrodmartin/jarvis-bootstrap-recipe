@@ -91,6 +91,19 @@ drush recipe recipes/jarvis
 drush cache:rebuild
 ```
 
+**Different docroot?** Many hosts use `public_html` (or `docroot`) instead of
+`web`. Nothing in the recipe cares — just aim the theme and custom-module
+copies at *your* docroot (`public_html/themes/custom/jarvis`,
+`public_html/modules/custom/…`). Composer places contrib wherever your
+project's installer-paths already point, and `recipes/` lives at the project
+root next to `composer.json`, not inside the docroot.
+
+**Why isn't this one command?** Drupal recipes enable and configure modules —
+they never download code; that is Composer's job by design. The clone flow
+above is effectively two commands only because this repo's `composer.json`
+already lists everything. On an existing project the `composer require` is a
+one-time step; from then on it's `drush recipe` + `drush cache:rebuild`.
+
 The recipe targets a **blank site**. A site that already runs Canvas or the
 AI modules with drifted settings will fail the recipe's config checks.
 Applying is also an opinionated takeover: default theme → Jarvis, admin
