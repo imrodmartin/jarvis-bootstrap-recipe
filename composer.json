@@ -36,6 +36,7 @@
         "drupal/core-recipe-unpack": "^11.4",
         "drupal/core-recommended": "^11.4",
         "drupal/default_content": "^2.0@beta",
+        "drupal/editoria11y": "^3.0",
         "drupal/elevenlabs": "^1.1",
         "drupal/extlink": "^3.0",
         "drupal/focal_point": "^2.1",

@@ -30,6 +30,10 @@ install:
   - backup_migrate
   - asset_injector
   - simple_gmap
+  # Editorial accessibility checker — flags content-level WCAG issues (missing
+  # alt, skipped headings, vague link text) inline for editors; complements the
+  # theme's build-time contrast safeguards.
+  - editoria11y
   - modeler_api
   # AI stack — installed unconfigured, NO keys ship here
   - key
