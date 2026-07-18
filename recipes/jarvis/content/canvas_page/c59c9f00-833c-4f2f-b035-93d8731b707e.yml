@@ -22,673 +22,638 @@ _meta:
     e0be4247-bdfa-4237-8c5b-d04d42e6f2be: media
 default:
   revision_user:
-    -
-      target_id: 1
+  - target_id: 1
   status:
-    -
-      value: true
+  - value: true
   owner:
-    -
-      target_id: 1
+  - target_id: 1
   title:
-    -
-      value: 'Jarvis Drupal Theme: Flexible SDC-Based Design with ADA Compliance Built In'
+  - value: 'Jarvis Drupal Theme: Flexible SDC-Based Design with ADA Compliance Built In'
   description:
-    -
-      value: 'Discover Jarvis, a flexible SDC-based Drupal theme with 20 reusable components, versatile layouts, and easy customization to match your brand and build faster.'
+  - value: Discover Jarvis, a flexible SDC-based Drupal theme with 20 reusable components, versatile layouts, and easy customization to match your brand and build faster.
   components:
-    -
-      uuid: 958a0ea7-b744-43a9-9599-9d46a33ead03
-      component_id: sdc.jarvis.hero
-      inputs:
-        heading: 'Jarvis — the flexible SDC theme for Drupal'
-        heading_level: h1
-        subheading: 'Build faster with a modern Single Directory Components (SDC) foundation, production-ready components, and layout freedom that scales from landing pages to full sites.'
-        cta_text: 'Get This Theme'
-        overlay: 79
-        align: center
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
-            target_type: media
-        cta_href:
-          uri: 'internal:/node1'
-          options: {  }
-    -
-      uuid: e9ba658c-8a68-425c-81ec-f249a046637f
-      component_id: sdc.jarvis.one-column
-      inputs:
-        background: none
-        text_color: inherit
-        gap: normal
-    -
-      parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
-      slot: first
-      uuid: e6b6b5b8-2e31-4ca9-aa46-fad5ac16e2cd
-      component_id: sdc.jarvis.image
-      inputs:
-        caption: 'Photo caption goes here.'
-        full_width: false
-    -
-      parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
-      slot: first
-      uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
-      component_id: sdc.jarvis.two-column
-      inputs:
-        background: none
-        text_color: inherit
-        gap: normal
-        ratio: even
-    -
-      parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
-      slot: first
-      uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
-      component_id: sdc.jarvis.two-column
-      inputs:
-        background: none
-        text_color: inherit
-        gap: normal
-        ratio: even
-        vertical_padding: false
-        width: full
-    -
-      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
-      slot: first
-      uuid: 549d8093-83cb-4dc8-8c3a-c101fd711dbd
-      component_id: sdc.jarvis.image
-      inputs:
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: cb024184-dd25-4929-acc4-e025132142aa
-            target_type: media
-        full_width: true
-        priority: true
-        vertical_padding: false
-    -
-      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
-      slot: first
-      uuid: b9afb374-e53d-47e3-b81b-41f4df560786
-      component_id: sdc.jarvis.image
-      inputs:
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
-            target_type: media
-        full_width: true
-        priority: true
-        vertical_padding: false
-        image_style: medium
-    -
-      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
-      slot: second
-      uuid: c9fc332c-e68c-4a24-a0e6-073be8e43aba
-      component_id: sdc.jarvis.image
-      inputs:
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: cb024184-dd25-4929-acc4-e025132142aa
-            target_type: media
-        full_width: true
-        priority: true
-        vertical_padding: false
-        image_style: medium
-    -
-      parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
-      slot: second
-      uuid: 09372614-178a-4375-b64e-4830e6ebff75
-      component_id: sdc.jarvis.image
-      inputs:
-        full_width: true
-        priority: true
-        vertical_padding: false
-        image_style: medium
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
-            target_type: media
-    -
-      parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
-      slot: second
-      uuid: 01e8ff49-e1ad-41e7-b5c0-58e38de71858
-      component_id: sdc.jarvis.image
-      inputs:
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: cb024184-dd25-4929-acc4-e025132142aa
-            target_type: media
-        full_width: false
-        priority: true
-        vertical_padding: true
-    -
-      uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      component_id: sdc.jarvis.section
-      inputs:
-        width: normal
-        bg: none
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        no_padding: false
-    -
-      parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      slot: content
-      uuid: aa0e7a0e-5ace-4c3e-b365-f074d6324427
-      component_id: sdc.jarvis.text
-      inputs:
-        body:
-          value: |
-            <h2>Everything you need to ship a component-driven Drupal site</h2>
-            <p>Jarvis is designed for teams who want a clean SDC workflow, a library of reusable UI building blocks, and the freedom to compose pages in Layout Builder/Canvas without fighting the theme.</p>
-          format: canvas_html_block
-        width: wide
-        align: center
-        color: inherit
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      slot: content
-      uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
-      component_id: sdc.jarvis.three-column
-      inputs:
-        width: boxed
-        background: none
-        text_color: inherit
-        gap: normal
-        padding: top
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
-      slot: first
-      uuid: 0a3d1ef5-cfae-4eb0-a7d5-e05eb46296fc
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: image-top
-        overlay: 40
-        text_color: black
-        title: 'SDC-based by design'
-        body:
-          value: |
-            <p>Organize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.</p>
-          format: canvas_html_block
-        link_text: 'Read the approach'
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: false
-        link_href:
-          uri: 'internal:/blog/building-jarvis-one-source-truth-your-markup'
-          options: {  }
-        heading_level: h2
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
-            target_type: media
-    -
-      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
-      slot: second
-      uuid: 7908fbcc-f6d2-4c39-843c-cde634e57fa6
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: image-top
-        overlay: 40
-        text_color: black
-        title: 'SDC-based by design'
-        body:
-          value: |
-            <p>Organize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.</p>
-          format: canvas_html_block
-        link_text: 'Read the approach'
-        padding: none
-        margin: none
-        margin_size: medium
-        vertical_padding: false
-        link_href:
-          uri: 'internal:/blog/building-jarvis-one-source-truth-your-markup'
-          options: {  }
-        heading_level: h2
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: de3bde27-604d-4908-aaa2-422f24282173
-            target_type: media
-    -
-      parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
-      slot: third
-      uuid: 3c0c382b-3cd0-4ea1-a407-2be8219c95e6
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: image-top
-        overlay: 40
-        text_color: black
-        title: 'Layout freedom'
-        body:
-          value: |
-            <p>Boxed or full-width sections, responsive columns, and flexible content patterns that look great on any device — no custom templates required.</p>
-          format: canvas_html_block
-        link_text: 'See layout examples'
-        link_href:
-          uri: 'https://example.com'
-          options: {  }
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: false
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
-            target_type: media
-        heading_level: h2
-    -
-      uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      component_id: sdc.jarvis.section
-      inputs:
-        width: full
-        bg: body-tertiary
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        no_padding: false
-    -
-      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      slot: content
-      uuid: f06db30d-57e8-4e55-a7cc-16b9798c94ac
-      component_id: sdc.jarvis.text
-      inputs:
-        body:
-          value: |
-            <h2>Component showcase</h2>
-            <p>Jarvis ships with a focused set of <strong>20 components</strong> that cover the most common marketing and editorial patterns — so you can assemble pages quickly and keep designs consistent.</p>
-          format: canvas_html_block
-        width: wide
-        align: center
-        color: inherit
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      slot: content
-      uuid: 90c80756-e9be-4be1-8905-28c724eebf45
-      component_id: sdc.jarvis.three-column
-      inputs:
-        width: boxed
-        background: none
-        text_color: inherit
-        gap: normal
-        padding: top
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
-      slot: first
-      uuid: debc4430-5a30-4201-b599-9bd56bd3a365
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: background
-        overlay: 0
-        text_color: black
-        title: 'Hero + CTA'
-        body:
-          value: |
-            <p>Lead with a clear message and a primary conversion action — perfect for front pages and campaign landing pages.</p>
-          format: canvas_html_block
-        link_href:
-          uri: 'https://example.com'
-          options: {  }
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: dfbf2867-6ca3-4ae6-bf94-5235281fbd3e
-            target_type: media
-    -
-      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
-      slot: second
-      uuid: 432a98c5-c8c0-40ff-b058-54494592bcdb
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: background
-        overlay: 0
-        text_color: black
-        title: 'Cards + grids'
-        body:
-          value: |
-            <p>Highlight features, services, or content collections with flexible cards that work in columns and sections.</p>
-          format: canvas_html_block
-        link_href:
-          uri: 'https://example.com'
-          options: {  }
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: 95f038cd-442d-4b46-b2ba-43f1579ed9bf
-            target_type: media
-    -
-      parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
-      slot: third
-      uuid: f342623e-d462-4c72-8233-004b7e03fe12
-      component_id: sdc.jarvis.card
-      inputs:
-        variant: background
-        overlay: 55
-        title: 'Media + story'
-        body:
-          value: |
-            <p>Blend images, video, and rich text to tell a product story that feels modern and intentional.</p>
-          format: canvas_html_block
-        link_href:
-          uri: 'https://example.com'
-          options: {  }
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: e0be4247-bdfa-4237-8c5b-d04d42e6f2be
-            target_type: media
-        text_color: black
-    -
-      parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      slot: content
-      uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
-      component_id: sdc.jarvis.two-column
-      inputs:
-        width: boxed
-        background: none
-        text_color: inherit
-        gap: large
-        ratio: wide-left
-        padding: top
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
-      slot: first
-      uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
-      component_id: sdc.jarvis.card-full-image
-      inputs:
-        image_right: true
-        fade_edge: true
-        background: primary
-    -
-      parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
-      slot: media
-      uuid: f39f10f7-9edd-4652-b39b-004fcd7d0cf5
-      component_id: sdc.jarvis.image
-      inputs:
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
-            target_type: media
-        full_width: true
-        priority: true
-        vertical_padding: true
-    -
-      parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
-      slot: content
-      uuid: ecb15855-2b90-4503-8daf-cf9fdd1f88f5
-      component_id: sdc.jarvis.wysiwyg
-      inputs:
-        body:
-          value: '<h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>&nbsp;</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>'
-          format: jarvis_html
-        vertical_padding: true
-    -
-      parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
-      slot: second
-      uuid: 25da63fd-eae4-4456-9312-98f727f8b54a
-      component_id: sdc.jarvis.video
-      inputs:
-        video_url:
-          uri: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
-          options: {  }
-        title: 'Product demo video'
-        aspect: 16x9
-        full_width: true
-        autoplay: false
-        muted: false
-        vertical_padding: false
-    -
-      uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      component_id: sdc.jarvis.section
-      inputs:
-        width: normal
-        bg: none
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        no_padding: false
-    -
-      parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      slot: content
-      uuid: 12a0aa06-8f45-41e8-8b4c-4248fc482538
-      component_id: sdc.jarvis.text
-      inputs:
-        body:
-          value: |
-            <h2>Flexible layouts without custom templates</h2>
-            <p>Compose pages from sections and responsive column components. Keep content editors productive and ensure the design system stays consistent across every page.</p>
-          format: canvas_html_block
-        width: wide
-        align: center
-        color: inherit
-        padding: none
-        padding_size: medium
-        margin: bottom
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      slot: content
-      uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
-      component_id: sdc.jarvis.three-column
-      inputs:
-        width: boxed
-        background: none
-        text_color: inherit
-        gap: normal
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
-      slot: first
-      uuid: 2ab8a76c-58fe-4746-8c1c-982bbdfd0061
-      component_id: sdc.jarvis.stat
-      inputs:
-        title: '17'
-        number_color: primary
-        count_up: true
-        body:
-          value: |
-            <p>Components included for modern marketing and editorial pages</p>
-          format: canvas_html_block
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
-      slot: second
-      uuid: ef88ef4d-4c04-4b62-845b-b2fd426133b3
-      component_id: sdc.jarvis.stat
-      inputs:
-        title: '1, 2 or 3'
-        number_color: secondary
-        count_up: true
-        body:
-          value: |
-            <p>Responsive column layouts you can mix and match in minutes</p>
-          format: canvas_html_block
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
-      slot: third
-      uuid: 6e5c8356-38cb-4a60-872e-3de9f5737522
-      component_id: sdc.jarvis.stat
-      inputs:
-        title: SDC
-        number_color: primary
-        count_up: false
-        body:
-          value: |
-            <p>Component architecture that makes theming and reuse straightforward</p>
-          format: canvas_html_block
-        padding: all
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
-      component_id: sdc.jarvis.section
-      inputs:
-        width: full
-        bg: dark
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        no_padding: true
-    -
-      parent_uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
-      slot: content
-      uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
-      component_id: sdc.jarvis.card-full-image
-      inputs:
-        image_right: true
-        fade_edge: true
-        background: dark
-    -
-      parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
-      slot: media
-      uuid: b4976bec-b094-462b-b4f6-ca99ec2961b4
-      component_id: sdc.jarvis.image
-      inputs:
-        image_style: wide
-        caption: 'Photo caption goes here.'
-        full_width: true
-        priority: true
-        padding: none
-        padding_size: medium
-        margin: none
-        margin_size: medium
-        vertical_padding: false
-        image:
-          CANVAS_ENTITY_REFERENCE:
-            target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
-            target_type: media
-    -
-      parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
-      slot: content
-      uuid: 176dacb7-42e6-4ae6-bcfa-a6b016c8095d
-      component_id: sdc.jarvis.wysiwyg
-      inputs:
-        body:
-          value: '<h2>Make it yours: theming and customization</h2><p>Jarvis is built to be customized. Adjust look and feel through component props, theme settings, and SDC overrides — without losing the benefits of a consistent system.</p><ul><li data-list-item-id="edfde7c8cf2df47c71d2ff51d8eceac54">Swap section backgrounds and spacing per page</li><li data-list-item-id="e2be2eeb06bf366d256189e2ed5623d0d">Choose component variants (cards, columns, CTAs)</li><li data-list-item-id="ed4e0c5f1d46739fd2f5ab6cfa029bcce">Extend the library with your own SDC components</li></ul>'
-          format: jarvis_html
-        measure: readable
-        align: start
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-    -
-      uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
-      component_id: sdc.jarvis.section
-      inputs:
-        width: normal
-        bg: none
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        no_padding: false
-    -
-      parent_uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
-      slot: content
-      uuid: 77b906fe-c991-4a42-aba3-080b87e632eb
-      component_id: sdc.jarvis.text
-      inputs:
-        body:
-          value: '<p>Trusted by people who value speed and consistency</p><p>When the design system is component-first, we move faster — with fewer regressions and more predictable results.</p>'
-          format: canvas_html_block
-        width: wide
-        align: center
-        color: inherit
-        padding: none
-        padding_size: medium
-        margin: bottom
-        margin_size: medium
-        vertical_padding: true
-    -
-      uuid: 2bf7d150-e55b-4a27-9662-178dfa016459
-      component_id: sdc.jarvis.cta
-      inputs:
-        subtitle: 'Get Jarvis'
-        heading: 'Build your next Drupal site with Jarvis'
-        heading_level: h2
-        text: 'Start with a flexible SDC foundation, leverage 20 included components, and ship pages that look consistent across every breakpoint.'
-        button_text: 'Get Jarvis'
-        bg: primary
-        padding: all
-        padding_size: large
-        margin: none
-        margin_size: medium
-        vertical_padding: true
-        button_href:
-          uri: 'internal:/node/1'
-          options: {  }
+  - uuid: 958a0ea7-b744-43a9-9599-9d46a33ead03
+    component_id: sdc.jarvis.hero
+    inputs:
+      heading: Jarvis — the flexible SDC theme for Drupal
+      heading_level: h1
+      subheading: Build faster with a modern Single Directory Components (SDC) foundation, production-ready components, and layout freedom that scales from landing pages to full sites.
+      cta_text: Get This Theme
+      overlay: 79
+      align: center
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+          target_type: media
+      cta_href:
+        uri: internal:/node1
+        options: {}
+  - uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+    component_id: sdc.jarvis.one-column
+    inputs:
+      background: none
+      text_color: inherit
+      gap: normal
+  - parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+    slot: first
+    uuid: e6b6b5b8-2e31-4ca9-aa46-fad5ac16e2cd
+    component_id: sdc.jarvis.image
+    inputs:
+      caption: Photo caption goes here.
+      full_width: false
+  - parent_uuid: e9ba658c-8a68-425c-81ec-f249a046637f
+    slot: first
+    uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    component_id: sdc.jarvis.two-column
+    inputs:
+      background: none
+      text_color: inherit
+      gap: normal
+      ratio: even
+  - parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    slot: first
+    uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    component_id: sdc.jarvis.two-column
+    inputs:
+      background: none
+      text_color: inherit
+      gap: normal
+      ratio: even
+      vertical_padding: false
+      width: full
+  - parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: first
+    uuid: 549d8093-83cb-4dc8-8c3a-c101fd711dbd
+    component_id: sdc.jarvis.image
+    inputs:
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: cb024184-dd25-4929-acc4-e025132142aa
+          target_type: media
+      full_width: true
+      priority: true
+      vertical_padding: false
+  - parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: first
+    uuid: b9afb374-e53d-47e3-b81b-41f4df560786
+    component_id: sdc.jarvis.image
+    inputs:
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
+          target_type: media
+      full_width: true
+      priority: true
+      vertical_padding: false
+      image_style: medium
+  - parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: second
+    uuid: c9fc332c-e68c-4a24-a0e6-073be8e43aba
+    component_id: sdc.jarvis.image
+    inputs:
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: cb024184-dd25-4929-acc4-e025132142aa
+          target_type: media
+      full_width: true
+      priority: true
+      vertical_padding: false
+      image_style: medium
+  - parent_uuid: ee9541cd-2970-40d5-b271-4a7bca31ec33
+    slot: second
+    uuid: 09372614-178a-4375-b64e-4830e6ebff75
+    component_id: sdc.jarvis.image
+    inputs:
+      full_width: true
+      priority: true
+      vertical_padding: false
+      image_style: medium
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
+          target_type: media
+  - parent_uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
+    slot: second
+    uuid: 01e8ff49-e1ad-41e7-b5c0-58e38de71858
+    component_id: sdc.jarvis.image
+    inputs:
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: cb024184-dd25-4929-acc4-e025132142aa
+          target_type: media
+      full_width: false
+      priority: true
+      vertical_padding: true
+  - uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+    component_id: sdc.jarvis.section
+    inputs:
+      width: normal
+      bg: none
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      no_padding: false
+  - parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+    slot: content
+    uuid: aa0e7a0e-5ace-4c3e-b365-f074d6324427
+    component_id: sdc.jarvis.text
+    inputs:
+      body:
+        value: '<h2>Everything you need to ship a component-driven Drupal site</h2>
+
+          <p>Jarvis is designed for teams who want a clean SDC workflow, a library of reusable UI building blocks, and the freedom to compose pages in Layout Builder/Canvas without fighting the theme.</p>
+
+          '
+        format: canvas_html_block
+      width: wide
+      align: center
+      color: inherit
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
+    slot: content
+    uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+    component_id: sdc.jarvis.three-column
+    inputs:
+      width: boxed
+      background: none
+      text_color: inherit
+      gap: normal
+      padding: top
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+    slot: first
+    uuid: 0a3d1ef5-cfae-4eb0-a7d5-e05eb46296fc
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: image-top
+      overlay: 40
+      text_color: black
+      title: SDC-based by design
+      body:
+        value: '<p>Organize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.</p>
+
+          '
+        format: canvas_html_block
+      link_text: Read the approach
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: false
+      link_href:
+        uri: internal:/blog/building-jarvis-one-source-truth-your-markup
+        options: {}
+      heading_level: h2
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
+          target_type: media
+  - parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+    slot: second
+    uuid: 7908fbcc-f6d2-4c39-843c-cde634e57fa6
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: image-top
+      overlay: 40
+      text_color: black
+      title: SDC-based by design
+      body:
+        value: '<p>Organize markup, styles, and schemas together in Single Directory Components. Predictable, maintainable, and friendly to both developers and site builders.</p>
+
+          '
+        format: canvas_html_block
+      link_text: Read the approach
+      padding: none
+      margin: none
+      margin_size: medium
+      vertical_padding: false
+      link_href:
+        uri: internal:/blog/building-jarvis-one-source-truth-your-markup
+        options: {}
+      heading_level: h2
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: de3bde27-604d-4908-aaa2-422f24282173
+          target_type: media
+  - parent_uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
+    slot: third
+    uuid: 3c0c382b-3cd0-4ea1-a407-2be8219c95e6
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: image-top
+      overlay: 40
+      text_color: black
+      title: Layout freedom
+      body:
+        value: '<p>Boxed or full-width sections, responsive columns, and flexible content patterns that look great on any device — no custom templates required.</p>
+
+          '
+        format: canvas_html_block
+      link_text: See layout examples
+      link_href:
+        uri: https://example.com
+        options: {}
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: false
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: 2ecce779-6a6c-4386-8351-ddd85d91700a
+          target_type: media
+      heading_level: h2
+  - uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+    component_id: sdc.jarvis.section
+    inputs:
+      width: full
+      bg: body-tertiary
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      no_padding: false
+  - parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+    slot: content
+    uuid: f06db30d-57e8-4e55-a7cc-16b9798c94ac
+    component_id: sdc.jarvis.text
+    inputs:
+      body:
+        value: '<h2>Component showcase</h2>
+
+          <p>Jarvis ships with a focused set of <strong>20 components</strong> that cover the most common marketing and editorial patterns — so you can assemble pages quickly and keep designs consistent.</p>
+
+          '
+        format: canvas_html_block
+      width: wide
+      align: center
+      color: inherit
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+    slot: content
+    uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+    component_id: sdc.jarvis.three-column
+    inputs:
+      width: boxed
+      background: none
+      text_color: inherit
+      gap: normal
+      padding: top
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+    slot: first
+    uuid: debc4430-5a30-4201-b599-9bd56bd3a365
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: background
+      overlay: 0
+      text_color: black
+      title: Hero + CTA
+      body:
+        value: '<p>Lead with a clear message and a primary conversion action — perfect for front pages and campaign landing pages.</p>
+
+          '
+        format: canvas_html_block
+      link_href:
+        uri: https://example.com
+        options: {}
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: dfbf2867-6ca3-4ae6-bf94-5235281fbd3e
+          target_type: media
+  - parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+    slot: second
+    uuid: 432a98c5-c8c0-40ff-b058-54494592bcdb
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: background
+      overlay: 0
+      text_color: black
+      title: Cards + grids
+      body:
+        value: '<p>Highlight features, services, or content collections with flexible cards that work in columns and sections.</p>
+
+          '
+        format: canvas_html_block
+      link_href:
+        uri: https://example.com
+        options: {}
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: 95f038cd-442d-4b46-b2ba-43f1579ed9bf
+          target_type: media
+  - parent_uuid: 90c80756-e9be-4be1-8905-28c724eebf45
+    slot: third
+    uuid: f342623e-d462-4c72-8233-004b7e03fe12
+    component_id: sdc.jarvis.card
+    inputs:
+      variant: background
+      overlay: 55
+      title: Media + story
+      body:
+        value: '<p>Blend images, video, and rich text to tell a product story that feels modern and intentional.</p>
+
+          '
+        format: canvas_html_block
+      link_href:
+        uri: https://example.com
+        options: {}
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: e0be4247-bdfa-4237-8c5b-d04d42e6f2be
+          target_type: media
+      text_color: black
+  - parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
+    slot: content
+    uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+    component_id: sdc.jarvis.two-column
+    inputs:
+      width: boxed
+      background: none
+      text_color: inherit
+      gap: large
+      ratio: wide-left
+      padding: top
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+    slot: first
+    uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+    component_id: sdc.jarvis.card-full-image
+    inputs:
+      image_right: true
+      fade_edge: true
+      background: primary
+  - parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+    slot: media
+    uuid: f39f10f7-9edd-4652-b39b-004fcd7d0cf5
+    component_id: sdc.jarvis.image
+    inputs:
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
+          target_type: media
+      full_width: true
+      priority: true
+      vertical_padding: true
+  - parent_uuid: 1bffe448-af72-4234-b43f-78c76c79ca52
+    slot: content
+    uuid: ecb15855-2b90-4503-8daf-cf9fdd1f88f5
+    component_id: sdc.jarvis.wysiwyg
+    inputs:
+      body:
+        value: <h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>&nbsp;</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>
+        format: jarvis_html
+      vertical_padding: true
+  - parent_uuid: 5908cb6e-265c-4cfa-8f56-0f4dc4c23db5
+    slot: second
+    uuid: 25da63fd-eae4-4456-9312-98f727f8b54a
+    component_id: sdc.jarvis.video
+    inputs:
+      video_url:
+        uri: https://www.youtube.com/embed/aqz-KE-bpKQ
+        options: {}
+      title: Product demo video
+      aspect: 16x9
+      full_width: true
+      autoplay: false
+      muted: false
+      vertical_padding: false
+  - uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+    component_id: sdc.jarvis.section
+    inputs:
+      width: normal
+      bg: none
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      no_padding: false
+  - parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+    slot: content
+    uuid: 12a0aa06-8f45-41e8-8b4c-4248fc482538
+    component_id: sdc.jarvis.text
+    inputs:
+      body:
+        value: '<h2>Flexible layouts without custom templates</h2>
+
+          <p>Compose pages from sections and responsive column components. Keep content editors productive and ensure the design system stays consistent across every page.</p>
+
+          '
+        format: canvas_html_block
+      width: wide
+      align: center
+      color: inherit
+      padding: none
+      padding_size: medium
+      margin: bottom
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
+    slot: content
+    uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+    component_id: sdc.jarvis.three-column
+    inputs:
+      width: boxed
+      background: none
+      text_color: inherit
+      gap: normal
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+    slot: first
+    uuid: 2ab8a76c-58fe-4746-8c1c-982bbdfd0061
+    component_id: sdc.jarvis.stat
+    inputs:
+      title: '17'
+      number_color: primary
+      count_up: true
+      body:
+        value: '<p>Components included for modern marketing and editorial pages</p>
+
+          '
+        format: canvas_html_block
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+    slot: second
+    uuid: ef88ef4d-4c04-4b62-845b-b2fd426133b3
+    component_id: sdc.jarvis.stat
+    inputs:
+      title: 1, 2 or 3
+      number_color: secondary
+      count_up: true
+      body:
+        value: '<p>Responsive column layouts you can mix and match in minutes</p>
+
+          '
+        format: canvas_html_block
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - parent_uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
+    slot: third
+    uuid: 6e5c8356-38cb-4a60-872e-3de9f5737522
+    component_id: sdc.jarvis.stat
+    inputs:
+      title: SDC
+      number_color: primary
+      count_up: false
+      body:
+        value: '<p>Component architecture that makes theming and reuse straightforward</p>
+
+          '
+        format: canvas_html_block
+      padding: all
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
+    component_id: sdc.jarvis.section
+    inputs:
+      width: full
+      bg: dark
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      no_padding: true
+  - parent_uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
+    slot: content
+    uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+    component_id: sdc.jarvis.card-full-image
+    inputs:
+      image_right: true
+      fade_edge: true
+      background: dark
+  - parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+    slot: media
+    uuid: b4976bec-b094-462b-b4f6-ca99ec2961b4
+    component_id: sdc.jarvis.image
+    inputs:
+      image_style: wide
+      caption: Photo caption goes here.
+      full_width: true
+      priority: true
+      padding: none
+      padding_size: medium
+      margin: none
+      margin_size: medium
+      vertical_padding: false
+      image:
+        CANVAS_ENTITY_REFERENCE:
+          target_uuid: d46a49f9-c5c4-418b-a235-bdc072e309ee
+          target_type: media
+  - parent_uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
+    slot: content
+    uuid: 176dacb7-42e6-4ae6-bcfa-a6b016c8095d
+    component_id: sdc.jarvis.wysiwyg
+    inputs:
+      body:
+        value: '<h2>Make it yours: theming and customization</h2><p>Jarvis is built to be customized. Adjust look and feel through component props, theme settings, and SDC overrides — without losing the benefits of a consistent system.</p><ul><li data-list-item-id="edfde7c8cf2df47c71d2ff51d8eceac54">Swap section backgrounds and spacing per page</li><li data-list-item-id="e2be2eeb06bf366d256189e2ed5623d0d">Choose component variants (cards, columns, CTAs)</li><li data-list-item-id="ed4e0c5f1d46739fd2f5ab6cfa029bcce">Extend the library with your own SDC components</li></ul>'
+        format: jarvis_html
+      measure: readable
+      align: start
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+  - uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
+    component_id: sdc.jarvis.section
+    inputs:
+      width: normal
+      bg: none
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      no_padding: false
+  - parent_uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
+    slot: content
+    uuid: 77b906fe-c991-4a42-aba3-080b87e632eb
+    component_id: sdc.jarvis.text
+    inputs:
+      body:
+        value: <p>Trusted by people who value speed and consistency</p><p>When the design system is component-first, we move faster — with fewer regressions and more predictable results.</p>
+        format: canvas_html_block
+      width: wide
+      align: center
+      color: inherit
+      padding: none
+      padding_size: medium
+      margin: bottom
+      margin_size: medium
+      vertical_padding: true
+  - uuid: 2bf7d150-e55b-4a27-9662-178dfa016459
+    component_id: sdc.jarvis.cta
+    inputs:
+      subtitle: Get Jarvis
+      heading: Build your next Drupal site with Jarvis
+      heading_level: h2
+      text: Start with a flexible SDC foundation, leverage 20 included components, and ship pages that look consistent across every breakpoint.
+      button_text: Get Jarvis
+      bg: primary
+      padding: all
+      padding_size: large
+      margin: none
+      margin_size: medium
+      vertical_padding: true
+      button_href:
+        uri: internal:/node/1
+        options: {}
   path:
-    -
-      alias: /jarvis-drupal-theme-flexible-sdc-based-design-with-20-components
-      langcode: en
+  - alias: /jarvis-drupal-theme-flexible-sdc-based-design-with-20-components
+    langcode: en
   revision_translation_affected:
-    -
-      value: true
-  metatags:
-    -
-      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  - value: true
