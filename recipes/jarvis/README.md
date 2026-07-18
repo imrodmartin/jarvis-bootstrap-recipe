@@ -80,8 +80,10 @@ in this repo — supply your own. See `recipes/jarvis_ai/README.md`.
 
 ## Known limitations
 
-- The `header` and `content_bottom` Canvas regions ship **empty**. They placed
-  per-entity `block_content` blocks whose Canvas components are derived from
-  content that imports after config, so they can't validate at recipe apply. The
-  demo block content (an "Alert" and a "Bottom Block") still ships as entities —
-  place them via the Canvas UI after install if you want them back.
+- The `header`, `content_bottom` and right-sidebar Canvas regions ship
+  **empty**. Their per-entity `block_content` placements were removed from the
+  recipe: content imports after config, so the block plugins don't exist at
+  apply time (which produced "block plugin was not found" warnings), and under
+  Canvas PageRegions block-layout placements never render anyway. The demo
+  block content (an "Alert", a "Bottom Block", a "More" block) still ships as
+  entities — place them via the Canvas UI after install if you want them.
