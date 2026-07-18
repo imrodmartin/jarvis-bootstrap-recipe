@@ -21,7 +21,7 @@ default:
   field_body:
     -
       value: '<h2>Rich text section</h2><p>Basic text block with width and alignment controls.</p>'
-      format: basic_html
+      format: jarvis_html
   field_width:
     -
       value: normal

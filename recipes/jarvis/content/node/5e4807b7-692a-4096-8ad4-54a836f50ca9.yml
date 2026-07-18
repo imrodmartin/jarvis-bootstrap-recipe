@@ -37,5 +37,5 @@ default:
   field_body:
     -
       value: '<p>this is the body</p>'
-      format: basic_html
+      format: jarvis_html
       summary: ''

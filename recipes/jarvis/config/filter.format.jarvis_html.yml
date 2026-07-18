@@ -8,8 +8,8 @@ dependencies:
     - editor
     - linkit
     - media
-name: 'Basic HTML'
-format: basic_html
+name: 'Jarvis HTML'
+format: jarvis_html
 weight: -10
 filters:
   editor_file_reference:

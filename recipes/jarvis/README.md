@@ -59,13 +59,17 @@ ddev drush cache:rebuild
 
 Without ddev (drush run from the project root), the path is just `recipes/jarvis`.
 
-> **Profile caveat:** the recipe ships a few config objects under stock names
-> (`filter.format.basic_html`/`full_html`/`restricted_html`,
-> `editor.editor.basic_html`/`full_html`, `image.style.large`/`medium`/`thumbnail`).
-> On a `minimal` install these don't pre-exist (or come from the image module the
-> recipe installs) and apply cleanly. On the `standard` profile they already
-> exist and would be **overwritten** with Jarvis's versions. Apply to a
-> minimal/empty site.
+> **Existing sites:** everything the recipe ships is namespaced away from the
+> standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
+> (not `basic_html`/`full_html`), the media types are `jarvis_image`/`jarvis_video`,
+> the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
+> applying to a site created with the standard profile no longer collides with
+> or overwrites its formats, media types, or block types. Shared field storages
+> (`media.field_media_image`, `block_content.body`) are byte-identical with the
+> standard profile's, so they pass the recipe's strict check. Note that applying
+> to an existing site is still an opinionated takeover: it sets the default
+> theme to Jarvis, the admin theme to Claro, the front page to the demo `/home`,
+> and imports the demo content alongside your own.
 
 ## AI keys (optional, private)
 

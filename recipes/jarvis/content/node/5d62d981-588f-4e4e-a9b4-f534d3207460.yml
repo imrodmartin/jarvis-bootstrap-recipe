@@ -39,7 +39,7 @@ default:
   field_body:
     -
       value: '<p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p>'
-      format: basic_html
+      format: jarvis_html
       summary: ''
   field_hero_banner:
     -

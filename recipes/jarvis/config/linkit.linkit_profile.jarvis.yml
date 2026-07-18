@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-label: Default
-id: default
+label: Jarvis
+id: jarvis
 description: 'A default Linkit profile'
 matchers:
   556010a3-e317-48b3-b4ed-854c10f4b950:

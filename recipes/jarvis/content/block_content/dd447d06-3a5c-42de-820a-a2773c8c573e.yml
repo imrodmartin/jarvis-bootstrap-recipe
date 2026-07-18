@@ -2,7 +2,7 @@ _meta:
   version: '1.0'
   entity_type: block_content
   uuid: dd447d06-3a5c-42de-820a-a2773c8c573e
-  bundle: basic
+  bundle: jarvis_basic
   default_langcode: en
 default:
   status:
@@ -17,4 +17,4 @@ default:
   body:
     -
       value: '<p class="alert">this is an alert</p>'
-      format: full_html
+      format: jarvis_full_html

@@ -2,15 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.image.field_media_image
-    - image.style.thumbnail
-    - media.type.image
+    - field.field.media.jarvis_video.field_media_oembed_video
+    - media.type.jarvis_video
   module:
-    - focal_point
+    - media
     - path
-id: media.image.default
+id: media.jarvis_video.default
 targetEntityType: media
-bundle: image
+bundle: jarvis_video
 mode: default
 content:
   created:
@@ -19,15 +18,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_image:
-    type: image_focal_point
+  field_media_oembed_video:
+    type: oembed_textfield
     weight: 0
     region: content
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-      preview_link: true
-      offsets: '50,50'
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   path:
     type: path

@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.basic_html
+    - filter.format.jarvis_html
     - filter.format.canvas_html_block
-    - filter.format.full_html
+    - filter.format.jarvis_full_html
   module:
     - options
     - text
@@ -21,13 +21,13 @@ versioned_properties:
           field_storage_settings: {  }
           field_instance_settings:
             allowed_formats:
-              - basic_html
-              - full_html
+              - jarvis_html
+              - jarvis_full_html
           field_widget: text_textarea
           default_value:
             -
               value: '<h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>'
-              format: basic_html
+              format: jarvis_html
           expression: ℹ︎text_long␟processed
           derived_schema_metadata: {  }
         measure:
@@ -198,13 +198,13 @@ versioned_properties:
           field_storage_settings: {  }
           field_instance_settings:
             allowed_formats:
-              - basic_html
-              - full_html
+              - jarvis_html
+              - jarvis_full_html
           field_widget: text_textarea
           default_value:
             -
               value: '<h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>'
-              format: basic_html
+              format: jarvis_html
           expression: ℹ︎text_long␟processed
           derived_schema_metadata: {  }
         measure:
@@ -287,13 +287,13 @@ versioned_properties:
           field_storage_settings: {  }
           field_instance_settings:
             allowed_formats:
-              - basic_html
-              - full_html
+              - jarvis_html
+              - jarvis_full_html
           field_widget: text_textarea
           default_value:
             -
               value: '<h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>'
-              format: basic_html
+              format: jarvis_html
           expression: ℹ︎text_long␟processed
           derived_schema_metadata:
             string_shape:

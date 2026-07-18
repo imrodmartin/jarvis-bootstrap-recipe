@@ -2,7 +2,7 @@ _meta:
   version: '1.0'
   entity_type: block_content
   uuid: dc46c5be-4928-40b2-8559-ff6c091ac4b5
-  bundle: basic
+  bundle: jarvis_basic
   default_langcode: en
 default:
   status:
@@ -17,4 +17,4 @@ default:
   body:
     -
       value: '<p>more demo text</p>'
-      format: basic_html
+      format: jarvis_html

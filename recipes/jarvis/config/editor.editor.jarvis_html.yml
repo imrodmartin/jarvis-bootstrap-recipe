@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.basic_html
+    - filter.format.jarvis_html
   module:
     - ckeditor5
-format: basic_html
+format: jarvis_html
 editor: ckeditor5
 settings:
   toolbar:
@@ -106,7 +106,7 @@ settings:
         - '<h6 id>'
     linkit_extension:
       linkit_enabled: true
-      linkit_profile: default
+      linkit_profile: jarvis
     media_media:
       allow_view_mode_override: true
 image_upload:

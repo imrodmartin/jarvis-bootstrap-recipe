@@ -17,7 +17,7 @@ default:
   field_body:
     -
       value: '<p>Cards support image at top, left, right, or as a background.</p>'
-      format: basic_html
+      format: jarvis_html
   field_cta:
     -
       uri: 'internal:/'

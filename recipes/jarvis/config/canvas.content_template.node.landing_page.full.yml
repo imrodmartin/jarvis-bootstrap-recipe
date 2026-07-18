@@ -5,8 +5,8 @@ dependencies:
     - canvas.component.sdc.jarvis.wysiwyg
     - core.entity_view_mode.node.full
     - field.field.node.landing_page.field_body
-    - filter.format.basic_html
-    - filter.format.full_html
+    - filter.format.jarvis_html
+    - filter.format.jarvis_full_html
     - node.type.landing_page
   module:
     - node

@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.basic
+    - block_content.type.jarvis_basic
     - field.storage.block_content.body
   module:
     - text
-id: block_content.basic.body
+id: block_content.jarvis_basic.body
 field_name: body
 entity_type: block_content
-bundle: basic
+bundle: jarvis_basic
 label: Body
 description: ''
 required: false

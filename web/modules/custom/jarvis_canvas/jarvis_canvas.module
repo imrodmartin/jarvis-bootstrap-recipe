@@ -28,7 +28,7 @@ function jarvis_canvas_canvas_storable_prop_shape_alter(CandidateStorablePropSha
   $schema = $storable_prop_shape->shape->schema;
   if (($schema['contentMediaType'] ?? NULL) === 'text/html'
     && !empty($schema['x-jarvis-html-format'])) {
-    $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = ['basic_html', 'full_html'];
+    $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = ['jarvis_html', 'jarvis_full_html'];
   }
 }
 

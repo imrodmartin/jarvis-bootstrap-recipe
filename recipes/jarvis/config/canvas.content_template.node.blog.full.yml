@@ -9,11 +9,11 @@ dependencies:
     - canvas.component.sdc.jarvis.text
     - canvas.component.sdc.navigation.message
     - core.entity_view_mode.node.full
-    - field.field.media.image.field_media_image
+    - field.field.media.jarvis_image.field_media_image
     - field.field.node.blog.field_body
     - field.field.node.blog.field_hero_banner
     - image.style.canvas_parametrized_width
-    - media.type.image
+    - media.type.jarvis_image
     - node.type.blog
   module:
     - file

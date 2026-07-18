@@ -37,5 +37,5 @@ default:
   field_body:
     -
       value: '<p>hi there</p>'
-      format: basic_html
+      format: jarvis_html
       summary: ''

@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.image.field_media_image
+    - field.field.media.jarvis_image.field_media_image
     - image.style.large
-    - media.type.image
+    - media.type.jarvis_image
   module:
     - image
-id: media.image.default
+id: media.jarvis_image.default
 targetEntityType: media
-bundle: image
+bundle: jarvis_image
 mode: default
 content:
   field_media_image:

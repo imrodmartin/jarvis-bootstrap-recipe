@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.basic
-    - field.field.block_content.basic.body
+    - block_content.type.jarvis_basic
+    - field.field.block_content.jarvis_basic.body
   module:
     - text
-id: block_content.basic.default
+id: block_content.jarvis_basic.default
 targetEntityType: block_content
-bundle: basic
+bundle: jarvis_basic
 mode: default
 content:
   body:
