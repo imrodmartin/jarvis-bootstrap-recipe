@@ -14,7 +14,8 @@ Validated end-to-end: applies cleanly to a fresh `minimal` install and renders
   (canvas, canvas_field_component) and its deps (block_content, layout_builder,
   editor, ckeditor5, navigation, help), crop + focal_point, linkit, token +
   token_filter, twig_tweak, backup_migrate, asset_injector, simple_gmap,
-  modeler_api, default_content, and the custom `jarvis_blocks` + `jarvis_canvas`.
+  modeler_api, default_content, editoria11y (editorial accessibility checker),
+  and the custom `jarvis_blocks` + `jarvis_canvas`.
 - **Installs the AI stack unconfigured**: ai, ai_agents, ai_ckeditor,
   ai_provider_anthropic/openai, gemini_provider, canvas_ai, key — enabled but
   with **no keys and no AI config**. See the AI section below.
@@ -34,10 +35,18 @@ downloads them; the recipe enables + configures.
 
 ## Apply
 
-Designed for a **fresh / empty site** (validated on the `minimal` profile):
+Designed for a **fresh / empty site** (validated on the `minimal` profile).
+
+The Jarvis theme lives in its own repository, wired in as a git submodule at
+`web/themes/custom/jarvis` — clone with `--recurse-submodules` or the theme
+directory arrives empty and the recipe fails:
 
 ```bash
-composer install
+git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-recipe.git mysite
+cd mysite
+# (already cloned without submodules? run: git submodule update --init)
+ddev start          # .ddev/config.yaml ships in the repo; project name = directory name
+ddev composer install
 ddev drush site:install minimal -y
 # NOTE: under ddev, drush's working dir is the docroot (web/), but recipes/ lives
 # at the project root — pass the absolute in-container path:
