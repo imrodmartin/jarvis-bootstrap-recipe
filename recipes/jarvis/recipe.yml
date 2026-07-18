@@ -48,16 +48,50 @@ install:
   - ai_provider_openai
   - gemini_provider
   - canvas_ai
+  # Admin UX: the navigation sidebar's Shortcuts block needs the shortcut
+  # module; Claro is the admin theme (set in config actions below).
+  - shortcut
+  - claro
   # Custom modules shipped in this codebase
   - jarvis_blocks
   - jarvis_canvas
   # The theme
   - jarvis
 config:
+  # Recipes deliberately skip config ENTITIES shipped by the modules they
+  # install (RecipeRunner sets the config installer to syncing during module
+  # install) — without this import list the site has no admin views
+  # (content/media/files/people listings), no media_library image style, no
+  # navigation menus, no shortcut set: the admin UI looks gutted. Importing
+  # creates only what does not already exist, straight from each module's
+  # config/install + config/optional.
+  import:
+    navigation: '*'
+    shortcut: '*'
+    node: '*'
+    media: '*'
+    media_library: '*'
+    block_content: '*'
+    file: '*'
+    taxonomy: '*'
+    dblog: '*'
+    canvas: '*'
+    editoria11y: '*'
+    backup_migrate: '*'
+    linkit: '*'
+    user:
+      # Explicit: user/optional also ships search.page.user_search, whose
+      # search-module dependency is not installed here.
+      - views.view.user_admin_people
   actions:
     system.theme:
       simpleConfigUpdate:
         default: jarvis
+        admin: claro
+    node.settings:
+      simpleConfigUpdate:
+        # Edit/add content in the admin theme, like the standard profile.
+        use_admin_theme: true
     system.site:
       simpleConfigUpdate:
         page.front: /home
