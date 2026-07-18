@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - canvas.component.sdc.jarvis.wysiwyg
-    - core.entity_view_mode.node.full
-    - field.field.node.landing_page.field_body
-    - filter.format.jarvis_html
-    - filter.format.jarvis_full_html
-    - node.type.landing_page
+  - canvas.component.sdc.jarvis.wysiwyg
+  - core.entity_view_mode.node.full
+  - field.field.node.landing_page.field_body
+  - filter.format.jarvis_html
+  - filter.format.jarvis_full_html
+  - node.type.landing_page
   module:
-    - node
-    - options
+  - node
+  - options
 id: node.landing_page.full
 content_entity_type_id: node
 content_entity_type_bundle: landing_page
@@ -19,11 +19,11 @@ component_tree:
   c43edd18-8ea2-4b89-aa3f-f060bd24e34f:
     uuid: c43edd18-8ea2-4b89-aa3f-f060bd24e34f
     component_id: sdc.jarvis.wysiwyg
-    component_version: 0a4b8adb38e81481
+    component_version: 63ab709e1d7d8792
     inputs:
       body:
         sourceType: entity-field
-        expression: 'ℹ︎␜entity:node:landing_page␝field_body␞␟processed'
+        expression: ℹ︎␜entity:node:landing_page␝field_body␞␟processed
       measure: readable
       vertical_padding: true
-exposed_slots: {  }
+exposed_slots: {}
