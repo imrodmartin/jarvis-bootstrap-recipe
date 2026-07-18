@@ -51,7 +51,7 @@ versioned_properties:
                 jarvis_image: jarvis_image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false
@@ -194,7 +194,7 @@ versioned_properties:
                 jarvis_image: jarvis_image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false
@@ -337,7 +337,7 @@ versioned_properties:
                 jarvis_image: jarvis_image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false
@@ -480,7 +480,7 @@ versioned_properties:
                 jarvis_image: jarvis_image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false
