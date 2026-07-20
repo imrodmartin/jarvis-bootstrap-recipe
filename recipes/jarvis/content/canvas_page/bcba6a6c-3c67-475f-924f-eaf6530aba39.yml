@@ -589,7 +589,7 @@ default:
       component_id: sdc.jarvis.wysiwyg
       inputs:
         body:
-          value: '<h2>This is placeholder paragraph&nbsp;</h2><p>text intended to demonstrate layout and typography. It can be replaced with your final content once messaging and tone are confirmed. Use it to preview spacing, line length, and rhythm across different screen sizes.</p><drupal-media data-entity-type="media" data-entity-uuid="5260d056-94d2-44d3-a5bd-4cb2da4bb208">&nbsp;</drupal-media>'
+          value: '<h2>This is placeholder paragraph&nbsp;</h2><p>text intended to demonstrate layout and typography. It can be replaced with your final content once messaging and tone are confirmed. Use it to preview spacing, line length, and rhythm across different screen sizes.</p>'
           format: jarvis_html
         measure: full
         align: start
