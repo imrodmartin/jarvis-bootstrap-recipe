@@ -17,7 +17,8 @@ and a configured AI stack. One apply, working site.
   patterns, content templates for the Blog/Basic/Landing content types, and
   two editable demo Canvas pages (a component showcase and a test page).
 - **Demo content** — home page, about page, accessibility statement, three
-  blog posts, media, menus. The front page is set to `/home`.
+  blog posts, media, menus. The front page is the Canvas component
+  showcase (`/page/2`).
 - **A real admin experience** — Claro admin theme, the core Navigation
   sidebar with working Content/Media/Files/People listings, shortcuts,
   field & views UIs.
@@ -136,7 +137,8 @@ one-time step; from then on it's `drush recipe` + `drush cache:rebuild`.
 The recipe targets a **blank site**. A site that already runs Canvas or the
 AI modules with drifted settings will fail the recipe's config checks.
 Applying is also an opinionated takeover: default theme → Jarvis, admin
-theme → Claro, front page → the demo `/home`, demo content imported.
+theme → Claro, front page → the demo Canvas page (`/page/2`), demo content
+imported.
 
 ## AI keys (optional)
 

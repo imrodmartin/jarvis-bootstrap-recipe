@@ -3,6 +3,8 @@ _meta:
   entity_type: menu_link_content
   uuid: 8c000000-0000-4a00-9000-000000000002
   default_langcode: en
+  depends:
+    8c000000-0000-4a00-9000-000000000005: menu_link_content
 default:
   title:
     - value: 'Building Jarvis'
@@ -11,7 +13,9 @@ default:
   menu_name:
     - value: main
   weight:
-    - value: -8
+    - value: -50
+  parent:
+    - value: 'menu_link_content:8c000000-0000-4a00-9000-000000000005'
   enabled:
     - value: true
   langcode:

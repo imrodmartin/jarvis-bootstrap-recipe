@@ -11,7 +11,7 @@ default:
   menu_name:
     - value: main
   weight:
-    - value: -5
+    - value: -49
   enabled:
     - value: true
   langcode:

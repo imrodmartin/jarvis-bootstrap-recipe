@@ -133,4 +133,6 @@ config:
         use_admin_theme: true
     system.site:
       simpleConfigUpdate:
-        page.front: /home
+        # Canvas home page ("Jarvis Drupal Theme…", uuid c59c9f00…) — imported
+        # after Test Page, so it gets canvas_page ID 2, matching the reference site.
+        page.front: /page/2
