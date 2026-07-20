@@ -10,8 +10,9 @@ default:
     - uri: 'internal:/about'
   menu_name:
     - value: main
+  # Positive weight keeps About after the standard profile's Home link (weight 0).
   weight:
-    - value: -49
+    - value: 10
   enabled:
     - value: true
   langcode:
