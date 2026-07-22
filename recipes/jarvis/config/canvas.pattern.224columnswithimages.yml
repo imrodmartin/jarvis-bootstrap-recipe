@@ -47,7 +47,7 @@ component_tree:
     slot: first
     uuid: 549d8093-83cb-4dc8-8c3a-c101fd711dbd
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         target_id: '18'
@@ -59,7 +59,7 @@ component_tree:
     slot: first
     uuid: b9afb374-e53d-47e3-b81b-41f4df560786
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         target_id: '19'
@@ -72,7 +72,7 @@ component_tree:
     slot: second
     uuid: c9fc332c-e68c-4a24-a0e6-073be8e43aba
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         target_id: '18'
@@ -85,7 +85,7 @@ component_tree:
     slot: second
     uuid: 09372614-178a-4375-b64e-4830e6ebff75
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         target_id: '19'
@@ -98,7 +98,7 @@ component_tree:
     slot: second
     uuid: 01e8ff49-e1ad-41e7-b5c0-58e38de71858
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         target_id: '18'

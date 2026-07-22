@@ -28,7 +28,7 @@ component_tree:
   43c8216d-a659-4a34-84d1-ceaea417f829:
     uuid: 43c8216d-a659-4a34-84d1-ceaea417f829
     component_id: sdc.jarvis.image
-    component_version: 19b4a9ad4295dcfa
+    component_version: 5f252054a41d2cf7
     inputs:
       image:
         sourceType: entity-field

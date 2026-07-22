@@ -12,7 +12,7 @@ dependencies:
   - options
   theme:
   - jarvis
-active_version: 19b4a9ad4295dcfa
+active_version: 5f252054a41d2cf7
 versioned_properties:
   active:
     settings:
@@ -69,6 +69,15 @@ versioned_properties:
           field_widget: boolean_checkbox
           default_value:
           - value: false
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {}
+        match_height:
+          required: false
+          field_type: boolean
+          field_storage_settings: {}
+          field_instance_settings: {}
+          field_widget: boolean_checkbox
+          default_value: null
           expression: ℹ︎boolean␟value
           derived_schema_metadata: {}
         rounded:
