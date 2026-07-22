@@ -4,9 +4,9 @@ Self-contained bootstrap recipe: stands up a **fully functional Drupal site**
 with the Jarvis theme — Canvas visual editing, demo content, forms, editorial
 workflow, SEO, an accessibility checker, admin UX, and a configured AI stack.
 
-Validated end-to-end on fresh `minimal` **and** `standard` installs: the
-recipe applies with zero warnings and every demo page (nodes and Canvas
-pages) renders. See the repository-root README for the quick start.
+Validated end-to-end on a fresh `standard` install: the recipe applies with
+zero warnings and every demo page (nodes and Canvas pages) renders. See the
+repository-root README for the quick start.
 
 ## What it does
 
@@ -49,8 +49,7 @@ downloads them; the recipe enables + configures.
 
 ## Apply
 
-Designed for a **fresh / empty site** (validated on the `minimal` and
-`standard` profiles).
+Designed for a **fresh / empty site** (validated on the `standard` profile).
 
 The Jarvis theme lives in its own repository, wired in as a git submodule at
 `web/themes/custom/jarvis` — clone with `--recurse-submodules` or the theme
@@ -62,7 +61,7 @@ cd mysite
 # (already cloned without submodules? run: git submodule update --init)
 ddev start          # .ddev/config.yaml ships in the repo; project name = directory name
 ddev composer install
-ddev drush site:install minimal -y
+ddev drush site:install standard -y
 # NOTE: under ddev, drush's working dir is the docroot (web/), but recipes/ lives
 # at the project root — pass the absolute in-container path:
 ddev drush recipe /var/www/html/recipes/jarvis

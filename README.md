@@ -44,13 +44,13 @@ git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-r
 cd mysite
 ddev start                       # ddev config ships in the repo
 ddev composer install
-ddev drush site:install minimal -y
+ddev drush site:install standard -y
 ddev drush recipe /var/www/html/recipes/jarvis
 ddev drush cache:rebuild         # also organises the Canvas component folders
 ddev drush uli                   # log in
 ```
 
-Both the `minimal` and `standard` install profiles are tested and supported.
+Install with the **standard** profile — the tested, supported path.
 On a standard-profile site, everything Jarvis ships is namespaced
 (`jarvis_html`, `jarvis_image`, `jarvis_basic`, …) so the site's own Basic
 HTML format, block types, and media types are left untouched.
