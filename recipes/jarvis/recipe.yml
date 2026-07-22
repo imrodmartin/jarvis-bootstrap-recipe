@@ -104,6 +104,11 @@ config:
     workflows: '*'
     navigation: '*'
     shortcut: '*'
+    # Claro's default admin blocks (local task tabs, page title, messages,
+    # help, breadcrumbs). The standard profile pre-creates these; on minimal
+    # they are absent, so Manage fields/display/Permissions tabs disappear
+    # from admin pages. Import creates only what is missing.
+    claro: '*'
     node: '*'
     media: '*'
     media_library: '*'
