@@ -136,3 +136,9 @@ config:
         # Canvas home page ("Jarvis Drupal Theme…", uuid c59c9f00…) — imported
         # after Test Page, so it gets canvas_page ID 2, matching the reference site.
         page.front: /page/2
+    core.entity_view_mode.node.full:
+      simpleConfigUpdate:
+        # Standard ships the Full content view mode DISABLED. Enable it so the
+        # Canvas content templates (basic/blog/landing_page full) surface on
+        # each type's Manage display page.
+        status: true

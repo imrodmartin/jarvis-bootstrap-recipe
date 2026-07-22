@@ -3,9 +3,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.basic.field_body
-    - field.field.node.basic.field_hero_banner
-    - node.type.basic
+    - field.field.node.blog.field_body
+    - field.field.node.blog.field_hero_banner
+    - field.field.node.blog.field_publication_date
+    - field.field.node.blog.field_video
+    - node.type.blog
   module:
     - layout_builder
     - user
@@ -13,13 +15,15 @@ third_party_settings:
   layout_builder:
     enabled: false
     allow_custom: false
-id: node.basic.full
+id: node.blog.full
 targetEntityType: node
-bundle: basic
+bundle: blog
 mode: full
 content: {  }
 hidden:
   field_body: true
   field_hero_banner: true
+  field_publication_date: true
+  field_video: true
   layout_builder__layout: true
   links: true
