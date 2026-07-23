@@ -30,6 +30,8 @@
         "drupal/canvas": "^1.8",
         "drupal/canvas_ai": "^1.8",
         "drupal/canvas_field_component": "^1.0",
+        "drupal/ckeditor5_markdown": "^1.0",
+        "drupal/ckeditor5_plugin_pack": "^1.5",
         "drupal/coffee": "^2.0",
         "drupal/core-composer-scaffold": "^11.4",
         "drupal/core-project-message": "^11.4",
