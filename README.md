@@ -8,7 +8,7 @@ and a configured AI stack. One apply, working site.
 
 ## What you get
 
-- **The Jarvis theme** — 16 SDC components (hero, cards, CTA, stats, people,
+- **The Jarvis theme** — 20 SDC components (hero, cards, CTA, stats, people,
   video, maps, 1/2/3-column layouts, rich text …) with automatic WCAG
   contrast enforcement: image overlays darken until text passes AA, unsafe
   colour picks fall back to safe ones, and the theme settings form shows live
