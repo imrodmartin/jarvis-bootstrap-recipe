@@ -15,6 +15,7 @@ settings:
   display_default: true
   uri_scheme: public
   default_image:
+    uuid: null
     alt: ''
     title: ''
     width: null

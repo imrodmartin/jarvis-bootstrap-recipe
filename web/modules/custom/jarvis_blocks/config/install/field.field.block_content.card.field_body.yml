@@ -17,5 +17,9 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  allowed_formats: {  }
+  # Restricted to the theme's own formats. An empty list means every format the
+  # editor has access to, which included Full HTML and the locked Canvas formats.
+  allowed_formats:
+    - jarvis_html
+    - jarvis_full_html
 field_type: text_long

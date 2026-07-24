@@ -5,10 +5,9 @@
  * Canvas integration for the Jarvis theme.
  */
 
+declare(strict_types=1);
+
 use Drupal\canvas\PropShape\CandidateStorablePropShape;
-use Drupal\Core\Entity\Display\EntityDisplayInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\node\NodeTypeInterface;
 
 /**
@@ -30,77 +29,6 @@ function jarvis_canvas_canvas_storable_prop_shape_alter(CandidateStorablePropSha
     && !empty($schema['x-jarvis-html-format'])) {
     $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = ['jarvis_html', 'jarvis_full_html'];
   }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for entity_view_display_edit_form.
- *
- * Canvas ships a "Create with Canvas" CTA on the node display edit form, but
- * its route check (canvas/src/Hook/FieldUiHooks.php) is hardcoded to the
- * pre-11.4 route `entity.entity_view_display.node.default`. Drupal 11.4 split
- * "Manage display" into a controller-based overview plus per-view-mode edit
- * forms (route `entity.entity_view_display.node.view_mode`), so Canvas's CTA
- * never renders and new content types can't get a Canvas template through the
- * UI. Re-add the CTA on the view-mode edit form until upstream fixes it.
- *
- * @see https://www.drupal.org/project/canvas/issues/3498525
- */
-function jarvis_canvas_form_entity_view_display_edit_form_alter(array &$form, FormStateInterface $form_state): void {
-  // Only the 11.4+ per-view-mode edit form; the pre-11.4 default form is still
-  // handled by Canvas itself.
-  if (\Drupal::routeMatch()->getRouteName() !== 'entity.entity_view_display.node.view_mode') {
-    return;
-  }
-  // Canvas already queued its own CTA — don't double up.
-  $messenger = \Drupal::messenger();
-  if ($messenger->messagesByType('canvas_cta')) {
-    return;
-  }
-  $display = $form_state->getFormObject()->getEntity();
-  if (!$display instanceof EntityDisplayInterface || $display->getTargetEntityTypeId() !== 'node') {
-    return;
-  }
-  $entity_type_id = $display->getTargetEntityTypeId();
-  $bundle = $display->getTargetBundle();
-  $entity_type_manager = \Drupal::entityTypeManager();
-  $storage = $entity_type_manager->getStorage('content_template');
-  // A Canvas template already exists for this bundle: nothing to offer.
-  $existing = $storage->getQuery()
-    ->accessCheck(FALSE)
-    ->condition('content_entity_type_id', $entity_type_id)
-    ->condition('content_entity_type_bundle', $bundle)
-    ->execute();
-  if (!empty($existing)) {
-    return;
-  }
-  if (!$entity_type_manager->getAccessControlHandler('content_template')->createAccess()) {
-    return;
-  }
-  // The boot URL Canvas's own CTA links to: opens the editor for a new
-  // template.
-  $url = Url::fromRoute('canvas.boot.empty', [], [
-    'query' => [
-      'from' => 'manage_display',
-      'entity_type' => $entity_type_id,
-      'bundle' => $bundle,
-    ],
-  ]);
-  // Mirror Canvas's canvas_cta message build so it inherits the same styling.
-  $messenger->addMessage([
-    '#theme' => 'canvas_cta',
-    '#icon' => [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      '#attributes' => [
-        'class' => ['canvas-cta__icon'],
-        'aria-hidden' => 'true',
-      ],
-    ],
-    '#title' => t('New: Design with Drupal Canvas'),
-    '#description' => t('Canvas provides a visual, drag-and-drop interface for creating content templates. It offers a modern alternative to the standard "Manage display" table.'),
-    '#url' => $url->toString(),
-    '#link_title' => t('Create with Canvas'),
-  ], 'canvas_cta');
 }
 
 /**
@@ -285,28 +213,26 @@ function jarvis_canvas_rebuild(): void {
       $all_folders[] = $target;
     }
 
-    // Move each item: pull it out of any other folder, add it here.
-    $target_items = $target->get('items') ?? [];
+    // Move each item: pull it out of whichever other folder holds it, then add
+    // it here. Folder::addItems()/removeItem() are setters that do not save, so
+    // they compose with the batched save below — an item may only live in one
+    // folder, hence the removal pass. Folders are scanned in memory rather than
+    // via Folder::loadByItemAndConfigEntityTypeId(), which would be one query
+    // per item.
+    $before = $target->get('items') ?? [];
     foreach ($items as $item) {
       foreach ($all_folders as $other) {
-        if ($other === $target) {
+        if ($other === $target || $other->get('configEntityTypeId') !== $type) {
           continue;
         }
-        if ($other->get('configEntityTypeId') !== $type) {
-          continue;
-        }
-        $other_items = $other->get('items') ?? [];
-        if (in_array($item, $other_items, TRUE)) {
-          $other->set('items', array_values(array_diff($other_items, [$item])));
+        if (in_array($item, $other->get('items') ?? [], TRUE)) {
+          $other->removeItem($item);
           $dirty[spl_object_id($other)] = $other;
         }
       }
-      if (!in_array($item, $target_items, TRUE)) {
-        $target_items[] = $item;
-      }
     }
-    if ($target_items !== ($target->get('items') ?? []) || $target->isNew() || $target->get('weight') !== $weight) {
-      $target->set('items', $target_items);
+    $target->addItems($items);
+    if ($target->get('items') !== $before || $target->isNew() || $target->get('weight') !== $weight) {
       $target->set('weight', $weight);
       $dirty[spl_object_id($target)] = $target;
     }

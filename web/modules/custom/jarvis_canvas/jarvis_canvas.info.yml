@@ -1,6 +1,6 @@
 name: 'Jarvis Canvas'
 type: module
-description: 'Canvas integration for the Jarvis theme — allows Basic/Full HTML text formats on block rich-text SDC props.'
+description: 'Canvas integration for the Jarvis theme: Basic/Full HTML text formats on opted-in rich-text SDC props, an auto-created Full-content template per content type, and the Jarvis component/pattern folder layout.'
 package: Jarvis
 core_version_requirement: ^11 || ^12
 dependencies:
