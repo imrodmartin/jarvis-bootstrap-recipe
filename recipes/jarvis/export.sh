@@ -9,8 +9,11 @@
 #   recipes/jarvis/export.sh node 5 media 3 menu_link_content 8
 #   recipes/jarvis/export.sh --selftest        # prove the cleanup works
 #
-# dcer = default-content:export-references: exports the given entity plus every
-# entity it references (media, files, blocks), grouped by type into content/.
+# Uses CORE's `drush content:export ... --with-dependencies` (NOT contrib
+# `dcer`/default-content:export-references). Canvas hooks core's export event to
+# emit portable CANVAS_ENTITY_REFERENCE {target_uuid} refs and to drop per-site
+# component_version pins; dcer bypasses that subscriber and writes non-portable
+# dev-site numeric ids that crash on a fresh recipe apply.
 # Re-exporting the same entity reuses its UUID, so diffs stay clean.
 set -euo pipefail
 
@@ -48,10 +51,13 @@ fi
 
 while [ "$#" -gt 0 ]; do
   echo ">> exporting $1 $2"
-  ddev drush dcer "$1" "$2" --folder="$CONTAINER_DEST"
+  ddev drush content:export "$1" "$2" --with-dependencies --dir="$CONTAINER_DEST" -y
   shift 2
 done
 
 strip_pathauto
 echo ">> stripped pathauto flags"
 echo ">> done. review with:  git diff $DEST"
+echo ">> MANUAL CHECK: dev-only fields (metatags) and per-site link uris"
+echo "   (entity:node/N -> internal:/<alias>) are NOT auto-scrubbed. See"
+echo "   [[jarvis-recipe-canvas-gotchas]]."
