@@ -34,13 +34,38 @@ strip_pathauto() {
   find "$DEST" -name '*.yml' -exec sed -i '' '/^[[:space:]]*pathauto:/d' {} +
 }
 
-# --- self-test: the only non-trivial logic is the pathauto strip -------------
+# Warn if a <drupal-media data-entity-uuid="..."> embedded in a rich-text prop
+# lacks a shipped media/<uuid>.yml. Those refs are plain HTML strings, invisible
+# to `content:export --with-dependencies`, so the media never ships and apply
+# dies with "media item with UUID ... does not exist". Returns 1 if any missing.
+audit_embedded_media() {
+  local dir="$1" missing=0 u
+  for u in $(grep -rho 'data-entity-uuid=[^ ]*' "$dir" 2>/dev/null \
+      | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' \
+      | sort -u); do
+    if [ ! -f "$dir/media/$u.yml" ]; then
+      echo "!! MISSING embedded media: $u  (fix: $0 media <id>)" >&2
+      missing=1
+    fi
+  done
+  return $missing
+}
+
+# --- self-test: pathauto strip + embedded-media audit ------------------------
 if [ "${1:-}" = "--selftest" ]; then
-  t=$(mktemp)
-  printf 'path:\n  -\n    alias: /x\n    pathauto: 1\n' > "$t"
-  sed -i '' '/^[[:space:]]*pathauto:/d' "$t"
-  if grep -q pathauto "$t"; then echo "SELFTEST FAIL"; rm -f "$t"; exit 1; fi
-  echo "SELFTEST OK"; rm -f "$t"; exit 0
+  t=$(mktemp -d); m=c55aa556-9054-40f9-9ce2-20662a5d6c82
+  # pathauto strip removes the line
+  printf 'path:\n  -\n    alias: /x\n    pathauto: 1\n' > "$t/a.yml"
+  sed -i '' '/^[[:space:]]*pathauto:/d' "$t/a.yml"
+  grep -q pathauto "$t/a.yml" && { echo "SELFTEST FAIL (pathauto)"; rm -rf "$t"; exit 1; }
+  # audit flags an embedded uuid with no media yml...
+  mkdir -p "$t/media"
+  printf 'value: %s\n' "'<drupal-media data-entity-uuid=\"$m\">'" > "$t/b.yml"
+  if audit_embedded_media "$t" 2>/dev/null; then echo "SELFTEST FAIL (audit missed)"; rm -rf "$t"; exit 1; fi
+  # ...and passes once the media yml is shipped
+  : > "$t/media/$m.yml"
+  audit_embedded_media "$t" 2>/dev/null || { echo "SELFTEST FAIL (audit false +)"; rm -rf "$t"; exit 1; }
+  echo "SELFTEST OK"; rm -rf "$t"; exit 0
 fi
 
 if [ "$#" -lt 2 ] || [ $(( $# % 2 )) -ne 0 ]; then
@@ -57,6 +82,13 @@ done
 
 strip_pathauto
 echo ">> stripped pathauto flags"
+
+if audit_embedded_media "$DEST"; then
+  echo ">> embedded-media audit: all data-entity-uuid refs shipped ✓"
+else
+  echo ">> embedded-media audit: export the media listed above before committing" >&2
+fi
+
 echo ">> done. review with:  git diff $DEST"
 echo ">> MANUAL CHECK: dev-only fields (metatags) and per-site link uris"
 echo "   (entity:node/N -> internal:/<alias>) are NOT auto-scrubbed. See"
