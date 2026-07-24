@@ -9,7 +9,6 @@ default:
     -
       target_id: 1
       target_uuid: ''
-      url: ''
   status:
     -
       value: true
@@ -17,7 +16,6 @@ default:
     -
       target_id: 1
       target_uuid: ''
-      url: ''
   title:
     -
       value: 'This is a landing page'

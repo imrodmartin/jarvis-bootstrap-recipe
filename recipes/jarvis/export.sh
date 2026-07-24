@@ -14,7 +14,14 @@
 # Re-exporting the same entity reuses its UUID, so diffs stay clean.
 set -euo pipefail
 
+# Host path (repo-relative) — used for the sed cleanup below.
 DEST="recipes/jarvis/content"
+
+# Absolute path INSIDE the ddev web container for `drush dcer --folder`.
+# `ddev drush` runs with its working directory set to the Drupal docroot
+# (/var/www/html/web), so a repo-relative --folder would land one level deep
+# under web/. The project root mounts at /var/www/html, so target that directly.
+CONTAINER_DEST="/var/www/html/recipes/jarvis/content"
 
 # Delete any `pathauto:` line. The recipe ships explicit inline aliases; a stray
 # `pathauto: 1` regenerates the alias on install and fights the fixed one.
@@ -41,7 +48,7 @@ fi
 
 while [ "$#" -gt 0 ]; do
   echo ">> exporting $1 $2"
-  ddev drush dcer "$1" "$2" --folder="$DEST"
+  ddev drush dcer "$1" "$2" --folder="$CONTAINER_DEST"
   shift 2
 done
 
