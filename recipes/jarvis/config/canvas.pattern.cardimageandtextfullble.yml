@@ -1,26 +1,25 @@
-uuid: 6255afc9-93ef-44ee-9fff-6b99256db7ea
 langcode: en
 status: true
 dependencies:
   config:
-  - canvas.component.sdc.jarvis.card-full-image
-  - canvas.component.sdc.jarvis.image
-  - canvas.component.sdc.jarvis.wysiwyg
-  - field.field.media.jarvis_image.field_media_image
-  - filter.format.jarvis_html
-  - filter.format.jarvis_full_html
-  - image.style.canvas_parametrized_width
-  - media.type.jarvis_image
+    - canvas.component.sdc.jarvis.card-full-image
+    - canvas.component.sdc.jarvis.image
+    - canvas.component.sdc.jarvis.wysiwyg
+    - field.field.media.jarvis_image.field_media_image
+    - filter.format.jarvis_full_html
+    - filter.format.jarvis_html
+    - image.style.canvas_parametrized_width
+    - media.type.jarvis_image
   content:
-  - file:file:c4aced91-90bc-4205-a978-6ede6027f950
-  - media:image:d46a49f9-c5c4-418b-a235-bdc072e309ee
+    - 'file:file:6c1fbfc6-ffc1-4bc6-a29b-92f9d38f103a'
+    - 'media:jarvis_image:741dc56b-2ee5-442f-abfe-bdac0a132490'
   module:
-  - file
-  - media
-  - options
-  - text
+    - file
+    - media
+    - options
+    - text
 id: cardimageandtextfullble
-label: Card - Image and Text full bleed
+label: 'Card - Image and Text full bleed'
 component_tree:
   c2f2e6b3-c41f-418c-8503-e7e3613b337a:
     uuid: c2f2e6b3-c41f-418c-8503-e7e3613b337a
@@ -49,6 +48,7 @@ component_tree:
     component_version: 63ab709e1d7d8792
     inputs:
       body:
-        value: <h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>&nbsp;</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>
+        value: '<h2>Freeform heading</h2><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p><p>&nbsp;</p><p>Edit this with the full CKEditor toolbar, including <strong>bold</strong>, lists, and links.</p>'
         format: jarvis_html
       vertical_padding: true
+

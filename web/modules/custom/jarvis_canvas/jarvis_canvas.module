@@ -25,9 +25,22 @@ use Drupal\node\NodeTypeInterface;
  */
 function jarvis_canvas_canvas_storable_prop_shape_alter(CandidateStorablePropShape $storable_prop_shape): void {
   $schema = $storable_prop_shape->shape->schema;
-  if (($schema['contentMediaType'] ?? NULL) === 'text/html'
-    && !empty($schema['x-jarvis-html-format'])) {
-    $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = ['jarvis_html', 'jarvis_full_html'];
+  if (($schema['contentMediaType'] ?? NULL) !== 'text/html'
+    || empty($schema['x-jarvis-html-format'])) {
+    return;
+  }
+  // jarvis_html / jarvis_full_html ship in the recipe, not in this module, so
+  // enabling jarvis_canvas on its own would otherwise hand the prop a list of
+  // formats that do not exist — leaving the editor with no usable format at
+  // all. Only offer the ones actually installed, and if neither is, leave
+  // Canvas's own default in place rather than breaking the widget.
+  $formats = array_values(array_filter(
+    ['jarvis_html', 'jarvis_full_html'],
+    static fn (string $id): bool => \Drupal::entityTypeManager()
+      ->getStorage('filter_format')->load($id) !== NULL
+  ));
+  if ($formats) {
+    $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = $formats;
   }
 }
 
