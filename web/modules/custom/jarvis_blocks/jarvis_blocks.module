@@ -11,6 +11,7 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\block_content\BlockContentInterface;
 
 /**
@@ -41,25 +42,32 @@ function jarvis_blocks_preprocess_block(array &$variables): void {
     return;
   }
 
-  $props = _jarvis_blocks_props($bundle, $bc);
+  // Cacheability of the original build, plus anything the props pull in
+  // (referenced files). Seeded from $content so block/entity cache tags still
+  // bubble up.
+  $cacheability = CacheableMetadata::createFromRenderArray($content);
+  $props = _jarvis_blocks_props($bundle, $bc, $cacheability);
 
-  // Replace the field-rendered body with the SDC render element. Keep the
-  // original cache metadata so block/entity cache tags still bubble up.
+  // Replace the field-rendered body with the SDC render element.
   $component = [
     '#type' => 'component',
     '#component' => $map[$bundle],
     '#props' => $props,
   ];
-  if (!empty($content['#cache'])) {
-    $component['#cache'] = $content['#cache'];
-  }
+  // Copy cacheability ONLY — never $content['#cache'] wholesale. That array
+  // comes from EntityViewBuilder::getBuildDefaults() and carries #cache[keys]
+  // and [bin], which name the block_content entity-view render-cache entry.
+  // Reusing them wrote this SDC markup into that entry, so any other render
+  // path for the same entity and view mode (a Views field, an entity-reference
+  // formatter, Canvas field_display) would serve it back, or clobber it.
+  $cacheability->applyTo($component);
   $variables['content'] = $component;
 }
 
 /**
  * Builds SDC props from a block_content entity's fields.
  */
-function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc): array {
+function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc, CacheableMetadata $cacheability): array {
   $has = static fn (string $f): bool => $bc->hasField($f) && !$bc->get($f)->isEmpty();
   $str = static fn (string $f): ?string => $has($f) ? (string) $bc->get($f)->value : NULL;
   $bool = static fn (string $f): bool => $has($f) ? (bool) $bc->get($f)->value : FALSE;
@@ -70,12 +78,21 @@ function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc): array 
       return NULL;
     }
     // Canvas's TextLongItemOverride drops the `processed` computed property,
-    // so run the text through check_markup() directly.
+    // so build the filter pipeline ourselves. #type processed_text rather than
+    // check_markup(): the latter is deprecated in 11.4 and removed in 13, and
+    // it renders in isolation, which silently discarded every cache tag the
+    // filters produced (media embeds, linkit, token_filter). Plain render()
+    // bubbles that metadata into the surrounding render context instead.
     $item = $bc->get($f)->first();
-    return (string) check_markup($item->value, $item->format ?: NULL);
+    $build = [
+      '#type' => 'processed_text',
+      '#text' => $item->value,
+      '#format' => $item->format ?: NULL,
+    ];
+    return (string) \Drupal::service('renderer')->render($build);
   };
 
-  $image = static function (string $f) use ($has, $bc): ?array {
+  $image = static function (string $f) use ($has, $bc, $cacheability): ?array {
     if (!$has($f)) {
       return NULL;
     }
@@ -84,7 +101,13 @@ function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc): array 
     if (!$file) {
       return NULL;
     }
-    $url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+    // Without the file's cache tag, replacing the image leaves the old URL in
+    // the rendered page cache.
+    $cacheability->addCacheableDependency($file);
+    // Relative, not absolute: generateAbsoluteString() bakes the hostname into
+    // cached markup, which breaks multi-domain and any environment served on a
+    // different host than the one that primed the cache.
+    $url = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
     $out = ['src' => $url, 'alt' => (string) ($item->alt ?? '')];
     if (!empty($item->width)) {
       $out['width'] = (int) $item->width;
@@ -104,7 +127,9 @@ function _jarvis_blocks_props(string $bundle, BlockContentInterface $bc): array 
       $url = $item->getUrl()->toString();
     }
     catch (\Throwable $e) {
-      $url = $item->uri;
+      // Don't fall back to the raw stored value — that emits the unrouted
+      // internal:/foo or entity:node/1 string straight into an href.
+      return [NULL, NULL];
     }
     return [$url, $item->title ?: NULL];
   };

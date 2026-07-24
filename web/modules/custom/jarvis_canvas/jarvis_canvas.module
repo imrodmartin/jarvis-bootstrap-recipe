@@ -133,7 +133,14 @@ function jarvis_canvas_node_type_insert(NodeTypeInterface $type): void {
   }
   $storage->create([
     'id' => $id,
-    'status' => TRUE,
+    // Disabled, NOT enabled. Canvas's ContentTemplateAwareViewBuilder swaps the
+    // view display for any template whose status() is TRUE and unsets #theme
+    // with it, so an enabled template with an empty component_tree rendered
+    // every node of the new type as a blank page until someone opened Canvas
+    // and built a tree. Disabled still leaves the template loadable and
+    // editable (VisibleWhenDisabledCanvasConfigEntityAccessControlHandler);
+    // it just doesn't hijack output before it has any.
+    'status' => FALSE,
     'content_entity_type_id' => 'node',
     'content_entity_type_bundle' => $type->id(),
     'content_entity_type_view_mode' => 'full',
@@ -178,7 +185,12 @@ function jarvis_canvas_node_type_delete(NodeTypeInterface $type): void {
  * exist are skipped, so partial installs are safe.
  */
 function jarvis_canvas_rebuild(): void {
-  if (!\Drupal::moduleHandler()->moduleExists('canvas')) {
+  // hook_rebuild() fires from drupal_flush_all_caches(), which config import
+  // calls at the end of its run. Without this guard the folder plan was
+  // re-applied on every `drush cr` and after every `drush cim`, so any folder
+  // reorganisation done in the Canvas UI was silently reverted, and the config
+  // saves re-invalidated the caches being rebuilt.
+  if (\Drupal::isConfigSyncing()) {
     return;
   }
   $etm = \Drupal::entityTypeManager();
@@ -191,8 +203,10 @@ function jarvis_canvas_rebuild(): void {
     'Content' => ['component', 0, [
       'sdc.jarvis.button', 'sdc.jarvis.card', 'sdc.jarvis.card-full-image',
       'sdc.jarvis.cta', 'sdc.jarvis.hero', 'sdc.jarvis.image',
+      'sdc.jarvis.image-overlay', 'sdc.jarvis.large-call-to-action',
       'sdc.jarvis.map', 'sdc.jarvis.person', 'sdc.jarvis.stat',
-      'sdc.jarvis.text', 'sdc.jarvis.video', 'sdc.jarvis.wysiwyg',
+      'sdc.jarvis.text', 'sdc.jarvis.video', 'sdc.jarvis.video-with-sidebar',
+      'sdc.jarvis.wysiwyg',
       'sdc.navigation.message', 'sdc.navigation.title',
     ]],
     'Sections' => ['component', 1, [

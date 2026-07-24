@@ -6,3 +6,7 @@ core_version_requirement: ^11 || ^12
 dependencies:
   - canvas:canvas
   - drupal:node
+  # JarvisCanvasTwigExtension type-hints FileInterface and ImageStyleInterface
+  # and loads the file / image_style storages — it fatals without these.
+  - drupal:file
+  - drupal:image
