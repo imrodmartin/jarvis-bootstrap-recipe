@@ -42,15 +42,6 @@ default:
       value: 'Welcome to Jarvis— a component-driven Drupal theme for Canvas and Layout Builder. Explore features, watch the demo, and get started fast with flexible layouts.'
   components:
     -
-      uuid: 29cdf992-0e75-450e-acb5-51758d41626e
-      component_id: sdc.navigation.title
-      inputs:
-        modifiers:
-          - xs
-        extra_classes:
-          - 'this is the title'
-        html_tag: span
-    -
       uuid: 21e6339b-81d4-4477-8658-4abcaa7a0afc
       component_id: sdc.jarvis.one-column
       inputs:
@@ -307,6 +298,18 @@ default:
         vertical_padding: true
         linkedin:
           uri: 'https://linkedin.com'
+          options: {  }
+        x:
+          uri: 'https://twitter.com'
+          options: {  }
+        facebook:
+          uri: 'https://facebook.com'
+          options: {  }
+        instagram:
+          uri: 'https://instagram.com'
+          options: {  }
+        youtube:
+          uri: 'https://youtube.com'
           options: {  }
     -
       uuid: faf3f4e6-6a5b-4105-92e9-2c6898d6d0ec

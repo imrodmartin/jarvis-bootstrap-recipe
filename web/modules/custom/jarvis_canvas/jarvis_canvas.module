@@ -135,7 +135,11 @@ function jarvis_canvas_rebuild(): void {
       'sdc.jarvis.map', 'sdc.jarvis.person', 'sdc.jarvis.stat',
       'sdc.jarvis.text', 'sdc.jarvis.video', 'sdc.jarvis.video-with-sidebar',
       'sdc.jarvis.wysiwyg',
-      'sdc.navigation.message', 'sdc.navigation.title',
+      // navigation:title and navigation:message are core Navigation's admin
+      // TOOLBAR components — their CSS is scoped to [data-drupal-admin-styles],
+      // so they render unstyled on the front end, and their text lives in a slot
+      // rather than a prop, which reads as "does nothing" to an editor. Both are
+      // disabled in the recipe; do not fold them into a content folder.
     ]],
     'Sections' => ['component', 1, [
       'sdc.jarvis.one-column', 'sdc.jarvis.section',
