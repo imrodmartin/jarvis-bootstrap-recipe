@@ -133,6 +133,22 @@ config:
       - views.view.who_s_new
       - views.view.who_s_online
   actions:
+    # The recipe ships filter.format.jarvis_html and jarvis_full_html plus their
+    # CKEditor configs, but shipped nothing that lets anyone USE them. Text
+    # formats are permission-gated, so before this only uid 1 (which bypasses
+    # every permission check) could edit rich text: content_editor -- the role
+    # the standard profile creates for exactly this job -- got no usable format
+    # in the Canvas WYSIWYG prop or in the card/text body fields, both of which
+    # allow only these two formats.
+    #
+    # jarvis_html keeps filter_html enabled, so it is a restricted format and is
+    # granted to authenticated, mirroring how core grants basic_html.
+    # jarvis_full_html has filter_html DISABLED -- unrestricted, script-capable,
+    # the equivalent of core's full_html, which core grants to no role at all.
+    # It is deliberately left to administrators; granting it more widely would
+    # be a stored-XSS vector.
+    user.role.authenticated:
+      grantPermission: 'use text format jarvis_html'
     # Theme install auto-creates a block for each region-matched block of the
     # outgoing default theme, all landing in `header`, and Canvas auto-creates
     # component entities during module/theme install. A recipe refuses to import
