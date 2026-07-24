@@ -1,10 +1,10 @@
 langcode: en
-status: false
+status: true
 dependencies:
   module:
-    - link
-    - navigation
-    - options
+  - link
+  - navigation
+  - options
 active_version: a860189644f260de
 versioned_properties:
   active:
@@ -15,15 +15,15 @@ versioned_properties:
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {  }
+          field_instance_settings: {}
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {  }
+          derived_schema_metadata: {}
         url:
           required: false
           field_type: link
-          field_storage_settings: {  }
+          field_storage_settings: {}
           field_instance_settings:
             title: 0
             link_type: 17
@@ -36,17 +36,17 @@ versioned_properties:
         content:
           required: false
           field_type: string
-          field_storage_settings: {  }
-          field_instance_settings: {  }
+          field_storage_settings: {}
+          field_instance_settings: {}
           field_widget: string_textfield
           default_value: null
           expression: ℹ︎string␟value
           derived_schema_metadata:
-            string_shape: {  }
+            string_shape: {}
     fallback_metadata:
-      slot_definitions: {  }
+      slot_definitions: {}
 label: Message
 id: sdc.navigation.message
 provider: navigation
 source: sdc
-source_local_id: 'navigation:message'
+source_local_id: navigation:message

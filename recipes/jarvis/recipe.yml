@@ -86,6 +86,11 @@ install:
   # Custom modules shipped in this codebase
   - jarvis_blocks
   - jarvis_canvas
+  # The theme itself. Recipes install themes from this same list, before config
+  # import and config actions run. Without it, a site that has not already run
+  # `theme:install jarvis` has no auto-created blocks for the block.block.*
+  # actions to act on, and the recipe aborts with "Entity ... does not exist".
+  - jarvis
   # The theme
   - jarvis
 config:
@@ -128,6 +133,32 @@ config:
       - views.view.who_s_new
       - views.view.who_s_online
   actions:
+    # Theme install auto-creates a block for each region-matched block of the
+    # outgoing default theme, all landing in `header`, and Canvas auto-creates
+    # component entities during module/theme install. A recipe refuses to import
+    # config that already exists and differs, so shipping these as config files
+    # aborted the install. Acting on the auto-created config instead is what the
+    # recipe README always described.
+    # Canvas creates block component entities lazily on rebuild, not at module
+    # install. If the theme was installed first it already exists (disabled) and
+    # only needs enabling; if the recipe is installing Canvas itself it does not
+    # exist yet and canvas.page_region.jarvis.page_title cannot validate without
+    # it. Cover both.
+    # Shipped with status:false so it matches what Canvas auto-creates and never
+    # collides; canvas.page_region.jarvis.page_title needs it to exist at config
+    # import time, and this action turns it on afterwards.
+    canvas.component.block.page_title_block:
+      setStatus: true
+    canvas.component.sdc.navigation.message:
+      setStatus: false
+    canvas.component.sdc.navigation.title:
+      setStatus: false
+    filter.format.canvas_html_block:
+      simpleConfigUpdate:
+        weight: -6
+    filter.format.canvas_html_inline:
+      simpleConfigUpdate:
+        weight: -5
     system.theme:
       simpleConfigUpdate:
         default: jarvis
