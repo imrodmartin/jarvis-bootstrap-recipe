@@ -17,6 +17,68 @@ use Drupal\node\NodeTypeInterface;
 final class JarvisCanvasHooks {
 
   /**
+   * Font-size slots and their theme defaults, mirroring _jarvis_font_sizes().
+   *
+   * key => [desktop default, unit].
+   */
+  private const FONT_SIZES = [
+    'base' => [16, 'px'],
+    'h1' => [2.5, 'rem'],
+    'h2' => [2, 'rem'],
+    'h3' => [1.75, 'rem'],
+    'h4' => [1.5, 'rem'],
+    'h5' => [1.25, 'rem'],
+    'h6' => [1, 'rem'],
+  ];
+
+  /**
+   * Implements hook_page_attachments().
+   *
+   * Feeds the theme's configured font sizes into the CKEditor 5 editing area.
+   *
+   * css/ckeditor5.css styles .ck-content from the --jarvis-fs-* variables, but
+   * those are emitted by jarvis_preprocess_html(), which only runs when Jarvis
+   * is the ACTIVE theme. Node forms render in the admin theme, so the variables
+   * were absent and the stylesheet fell back to its defaults: the editor showed
+   * a 16px base and a 40px h1 while the site rendered 20px and 50px. The theme
+   * settings are meant to be the single source of truth, so the editor has to
+   * read them too.
+   *
+   * This lives in a module rather than the theme precisely because a theme's
+   * hooks only fire while that theme is the active one.
+   *
+   * Heading sizes are converted from rem to em. On the front end they resolve
+   * against <html>, whose font-size the theme sets from the base setting. Inside
+   * the editor <html> belongs to the admin theme and must not be touched, so the
+   * same ratios are anchored to .ck-content's own font-size instead, which
+   * reproduces the front-end result exactly while staying scoped to the editor.
+   */
+  #[Hook('page_attachments')]
+  public function pageAttachments(array &$attachments): void {
+    $declarations = [];
+    foreach (self::FONT_SIZES as $key => [$default, $unit]) {
+      $value = theme_get_setting('jarvis_fs_' . $key, 'jarvis');
+      $value = is_numeric($value) ? (float) $value : $default;
+      // Base is absolute; the rest become em so they scale from it.
+      $declarations[] = $unit === 'px'
+        ? sprintf('--jarvis-fs-%s:%spx;', $key, $value)
+        : sprintf('--jarvis-fs-%s:%sem;', $key, $value);
+    }
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#tag' => 'style',
+        // Scoped to .ck-content, and doubled to match the specificity
+        // css/ckeditor5.css needs in order to beat CKEditor's inline rules.
+        '#value' => '.ck-content.ck-content{' . implode('', $declarations) . '}',
+      ],
+      'jarvis-ckeditor5-font-sizes',
+    ];
+    // Rebuild this markup when the theme settings change.
+    $attachments['#cache']['tags'][] = 'config:jarvis.settings';
+  }
+
+  /**
    * Implements hook_canvas_storable_prop_shape_alter().
    *
    * Canvas hardwires every block rich-text prop to its locked canvas_html_block
