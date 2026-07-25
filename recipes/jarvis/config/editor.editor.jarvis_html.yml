@@ -22,12 +22,14 @@ settings:
       - horizontalLine
       - alignment
       - heading
+      - markdownPaste
       - '-'
       - bulletedList
       - numberedList
       - blockQuote
       - code
       - sourceEditing
+      - fullscreen
   plugins:
     ai_ckeditor_ai:
       dialog:
@@ -59,19 +61,6 @@ settings:
         ai_ckeditor_summarize:
           enabled: true
           provider: openai__gpt-5.2
-        ai_ckeditor_tone:
-          enabled: false
-          provider: openai__gpt-5.2
-          autocreate: false
-          tone_vocabulary: tags
-          use_description: false
-        ai_ckeditor_translate:
-          enabled: false
-          provider: openai__gpt-5.2
-          language_source: tax
-          autocreate: false
-          translate_vocabulary: tags
-          use_description: false
     ckeditor5_alignment:
       enabled_alignments:
         - center
@@ -117,3 +106,4 @@ image_upload:
   max_dimensions:
     width: null
     height: null
+

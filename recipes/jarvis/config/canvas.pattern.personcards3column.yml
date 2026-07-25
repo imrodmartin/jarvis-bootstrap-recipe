@@ -1,23 +1,19 @@
-uuid: 6d1ab94f-3212-40a6-82b1-807ee7f2735f
 langcode: en
 status: true
 dependencies:
   config:
-  - canvas.component.sdc.jarvis.person
-  - canvas.component.sdc.jarvis.three-column
-  - field.field.media.jarvis_image.field_media_image
-  - image.style.canvas_parametrized_width
-  - media.type.jarvis_image
-  content:
-  - file:file:547c9c60-5e2a-4639-a2af-7d60cdd47138
-  - media:image:bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+    - canvas.component.sdc.jarvis.person
+    - canvas.component.sdc.jarvis.three-column
+    - field.field.media.jarvis_image.field_media_image
+    - image.style.canvas_parametrized_width
+    - media.type.jarvis_image
   module:
-  - file
-  - link
-  - media
-  - options
+    - file
+    - link
+    - media
+    - options
 id: personcards3column
-label: Person Cards - 3 Column
+label: 'Person Cards - 3 Column'
 component_tree:
   52fdcaeb-66bf-4fc3-a60e-10c14cf132cd:
     uuid: 52fdcaeb-66bf-4fc3-a60e-10c14cf132cd
@@ -35,17 +31,17 @@ component_tree:
       variant: card
       image:
         target_id: '5'
-      name: Jane Doe
-      position: Chief Executive Officer
-      phone: +1 555 123 4567
+      name: 'Jane Doe'
+      position: 'Chief Executive Officer'
+      phone: '+1 555 123 4567'
       email: jane@example.com
-      link_text: View profile
+      link_text: 'View profile'
       link_href:
-        uri: internal:/node/1
-        options: {}
+        uri: 'internal:/node/1'
+        options: {  }
       linkedin:
-        uri: https://linkedin.com
-        options: {}
+        uri: 'https://linkedin.com'
+        options: {  }
       padding: none
       margin: none
       vertical_padding: true
@@ -59,17 +55,17 @@ component_tree:
       variant: card
       image:
         target_id: '5'
-      name: Jane Doe
-      position: Chief Executive Officer
-      phone: +1 555 123 4567
+      name: 'Jane Doe'
+      position: 'Chief Executive Officer'
+      phone: '+1 555 123 4567'
       email: jane@example.com
-      link_text: View profile
+      link_text: 'View profile'
       link_href:
-        uri: internal:/node/1
-        options: {}
+        uri: 'internal:/node/1'
+        options: {  }
       linkedin:
-        uri: https://linkedin.com
-        options: {}
+        uri: 'https://linkedin.com'
+        options: {  }
       padding: none
       margin: none
       vertical_padding: true
@@ -83,17 +79,18 @@ component_tree:
       variant: card
       image:
         target_id: '5'
-      name: Jane Doe
-      position: Chief Executive Officer
-      phone: +1 555 123 4567
+      name: 'Jane Doe'
+      position: 'Chief Executive Officer'
+      phone: '+1 555 123 4567'
       email: jane@example.com
-      link_text: View profile
+      link_text: 'View profile'
       link_href:
-        uri: internal:/node/1
-        options: {}
+        uri: 'internal:/node/1'
+        options: {  }
       linkedin:
-        uri: https://linkedin.com
-        options: {}
+        uri: 'https://linkedin.com'
+        options: {  }
       padding: none
       margin: none
       vertical_padding: true
+

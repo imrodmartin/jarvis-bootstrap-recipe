@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_body
-    - filter.format.jarvis_html
     - filter.format.jarvis_full_html
+    - filter.format.jarvis_html
     - node.type.landing_page
   module:
     - text
@@ -25,3 +25,4 @@ settings:
     - jarvis_html
     - jarvis_full_html
 field_type: text_with_summary
+

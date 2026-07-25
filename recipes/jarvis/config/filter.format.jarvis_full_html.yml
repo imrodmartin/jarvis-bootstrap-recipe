@@ -4,8 +4,6 @@ dependencies:
   config:
     - core.entity_view_mode.media.full
     - core.entity_view_mode.media.hero
-    - media.type.jarvis_image
-    - media.type.jarvis_video
   module:
     - editor
     - media
@@ -65,3 +63,4 @@ filters:
       allowed_media_types:
         jarvis_image: jarvis_image
         jarvis_video: jarvis_video
+

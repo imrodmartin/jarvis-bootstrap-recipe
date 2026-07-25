@@ -1,23 +1,19 @@
-uuid: 51bee134-7434-4d0e-a9ca-82b131caedde
 langcode: en
 status: true
 dependencies:
   config:
-  - canvas.component.sdc.jarvis.person
-  - canvas.component.sdc.jarvis.two-column
-  - field.field.media.jarvis_image.field_media_image
-  - image.style.canvas_parametrized_width
-  - media.type.jarvis_image
-  content:
-  - file:file:547c9c60-5e2a-4639-a2af-7d60cdd47138
-  - media:image:bf48dd95-4205-4113-a4ee-8bbf0b5423cf
+    - canvas.component.sdc.jarvis.person
+    - canvas.component.sdc.jarvis.two-column
+    - field.field.media.jarvis_image.field_media_image
+    - image.style.canvas_parametrized_width
+    - media.type.jarvis_image
   module:
-  - file
-  - link
-  - media
-  - options
+    - file
+    - link
+    - media
+    - options
 id: personcards2column
-label: Person Cards - 2 Column
+label: 'Person Cards - 2 Column'
 component_tree:
   6cae201c-8bab-4f7b-b821-ceb0576fd1ec:
     uuid: 6cae201c-8bab-4f7b-b821-ceb0576fd1ec
@@ -38,17 +34,17 @@ component_tree:
       variant: card
       image:
         target_id: '5'
-      name: Jane Doe
-      position: Chief Executive Officer
-      phone: +1 555 123 4567
+      name: 'Jane Doe'
+      position: 'Chief Executive Officer'
+      phone: '+1 555 123 4567'
       email: jane@example.com
-      link_text: View profile
+      link_text: 'View profile'
       link_href:
-        uri: internal:/node/1
-        options: {}
+        uri: 'internal:/node/1'
+        options: {  }
       linkedin:
-        uri: https://linkedin.com
-        options: {}
+        uri: 'https://linkedin.com'
+        options: {  }
       padding: none
       margin: none
       vertical_padding: true
@@ -62,17 +58,18 @@ component_tree:
       variant: card
       image:
         target_id: '5'
-      name: Jane Doe
-      position: Chief Executive Officer
-      phone: +1 555 123 4567
+      name: 'Jane Doe'
+      position: 'Chief Executive Officer'
+      phone: '+1 555 123 4567'
       email: jane@example.com
-      link_text: View profile
+      link_text: 'View profile'
       link_href:
-        uri: internal:/node/1
-        options: {}
+        uri: 'internal:/node/1'
+        options: {  }
       linkedin:
-        uri: https://linkedin.com
-        options: {}
+        uri: 'https://linkedin.com'
+        options: {  }
       padding: none
       margin: none
       vertical_padding: true
+

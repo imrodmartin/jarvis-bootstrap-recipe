@@ -3,9 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.media.jarvis_image.field_media_image
-    - filter.format.jarvis_html
     - filter.format.canvas_html_block
-    - filter.format.jarvis_full_html
     - image.style.canvas_parametrized_width
     - media.type.jarvis_image
   module:
@@ -141,3 +139,4 @@ id: sdc.jarvis.stat
 provider: jarvis
 source: sdc
 source_local_id: 'jarvis:stat'
+

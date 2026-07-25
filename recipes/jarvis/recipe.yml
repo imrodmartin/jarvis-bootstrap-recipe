@@ -42,6 +42,10 @@ install:
   # Both shipped editors carry the ai_automators_ckeditor toolbar plugin.
   - ai_automators
   - ai_ckeditor
+  # Provides the markdownPaste toolbar item that editor.editor.jarvis_html
+  # uses. Without it the recipe aborts: "The provided toolbar item
+  # markdownPaste is not valid."
+  - ckeditor5_markdown
   - ai_assistant_api
   - ai_chatbot
   - ai_image_alt_text

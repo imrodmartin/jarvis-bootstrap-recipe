@@ -1,24 +1,18 @@
-uuid: b32c9b06-735c-43a7-bed8-53dd57792c6a
 langcode: en
 status: true
 dependencies:
   config:
-  - canvas.component.sdc.jarvis.image
-  - canvas.component.sdc.jarvis.two-column
-  - field.field.media.jarvis_image.field_media_image
-  - image.style.canvas_parametrized_width
-  - media.type.jarvis_image
-  content:
-  - file:file:1c204e6b-fa01-4a7e-b7d2-ee158340b82d
-  - file:file:aa7be51b-8fd9-4898-8731-4a0c6895278b
-  - media:image:2ecce779-6a6c-4386-8351-ddd85d91700a
-  - media:image:cb024184-dd25-4929-acc4-e025132142aa
+    - canvas.component.sdc.jarvis.image
+    - canvas.component.sdc.jarvis.two-column
+    - field.field.media.jarvis_image.field_media_image
+    - image.style.canvas_parametrized_width
+    - media.type.jarvis_image
   module:
-  - file
-  - media
-  - options
+    - file
+    - media
+    - options
 id: 224columnswithimages
-label: 2-2-4 columns with images
+label: '2-2-4 columns with images'
 component_tree:
   163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7:
     uuid: 163036a4-c9e7-48ba-8dce-c2f2f9cfb5e7
@@ -105,3 +99,4 @@ component_tree:
       full_width: false
       priority: true
       vertical_padding: true
+

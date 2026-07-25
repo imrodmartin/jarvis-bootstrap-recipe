@@ -2,14 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-  - filter.format.jarvis_html
-  - filter.format.canvas_html_block
-  - filter.format.jarvis_full_html
+    - filter.format.canvas_html_block
   module:
-  - options
-  - text
+    - options
+    - text
   theme:
-  - jarvis
+    - jarvis
 active_version: ea8cfd6e6dca35c5
 versioned_properties:
   active:
@@ -18,14 +16,15 @@ versioned_properties:
         body:
           required: true
           field_type: text_long
-          field_storage_settings: {}
+          field_storage_settings: {  }
           field_instance_settings:
             allowed_formats:
-            - canvas_html_block
+              - canvas_html_block
           field_widget: text_textarea
           default_value:
-          - value: <h2>Section heading</h2><p>Body copy with <strong>rich text</strong> support.</p>
-            format: canvas_html_block
+            -
+              value: '<h2>Section heading</h2><p>Body copy with <strong>rich text</strong> support.</p>'
+              format: canvas_html_block
           expression: ℹ︎text_long␟processed
           derived_schema_metadata:
             string_shape:
@@ -36,87 +35,91 @@ versioned_properties:
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: normal
+            -
+              value: normal
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         align:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: start
+            -
+              value: start
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         color:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value:
-          - value: inherit
+            -
+              value: inherit
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         vertical_padding:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
     fallback_metadata:
-      slot_definitions: {}
+      slot_definitions: {  }
 label: Text
 id: sdc.jarvis.text
 provider: jarvis
 source: sdc
-source_local_id: jarvis:text
+source_local_id: 'jarvis:text'
+

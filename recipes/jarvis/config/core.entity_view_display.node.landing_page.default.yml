@@ -6,7 +6,6 @@ dependencies:
     - node.type.landing_page
   module:
     - layout_builder
-    - layout_discovery
     - text
     - user
 third_party_settings:
@@ -28,3 +27,4 @@ content:
 hidden:
   layout_builder__layout: true
   links: true
+
