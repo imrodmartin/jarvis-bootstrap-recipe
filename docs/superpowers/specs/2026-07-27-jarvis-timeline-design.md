@@ -180,16 +180,22 @@ the strip into a three-line block that pushes the panel below the fold.
   scroll-snap-type: x proximity;
   scroll-padding-inline: 1rem;    /* snapped tab never sits flush to the edge */
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;          /* affordance is the edge fade, not a scrollbar */
+  scrollbar-width: thin;          /* the platform's own affordance — keep it */
 }
-.jarvis-timeline__nav::-webkit-scrollbar { display: none; }
 .jarvis-timeline__nav .nav-link { scroll-snap-align: start; }
 ```
 
-A hidden scrollbar needs a replacement affordance or the extra tabs are invisible.
-Use a `mask-image` edge fade on the nav that disappears at the scroll ends via
-`animation-timeline: scroll(self inline)`, with a plain always-on fade as the
-fallback where scroll-driven animations aren't supported. No JS.
+**Keep the scrollbar.** Hiding it means the extra tabs become invisible, which then
+needs a replacement affordance — a `mask-image` edge fade driven by
+`animation-timeline: scroll(self inline)` so it only appears while there is more to
+scroll, plus a static fallback where scroll-driven animations aren't supported.
+That is a lot of CSS to reimplement something the platform already provides, and a
+permanent fade over a strip that fits reads as a rendering bug. `scrollbar-width:
+thin` instead; iOS hides it until scroll anyway.
+
+Centering with `align: center` uses `justify-content: safe center`, not plain
+`center` — a centered flex container that overflows makes its leading items
+unreachable by scrolling.
 
 **Touch targets.** Bootstrap's `.nav-link` padding alone can fall under the WCAG 2.2
 target-size floor once the label is short. Set `min-height: 44px` (and `min-width`
