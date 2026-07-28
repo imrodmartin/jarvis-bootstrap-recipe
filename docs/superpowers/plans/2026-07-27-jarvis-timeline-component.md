@@ -682,13 +682,27 @@ here only — in tabs the name is a button and in the accordion a summary."
 
 - [ ] **Step 1: Write the failing test**
 
-An SDC auto-attaches a same-named CSS file, so the presence of the stylesheet in the render is the signal.
+An SDC auto-attaches a same-named CSS file, but `renderInIsolation()` returns only
+the component fragment — `#attached` libraries never become `<link>` tags in it, so
+grepping that output for the stylesheet can never succeed. The signal is computed
+style on the harness page, which links the stylesheet directly.
 
 ```bash
-/tmp/render_timeline.sh tabs | grep -c "timeline.css"
+/tmp/timeline_harness.sh tabs
 ```
 
-Expected: `0` — no stylesheet attached yet.
+Open the printed URL and evaluate:
+
+```js
+getComputedStyle(document.querySelector('.jarvis-timeline__icon')).fontSize
+```
+
+Expected before the fix: the browser's default (`16px`), because
+`components/timeline/timeline.css` does not exist yet and the harness's `<link>` to
+it 404s. After the fix it is `48px` — the harness renders at `icon_size: large`.
+
+Auto-attachment on a real Drupal page is a separate claim this harness cannot make;
+Task 7 Step 1 verifies it in Canvas.
 
 - [ ] **Step 2: Write the stylesheet**
 
@@ -840,10 +854,10 @@ Expected: `0` — no stylesheet attached yet.
 - [ ] **Step 3: Rebuild and confirm the stylesheet attaches**
 
 ```bash
-cd /Users/rodmartin/code/drupaltheme && ddev drush cr && /tmp/render_timeline.sh tabs | grep -c "timeline.css"
+cd /Users/rodmartin/code/drupaltheme && ddev drush cr && /tmp/timeline_harness.sh tabs
 ```
 
-Expected: `1`.
+Reload the printed URL and re-evaluate the Step 1 expression. Expected: `48px`.
 
 - [ ] **Step 4: Confirm computed sizes in the browser**
 
@@ -1158,6 +1172,18 @@ cd /Users/rodmartin/code/drupaltheme && ddev drush cr
 ```
 
 In the Canvas editor, confirm `Timeline` is listed under the Jarvis category and that all 23 props render in the settings tray — in particular that the six `_content` props show a CKEditor field, and that the icon selects list `None (show the step number)` rather than a blank first option.
+
+Then confirm the stylesheet **auto-attaches**. Tasks 4–6 proved the CSS rules are
+correct, but they proved it on a harness page that links `timeline.css` by hand.
+Nothing so far has shown that Drupal attaches it on a real page. On the rendered
+Canvas page, with no harness involved:
+
+```js
+[...document.querySelectorAll('link[rel=stylesheet]')].some(l => l.href.includes('timeline.css'))
+```
+
+Expected: `true`. If it is `false` the component is unstyled everywhere except the
+harness, and no earlier task would have caught it.
 
 - [ ] **Step 2: Run the verification matrix**
 
