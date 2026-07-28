@@ -1185,6 +1185,20 @@ Canvas page, with no harness involved:
 Expected: `true`. If it is `false` the component is unstyled everywhere except the
 harness, and no earlier task would have caught it.
 
+Then, at a 375px viewport on that same real page, confirm the mobile override
+survives production asset order:
+
+```js
+getComputedStyle(document.querySelector('.jarvis-timeline__nav')).flexWrap
+```
+
+Expected: `nowrap`. This matters because `.jarvis-timeline__nav { flex-wrap: nowrap }`
+and Bootstrap's `.nav { flex-wrap: wrap }` have identical specificity — the override
+wins on source order alone. The harness hardcodes that order in its `<link>` tags;
+a real page builds it from library dependencies and CSS aggregation. If this reads
+`wrap`, the tab strip wraps in production no matter what the harness showed, and the
+fix is a dependency or weight adjustment on the component's library, not a CSS change.
+
 - [ ] **Step 2: Run the verification matrix**
 
 Place a six-step timeline. For each of `tabs`, `accordion` and `rail`, at 1280px, 768px and 375px: assert `document.documentElement.scrollWidth <= document.documentElement.clientWidth` and capture a screenshot.
