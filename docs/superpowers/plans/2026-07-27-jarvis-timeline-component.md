@@ -1082,7 +1082,11 @@ Canvas page where the preprocess actually runs.
   .jarvis-bg--bg2,
   .jarvis-bg--dark,
   .jarvis-bg--image
-) .jarvis-timeline__marker::after {
+/* The `:not(:last-child)` must be repeated here. The base connector rule is
+   `.jarvis-timeline__step:not(:last-child) .jarvis-timeline__marker::after`
+   at specificity (0,3,1); an override without it is (0,2,1) and loses no
+   matter how late it appears in the file. */
+) .jarvis-timeline__step:not(:last-child) .jarvis-timeline__marker::after {
   background: rgba(255, 255, 255, 0.25);
 }
 
