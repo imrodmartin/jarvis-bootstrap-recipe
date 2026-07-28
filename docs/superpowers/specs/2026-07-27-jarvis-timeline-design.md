@@ -159,13 +159,61 @@ step order carries meaning.
   `icon_size` class; the `<i>` reads it for `font-size`.
 - `icon_position: above` → `.nav-link { display: grid; justify-items: center; }`;
   `inline` → `display: inline-flex; gap: .5rem;`.
-- Tabs nav on narrow screens: `flex-wrap: nowrap; overflow-x: auto;` with
-  `scroll-snap-type: x proximity`. Six tabs otherwise crush on a phone.
 - Rail line: `grid-template-columns: auto 1fr` on the `<li>`, connector drawn as a
   `::before` on the marker column. No absolute positioning against a fixed height.
 - `@media (prefers-reduced-motion: reduce)` disables the Bootstrap `.fade`
   transition on panes.
 - **No `vh`/`vw` anywhere** — viewport units break the Canvas preview iframe.
+
+## Mobile
+
+Mobile is a requirement, not a fallback. The tabs strip is the only real risk: six
+tabs at 375px cannot fit, and Bootstrap's `.nav-tabs` wraps by default, which turns
+the strip into a three-line block that pushes the panel below the fold.
+
+**Tabs strip — horizontal scroll, not wrap.**
+
+```css
+.jarvis-timeline__nav {
+  flex-wrap: nowrap;              /* override Bootstrap's default wrap */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 1rem;    /* snapped tab never sits flush to the edge */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;          /* affordance is the edge fade, not a scrollbar */
+}
+.jarvis-timeline__nav::-webkit-scrollbar { display: none; }
+.jarvis-timeline__nav .nav-link { scroll-snap-align: start; }
+```
+
+A hidden scrollbar needs a replacement affordance or the extra tabs are invisible.
+Use a `mask-image` edge fade on the nav that disappears at the scroll ends via
+`animation-timeline: scroll(self inline)`, with a plain always-on fade as the
+fallback where scroll-driven animations aren't supported. No JS.
+
+**Touch targets.** Bootstrap's `.nav-link` padding alone can fall under the WCAG 2.2
+target-size floor once the label is short. Set `min-height: 44px` (and `min-width`
+on the icon-only edge case) on the tab buttons — Jarvis already holds itself to the
+stricter 44px rather than the 24px minimum.
+
+**Icon size steps down.** `icon_size: large` (48px) plus a stacked label makes a tab
+roughly 90px tall on a phone. Below `768px` the custom property drops one step
+(`large` → `medium`, `medium` → `small`); `icon_position: above` is preserved because
+it is what keeps the tab narrow enough to fit several on screen.
+
+**Panel content cannot overflow the page.** Editors paste tables and wide images into
+the rich-text props. The content wrapper gets `overflow-x: auto` and
+`img, table, iframe { max-width: 100%; }` so a wide table scrolls inside its own box
+instead of making the whole document scroll sideways.
+
+**Rail at 375px.** Marker column shrinks and the connector stays aligned to the
+marker centre; the body column is `minmax(0, 1fr)` so long unbroken strings wrap
+rather than forcing the grid wider.
+
+**No responsive mode switching.** Tabs do not become an accordion below a breakpoint.
+The three modes emit different DOM at render time, so switching would mean shipping
+both trees and hiding one — double markup for the same content. The scrolling strip
+is the standard mobile tabs pattern and keeps one DOM.
 
 ## Accessibility
 
@@ -212,15 +260,21 @@ theme before.
 
 1. Place the component in Canvas in each of the three modes; confirm all three
    appear in the component list and all props bind.
-2. Screenshot each mode at 1280px and 375px. Confirm the tabs nav scrolls rather
-   than wrapping into a crush at 375px.
-3. Keyboard: arrow keys move between tabs and only the active tab is in the tab
+2. Screenshot each mode at 1280px, 768px and 375px, with all six steps populated.
+3. **At 375px, assert `document.documentElement.scrollWidth <= clientWidth`** — the
+   page must not scroll sideways in any of the three modes. Repeat with a wide table
+   and an oversized image pasted into a step's rich text.
+4. At 375px confirm the tabs strip scrolls (`nav.scrollWidth > nav.clientWidth`) and
+   that `getComputedStyle(nav).flexWrap === 'nowrap'` — Bootstrap's default wrap
+   must actually be overridden, not merely declared.
+5. Measure a tab button's rendered box at 375px; height must be ≥ 44px.
+6. Keyboard: arrow keys move between tabs and only the active tab is in the tab
    order; Enter/Space toggles a `<summary>`; the rail has no phantom focus stops.
-4. Confirm accordion exclusivity — opening step 3 closes step 1.
-5. Confirm two timelines on one page don't cross-trigger each other.
-6. Check computed contrast on the active `.nav-link` against the section
+7. Confirm accordion exclusivity — opening step 3 closes step 1.
+8. Confirm two timelines on one page don't cross-trigger each other.
+9. Check computed contrast on the active `.nav-link` against the section
    background in both light and dark section themes.
-7. Confirm a step with `icon: none` shows its step number.
+10. Confirm a step with `icon: none` shows its step number.
 
 ## Out of scope
 
