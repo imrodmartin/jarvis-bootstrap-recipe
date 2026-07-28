@@ -43,7 +43,9 @@ The worktree at `component-brainstorm-d6b665` has the submodule uninitialized (`
 
 **Interfaces:**
 - Consumes: nothing.
-- Produces: the `/tmp/render_timeline.sh` harness used verbatim by Tasks 1–4.
+- Produces: two harnesses — `/tmp/render_timeline.sh` (markup, used by Tasks 1–3) and `/tmp/timeline_harness.sh` (rendered page, used by Tasks 4–6).
+
+The DDEV project is `jarvis`, served at `https://jarvis.ddev.site`. The submodule sits on `master`; Task 0 branches off it.
 
 - [ ] **Step 1: Cut the branch**
 
@@ -68,6 +70,61 @@ cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval 'print \Drupal::serv
 ```
 
 Expected: HTML containing `jarvis-stat__number` and `1,200+`. If this fails, stop — no later task can be verified.
+
+- [ ] **Step 4: Build the browser harness**
+
+Tasks 4–6 assert computed style, which needs a real rendered page. Rather than
+hand-placing the component in Canvas for every check, this writes a standalone
+page into the docroot carrying the four stylesheets the component actually
+depends on. Task 7 does the real Canvas placement once, at the end.
+
+```bash
+cat > /tmp/timeline_harness.sh <<'OUTER'
+#!/usr/bin/env bash
+# Usage: timeline_harness.sh <display-mode> [jarvis-bg-class]
+# Writes web/timeline-harness.html and prints its URL.
+set -e
+MODE="$1"; BG="${2:-}"
+cd /Users/rodmartin/code/drupaltheme
+BODY=$(ddev drush php:eval '
+$props = ["display" => "'"$MODE"'", "icon_size" => "large"];
+$labels = ["October to December", "January", "February", "March", "April", "May"];
+foreach ($labels as $i => $l) {
+  $n = $i + 1;
+  $props["step{$n}_icon"] = $i === 1 ? "none" : "fa-solid fa-calendar-days";
+  $props["step{$n}_label"] = $l;
+  $props["step{$n}_content"] = "<p>Step {$n} body copy for the harness.</p>";
+}
+print \Drupal::service("renderer")->renderInIsolation(["#type" => "component", "#component" => "jarvis:timeline", "#props" => $props]);
+')
+cat > web/timeline-harness.html <<HTML
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/themes/custom/jarvis/libraries/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="/themes/custom/jarvis/css/overrides.css">
+<link rel="stylesheet" href="/themes/custom/jarvis/components/timeline/timeline.css">
+</head><body>
+<div class="container ${BG}">${BODY}</div>
+<script src="/themes/custom/jarvis/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body></html>
+HTML
+echo "https://jarvis.ddev.site/timeline-harness.html"
+OUTER
+chmod +x /tmp/timeline_harness.sh
+```
+
+Six steps and `icon_size: large` because those are the conditions the mobile
+task has to survive. Pass a second argument to wrap the component in a coloured
+section — Task 6 uses `jarvis-bg--primary`.
+
+**Harness caveat for Task 6.** On a real page `jarvis_preprocess_html` computes
+`--bs-body-color` to an ADA-safe foreground for the section background; the
+static harness does not run that preprocess. Task 6 therefore sets the property
+by hand in the harness to stand in for it, and Task 7 re-checks the same
+assertion on a genuine Canvas page where the preprocess does run. Do not treat
+the harness result alone as proof for Task 6.
 
 ---
 
@@ -787,7 +844,12 @@ Expected: `1`.
 
 - [ ] **Step 4: Confirm computed sizes in the browser**
 
-Place the component on a test page in Canvas with `icon_size: large`, then in the browser console:
+```bash
+/tmp/timeline_harness.sh tabs
+```
+
+Open the printed URL at a 1280px viewport (the harness already uses
+`icon_size: large`) and run in the console:
 
 ```js
 ({
@@ -796,7 +858,7 @@ Place the component on a test page in Canvas with `icon_size: large`, then in th
 })
 ```
 
-Expected: `glyph: "48px"`, `circle: "50%"`.
+Expected: `glyph: "48px"`, `circle: "50%"`. Repeat with `/tmp/timeline_harness.sh rail` and confirm the connector renders between markers but not after the last one.
 
 - [ ] **Step 5: Commit**
 
@@ -822,7 +884,11 @@ height."
 
 - [ ] **Step 1: Write the failing test**
 
-Load a page with a six-step tabs timeline, resize to 375px, and run in the console:
+```bash
+/tmp/timeline_harness.sh tabs
+```
+
+Open the printed URL, resize the viewport to 375px, and run in the console:
 
 ```js
 const nav = document.querySelector('.jarvis-timeline__nav');
@@ -904,7 +970,9 @@ All four must pass.
 
 - [ ] **Step 4: Repeat the overflow assertion for the other two modes and for hostile content**
 
-Paste a 12-column table and a 2000px-wide image into step 1's content. Then at 375px, for each of `tabs`, `accordion` and `rail`:
+Edit `/tmp/timeline_harness.sh` to put a 12-column table and a 2000px-wide image
+into step 1's content, then regenerate for each mode. At 375px, for each of
+`tabs`, `accordion` and `rail`:
 
 ```js
 const doc = document.documentElement;
@@ -944,13 +1012,21 @@ Every Jarvis component with a fixed accent carries this block; `large-call-to-ac
 
 - [ ] **Step 1: Write the failing test**
 
-Place a timeline inside a Section with a primary background. In the console:
-
-```js
-getComputedStyle(document.querySelector('.jarvis-timeline__icon')).color === getComputedStyle(document.body).color
+```bash
+/tmp/timeline_harness.sh tabs jarvis-bg--primary
 ```
 
-Expected before the fix: `false` — the icon is still primary-on-primary and effectively invisible.
+The static harness does not run `jarvis_preprocess_html`, so stand in for it by
+setting the property the preprocess would compute, then read the icon colour:
+
+```js
+document.querySelector('.jarvis-bg--primary').style.setProperty('--bs-body-color', 'rgb(255, 255, 255)');
+getComputedStyle(document.querySelector('.jarvis-timeline__icon')).color;  // want "rgb(255, 255, 255)"
+```
+
+Expected before the fix: the primary blue, not white — the icon is
+primary-on-primary and effectively invisible. Task 7 re-checks this on a real
+Canvas page where the preprocess actually runs.
 
 - [ ] **Step 2: Append the override block**
 
@@ -1017,9 +1093,15 @@ Expected before the fix: `false` — the icon is still primary-on-primary and ef
 cd /Users/rodmartin/code/drupaltheme && ddev drush cr
 ```
 
+```bash
+/tmp/timeline_harness.sh tabs jarvis-bg--primary
+```
+
 ```js
+const sec = document.querySelector('.jarvis-bg--primary');
+sec.style.setProperty('--bs-body-color', 'rgb(255, 255, 255)');
 console.assert(
-  getComputedStyle(document.querySelector('.jarvis-timeline__icon')).color === getComputedStyle(document.body).color,
+  getComputedStyle(document.querySelector('.jarvis-timeline__icon')).color === 'rgb(255, 255, 255)',
   'icon must fall back to the safe foreground'
 );
 'passed';
@@ -1078,7 +1160,19 @@ In the Canvas editor, confirm `Timeline` is listed under the Jarvis category and
 
 Place a six-step timeline. For each of `tabs`, `accordion` and `rail`, at 1280px, 768px and 375px: assert `document.documentElement.scrollWidth <= document.documentElement.clientWidth` and capture a screenshot.
 
-- [ ] **Step 3: Keyboard and screen-reader pass**
+- [ ] **Step 3: Re-check the contrast fallback on a real page**
+
+Task 6 proved this only against the static harness, where `--bs-body-color` was
+set by hand. Place the timeline inside a Section with a primary background in
+Canvas, where `jarvis_preprocess_html` actually computes the value, and confirm:
+
+```js
+getComputedStyle(document.querySelector('.jarvis-timeline__icon')).color === getComputedStyle(document.body).color
+```
+
+Expected: `true`. Repeat on a light-background Section.
+
+- [ ] **Step 4: Keyboard and screen-reader pass**
 
 - Tabs: Left/Right arrows move between tabs; only the active tab is in the tab order (Bootstrap's roving tabindex); Tab from the strip lands on the active panel.
 - Accordion: Enter and Space toggle a `<summary>`; opening step 3 closes step 1.
@@ -1086,7 +1180,18 @@ Place a six-step timeline. For each of `tabs`, `accordion` and `rail`, at 1280px
 - Two timelines on one page: opening a step in the first does not close one in the second.
 - A step with `icon: none` shows its number.
 
-- [ ] **Step 4: Document the component**
+- [ ] **Step 5: Remove the harness page**
+
+The harness wrote a file into the docroot. It is scratch, not a deliverable.
+
+```bash
+rm -f /Users/rodmartin/code/drupaltheme/web/timeline-harness.html
+cd /Users/rodmartin/code/drupaltheme && git status --porcelain web/ | grep timeline-harness && echo "STILL PRESENT — remove it" || echo "clean"
+```
+
+Expected: `clean`.
+
+- [ ] **Step 6: Document the component**
 
 Append to the "Text and people" section of `docs/jarvis-sdc-components.md`, matching the one-paragraph-per-component style already in use:
 
@@ -1096,13 +1201,13 @@ Append to the "Text and people" section of `docs/jarvis-sdc-components.md`, matc
 
 That document's opening line currently reads "all nineteen components" — update the count.
 
-- [ ] **Step 5: Commit the theme and push the branch**
+- [ ] **Step 7: Commit the theme and push the branch**
 
 ```bash
 cd /Users/rodmartin/code/drupaltheme/web/themes/custom/jarvis && git add -A && git commit -m "docs(timeline): document the timeline component" && git push -u origin feat/timeline-component && git rev-parse HEAD
 ```
 
-- [ ] **Step 6: Bump the submodule in the parent repo**
+- [ ] **Step 8: Bump the submodule in the parent repo**
 
 ```bash
 cd /Users/rodmartin/code/drupaltheme && git add web/themes/custom/jarvis docs/jarvis-sdc-components.md && git commit -m "theme: bump jarvis — timeline component"
