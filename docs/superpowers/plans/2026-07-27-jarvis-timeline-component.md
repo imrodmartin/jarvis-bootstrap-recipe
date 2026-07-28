@@ -23,6 +23,7 @@ Every task's requirements implicitly include this section.
 - **Touch targets ≥ 44px**, not the WCAG 2.2 minimum of 24px. Jarvis holds the stricter floor.
 - **Icons are always `aria-hidden="true"`.** The adjacent label carries the meaning.
 - **Verify rendered output, not source.** Grepping source has shipped regressions in this theme before. Every task's check renders the component and inspects the result.
+- **`renderInIsolation()` takes its argument by reference.** Always assign the render array to a variable first — `$e = [...]; print …->renderInIsolation($e);`. Passing an array literal inline fails with "could not be passed by reference".
 
 ## Where the work happens
 
@@ -66,7 +67,7 @@ Expected: `Successful`. If not, run `ddev start` first.
 This is the red/green loop for Tasks 1–4. It renders an SDC in isolation and prints the HTML, and it throws on a schema violation — so it validates both markup and `component.yml` at once.
 
 ```bash
-cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval 'print \Drupal::service("renderer")->renderInIsolation(["#type" => "component", "#component" => "jarvis:stat", "#props" => ["title" => "1,200+"]]);'
+cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval '$e = ["#type" => "component", "#component" => "jarvis:stat", "#props" => ["title" => "1,200+"]]; print \Drupal::service("renderer")->renderInIsolation($e);'
 ```
 
 Expected: HTML containing `jarvis-stat__number` and `1,200+`. If this fails, stop — no later task can be verified.
@@ -95,7 +96,8 @@ foreach ($labels as $i => $l) {
   $props["step{$n}_label"] = $l;
   $props["step{$n}_content"] = "<p>Step {$n} body copy for the harness.</p>";
 }
-print \Drupal::service("renderer")->renderInIsolation(["#type" => "component", "#component" => "jarvis:timeline", "#props" => $props]);
+$e = ["#type" => "component", "#component" => "jarvis:timeline", "#props" => $props];
+print \Drupal::service("renderer")->renderInIsolation($e);
 ')
 cat > web/timeline-harness.html <<HTML
 <!doctype html>
@@ -502,7 +504,7 @@ Expected output contains:
 - [ ] **Step 6: Verify empty input renders nothing**
 
 ```bash
-cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval 'print "[" . trim(\Drupal::service("renderer")->renderInIsolation(["#type" => "component", "#component" => "jarvis:timeline", "#props" => ["display" => "tabs"]])) . "]";'
+cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval '$e = ["#type" => "component", "#component" => "jarvis:timeline", "#props" => ["display" => "tabs"]]; print "[" . trim(\Drupal::service("renderer")->renderInIsolation($e)) . "]";'
 ```
 
 Expected: `[]` — no wrapper div when every step is empty.
@@ -578,7 +580,8 @@ $p = ["display" => "accordion", "step1_label" => "A", "step1_content" => "<p>a</
 $r = \Drupal::service("renderer");
 $out = "";
 foreach ([1, 2] as $i) {
-  $out .= $r->renderInIsolation(["#type" => "component", "#component" => "jarvis:timeline", "#props" => $p]);
+  $e = ["#type" => "component", "#component" => "jarvis:timeline", "#props" => $p];
+  $out .= $r->renderInIsolation($e);
 }
 preg_match_all("/name=\"(jt-\d+)\"/", $out, $m);
 print count(array_unique($m[1])) . " unique group names\n";
@@ -652,7 +655,7 @@ Expected output contains:
 - [ ] **Step 4: Verify heading_level is honoured**
 
 ```bash
-cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval 'print \Drupal::service("renderer")->renderInIsolation(["#type" => "component", "#component" => "jarvis:timeline", "#props" => ["display" => "rail", "heading_level" => "h2", "step1_label" => "A", "step1_content" => "<p>a</p>"]]);'
+cd /Users/rodmartin/code/drupaltheme && ddev drush php:eval '$e = ["#type" => "component", "#component" => "jarvis:timeline", "#props" => ["display" => "rail", "heading_level" => "h2", "step1_label" => "A", "step1_content" => "<p>a</p>"]]; print \Drupal::service("renderer")->renderInIsolation($e);'
 ```
 
 Expected: `<h2 class="jarvis-timeline__label">A</h2>`.
