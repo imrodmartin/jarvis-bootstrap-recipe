@@ -101,33 +101,81 @@ the full site. Notes:
 - The three `repositories` lines disappear once the packages are on
   Packagist.
 
-## On a webserver with public_html as the root
-1. Make sure php is updated for memory.
-   
+## Installing Drupal 11 with Jarvis on a Webserver Using `public_html` as the Docroot
 
-2 — Scaffold a fresh Drupal 11 project:
+### 1. Verify PHP configuration
 
-composer create-project drupal/recommended-project:^11.4 tmp --no-install && mv tmp/composer.json . && rm -rf tmp
-3 — Point the docroot at public_html instead of web:
+Make sure PHP is updated and `memory_limit` is high enough for Composer.
 
-sed -i 's|"web/|"public_html/|g; s|: "web"|: "public_html"|g' composer.json && grep -n "public_html" composer.json | head
-Every path in that file should now read public_html/…. If any still say web/, stop and paste the output.
+### 2. Scaffold a fresh Drupal 11 project
 
-4 — Install Drupal core + Jarvis:
+```bash
+composer create-project drupal/recommended-project:^11.4 tmp --no-install \
+  && mv tmp/composer.json . \
+  && rm -rf tmp
+```
 
-```composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}' && composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}' && composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
-composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush```
+### 3. Point the docroot at `public_html` instead of `web`
 
-Composer places the theme in public_html/themes/contrib/jarvis, the custom modules in public_html/modules/custom/jarvis-modules, the recipe in recipes/jarvis-recipe. Do not clone or copy any of those by hand — that's what broke the last attempt.
+```bash
+sed -i 's|"web/|"public_html/|g; s|: "web"|: "public_html"|g' composer.json \
+  && grep -n "public_html" composer.json | head
+```
 
-5 — Install the site. Fill in your real DB credentials; this drops and recreates those tables:
+> **Check the output.** Every path in `composer.json` should now read `public_html/...`.
+> If any still say `web/`, stop and paste the output before continuing.
 
-```vendor/bin/drush --root=public_html site:install standard --db-url=mysql://DBUSER:DBPASS@localhost/DBNAME --account-name=admin -y```
+### 4. Install Drupal core and Jarvis
 
-6 — Apply the recipe (absolute path — relative resolves against the docroot and fails):
+Register the repositories:
 
-```vendor/bin/drush --root=public_html recipe "$(pwd)/recipes/jarvis-recipe" && vendor/bin/drush --root=public_html cr && vendor/bin/drush --root=public_html uli```
+```bash
+composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
+composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
+composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
+```
 
+Then require the packages:
+
+```bash
+composer require \
+  imrodmartin/jarvis-recipe \
+  drupal/ckeditor5_markdown \
+  drupal/default_content:^2.0@beta \
+  drupal/ai_media_image:^1.0@alpha \
+  drush/drush
+```
+
+Composer places files as follows:
+
+| Component | Destination |
+| --- | --- |
+| Theme | `public_html/themes/contrib/jarvis` |
+| Custom modules | `public_html/modules/custom/jarvis-modules` |
+| Recipe | `recipes/jarvis-recipe` |
+
+> **Don't clone or copy any of those by hand.** That's what broke the last attempt.
+
+### 5. Install the site
+
+Fill in your real database credentials. This drops and recreates those tables.
+
+```bash
+vendor/bin/drush --root=public_html site:install standard \
+  --db-url=mysql://DBUSER:DBPASS@localhost/DBNAME \
+  --account-name=admin \
+  -y
+```
+
+### 6. Apply the recipe
+
+Use an absolute path. A relative path resolves against the docroot and fails.
+
+```bash
+vendor/bin/drush --root=public_html recipe "$(pwd)/recipes/jarvis-recipe" \
+  && vendor/bin/drush --root=public_html cr \
+  && vendor/bin/drush --root=public_html uli
+```
 ## Add Jarvis by hand (no composer package)
 
 Prefer to vendor the pieces yourself? Assemble the four pieces, then apply:
