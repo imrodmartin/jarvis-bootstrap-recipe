@@ -98,6 +98,22 @@ install:
   # The theme
   - jarvis
 config:
+  # Core defaults `strict` to TRUE, which compares EVERY config name this
+  # recipe can supply — the ~217 files in config/ plus the ~133 names the
+  # import list below pulls out of other extensions — against the site's
+  # active config, and throws RecipePreExistingConfigException on the first
+  # byte that differs. On an existing site that is a hair trigger: a site that
+  # added a column to views.view.content, or tweaked image.style.large, or
+  # already runs Canvas, never gets past validation. Nested uuids are not
+  # normalised either, so a hand-built image style with identical settings
+  # still fails on its effect uuids.
+  #
+  # FALSE instead: pre-existing config is left alone and only the names the
+  # site does not already have are created. The trade-off is silence — where
+  # the site owns a drifted copy, the recipe's version never lands and nothing
+  # says so. Flip back to TRUE (or list the names that genuinely must match)
+  # if fail-fast matters more than applying to an existing site.
+  strict: false
   # Recipes deliberately skip config ENTITIES shipped by the modules they
   # install (RecipeRunner sets the config installer to syncing during module
   # install) — without this import list the site has no admin views

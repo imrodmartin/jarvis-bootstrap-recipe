@@ -68,21 +68,25 @@ say):
 composer config repositories.jarvis-recipe vcs https://github.com/imrodmartin/jarvis-recipe
 composer config repositories.jarvis-theme vcs https://github.com/imrodmartin/jarvis
 composer config repositories.jarvis-modules vcs https://github.com/imrodmartin/jarvis-modules
-composer require imrodmartin/jarvis-recipe drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
+composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown \
+  drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
 
 drush recipe recipes/jarvis-recipe
 drush cache:rebuild
 ```
 
-Verified end-to-end on a blank `drupal/recommended-project` with the standard
-profile: theme lands in `themes/contrib/jarvis`, the custom modules in
-`modules/custom/jarvis-modules` (Drupal discovers both nested modules), the
-recipe in `recipes/jarvis-recipe`, and the apply produces the full site.
-Notes:
+Last verified end-to-end on a blank `drupal/recommended-project` with the
+standard profile (2026-07-18): theme lands in `themes/contrib/jarvis`, the
+custom modules in `modules/custom/jarvis-modules` (Drupal discovers both
+nested modules), the recipe in `recipes/jarvis-recipe`, and the apply produces
+the full site. Notes:
 
-- The two extra packages on the `require` line carry stability flags
-  (`@beta`/`@alpha`) that only work in the root `composer.json` — that's why
-  they're spelled out.
+- `drupal/ckeditor5_markdown` is spelled out because nothing else depends on
+  it: it supplies the `markdownPaste` toolbar item that
+  `editor.editor.jarvis_html` references, and without it the apply aborts with
+  *"The provided toolbar item markdownPaste is not valid."*
+- The two `@beta`/`@alpha` packages carry stability flags that only work in the
+  root `composer.json` — that's why they're spelled out too.
 - No drush yet? Add `drush/drush` to the same require.
 - The three `repositories` lines disappear once the packages are on
   Packagist.
@@ -107,6 +111,7 @@ rm -rf /tmp/jarvis-src
 # 3. Contrib dependencies
 composer require drupal/canvas drupal/canvas_field_component \
   drupal/twig_tweak drupal/linkit drupal/token_filter drupal/focal_point \
+  drupal/ckeditor5_markdown \
   drupal/backup_migrate drupal/asset_injector drupal/simple_gmap \
   drupal/default_content drupal/editoria11y drupal/key drupal/ai \
   drupal/ai_agents drupal/ai_image_alt_text drupal/ai_media_image \
@@ -134,11 +139,37 @@ above is effectively two commands only because this repo's `composer.json`
 already lists everything. On an existing project the `composer require` is a
 one-time step; from then on it's `drush recipe` + `drush cache:rebuild`.
 
-The recipe targets a **blank site**. A site that already runs Canvas or the
-AI modules with drifted settings will fail the recipe's config checks.
-Applying is also an opinionated takeover: default theme → Jarvis, admin
-theme → Claro, front page → the demo Canvas page (`/page/2`), demo content
-imported.
+## Applying to a site that already has config
+
+The recipe is built for a **blank site**, and applying it is an opinionated
+takeover: default theme → Jarvis, admin theme → Claro, front page → the demo
+Canvas page (`/page/2`), demo content imported. It will apply to a site that
+already has content and config, but know what it does and does not touch:
+
+- **Config the site already has is left exactly as it is.** The recipe ships
+  `strict: false`, so it creates only the config names your site does not
+  already own. Nothing of yours is overwritten.
+- **The flip side is silence.** Where your site owns a drifted copy of
+  something the recipe ships — a customised `views.view.content`, your own
+  `image.style.large`, an existing `workflows.workflow.editorial` — the
+  recipe's version simply never lands, and you get no warning. Expect to
+  reconcile those by hand afterwards.
+- **Watch for name collisions.** The recipe ships generic names that an
+  existing site may already use for something else: `image.style.hero_banner`,
+  `field.storage.node.field_body`, the `card`/`hero`/`image`/`text`/`video`
+  block content types and their fields. Yours win; the components that expect
+  the recipe's shape may not find what they need.
+- **Config *actions* still run regardless** — they are what set the default
+  theme, the front page and the text-format permissions, and they act on
+  whatever config is there.
+
+Want the recipe to stop rather than silently skip? Set `strict: true` in
+`recipes/jarvis/recipe.yml` (core's default). Every config name the recipe can
+supply — the ~217 files in `config/` plus the ~133 it pulls from other
+extensions via `import:` — must then be absent or byte-identical, or the apply
+throws `RecipePreExistingConfigException` before changing anything. That is a
+clean abort with a named config, and on any real site it will almost certainly
+trigger.
 
 ## AI keys (optional)
 
@@ -168,8 +199,10 @@ No key files? The overlay is a harmless no-op. Key file shape and details:
   logged-in editors — publish with zero flags.
 - **Accessibility statement** ships at `/accessibility-statement` — replace
   the contact placeholder and review date before launch.
-- Re-applying the recipe to the same site fails by design (recipes are not
-  idempotent). Reinstall instead.
+- Re-applying the recipe to the same site is not supported. It no longer stops
+  at the config check (that was `strict`, now false — a re-apply validates and
+  finds nothing new to create), but the config actions and the demo-content
+  import run again, which is untested. Reinstall instead.
 
 ## Repository layout
 
