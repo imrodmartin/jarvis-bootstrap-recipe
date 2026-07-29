@@ -65,9 +65,9 @@ root (any docroot name — `web`, `public_html`, whatever your installer-paths
 say):
 
 ```bash
-composer config repositories.jarvis-recipe vcs https://github.com/imrodmartin/jarvis-recipe
-composer config repositories.jarvis-theme vcs https://github.com/imrodmartin/jarvis
-composer config repositories.jarvis-modules vcs https://github.com/imrodmartin/jarvis-modules
+composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
+composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
+composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
 composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown \
   drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
 
@@ -75,8 +75,18 @@ drush recipe recipes/jarvis-recipe
 drush cache:rebuild
 ```
 
+`"no-api": true` matters: all three repositories are public, but without it
+composer calls `api.github.com` to read them, and on a host that cannot reach
+it — shared hosting often can't, failing with `curl error 92 … HTTP/2` —
+composer falls back to prompting for a GitHub token. None is needed. With
+`no-api` it clones over plain HTTPS instead and the prompt never appears.
+Under **ddev**, pass the absolute in-container path to the last two commands
+(`ddev drush recipe /var/www/html/recipes/jarvis-recipe`): drush's working
+directory is the docroot, while `recipes/` sits at the project root.
+
 Last verified end-to-end on a blank `drupal/recommended-project` with the
-standard profile (2026-07-18): theme lands in `themes/contrib/jarvis`, the
+standard profile (2026-07-29, released tags only — recipe v1.1.0, theme
+v2.1.0, modules v1.1.0): theme lands in `themes/contrib/jarvis`, the
 custom modules in `modules/custom/jarvis-modules` (Drupal discovers both
 nested modules), the recipe in `recipes/jarvis-recipe`, and the apply produces
 the full site. Notes:
