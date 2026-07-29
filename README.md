@@ -101,6 +101,31 @@ the full site. Notes:
 - The three `repositories` lines disappear once the packages are on
   Packagist.
 
+## On a webserver with public_html as the root
+1. Make sure php is updated for memory.
+   
+
+2 — Scaffold a fresh Drupal 11 project:
+
+composer create-project drupal/recommended-project:^11.4 tmp --no-install && mv tmp/composer.json . && rm -rf tmp
+3 — Point the docroot at public_html instead of web:
+
+sed -i 's|"web/|"public_html/|g; s|: "web"|: "public_html"|g' composer.json && grep -n "public_html" composer.json | head
+Every path in that file should now read public_html/…. If any still say web/, stop and paste the output.
+
+4 — Install Drupal core + Jarvis:
+
+composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}' && composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}' && composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
+composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush
+Composer places the theme in public_html/themes/contrib/jarvis, the custom modules in public_html/modules/custom/jarvis-modules, the recipe in recipes/jarvis-recipe. Do not clone or copy any of those by hand — that's what broke the last attempt.
+
+5 — Install the site. Fill in your real DB credentials; this drops and recreates those tables:
+
+vendor/bin/drush --root=public_html site:install standard --db-url=mysql://DBUSER:DBPASS@localhost/DBNAME --account-name=admin -y
+6 — Apply the recipe (absolute path — relative resolves against the docroot and fails):
+
+vendor/bin/drush --root=public_html recipe "$(pwd)/recipes/jarvis-recipe" && vendor/bin/drush --root=public_html cr && vendor/bin/drush --root=public_html uli
+
 ## Add Jarvis by hand (no composer package)
 
 Prefer to vendor the pieces yourself? Assemble the four pieces, then apply:
