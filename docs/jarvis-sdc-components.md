@@ -1,6 +1,6 @@
 # Inside the Jarvis Theme: Every Component, and How It Stays Accessible
 
-Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all nineteen components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
+Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all twenty-one components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
 
 ## How Jarvis Handles ADA Compliance
 
@@ -48,6 +48,8 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 **Video** is a responsive video that accepts either an embed URL (YouTube or Vimeo) or a direct video file. It supports a captions track and language through `<track>`, so a video placed here can meet caption requirements rather than shipping as an inaccessible embed.
 
+**Video Background** is a full-width band with an uploaded video playing behind a text card, positioned left, centre or right. The video carries its own dimming slider and the text card its own colour and opacity, so the copy stays readable over footage that changes brightness as it plays.
+
 **Video with Sidebar** puts a video on one side — from the media library or a plain URL — with an eyebrow, title, description, and call-to-action buttons alongside it. It can be placed directly in Canvas or driven by a View, making it useful both for one-off feature sections and for templated, content-driven video rows.
 
 **Map** embeds a Google Map from a one-line address, keyless in the `simple_gmap` style, with zoom control and a link out to the full map. It's the low-friction "here's where we are" block — type an address, get a map, no API key wrangling.
@@ -59,6 +61,8 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 **WYSIWYG** is a freeform CKEditor rich-text block, full-width by default with an optional readable measure. Where **Text** gives you constrained, aligned prose, WYSIWYG is the open canvas for longer editorial content, with the option to cap line length for comfortable reading.
 
 **Person** is a profile block: portrait, name, position, phone, email, and a link. It's built for team and staff listings, and its name text runs through the same color-inheritance guard as the stat number so it stays readable against any section background.
+
+**Timeline** is a set of up to six steps, each with an icon, a name, and rich-text content, rendered three ways from the same props: as tabs (the default), as an accordion, or as an always-open vertical rail. It ships no JavaScript of its own — tabs reuse the Bootstrap bundle the theme already loads, and the accordion is a native `<details>` group that is exclusive without script. A step whose icon is set to None shows its position number in a circle instead, so a partly-iconned set keeps one rhythm. On a phone the tab strip stays on one line and scrolls rather than wrapping into a block that would push the panel below the fold, tab targets hold a 44px floor, and panel content is contained so a pasted wide table scrolls inside its own box instead of taking the page with it.
 
 ## The Takeaway
 

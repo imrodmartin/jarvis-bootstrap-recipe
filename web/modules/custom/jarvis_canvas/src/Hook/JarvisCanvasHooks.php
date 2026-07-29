@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\jarvis_canvas\Hook;
 
+use Drupal\Core\Entity\Display\EntityDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Drupal\canvas\PropShape\CandidateStorablePropShape;
 use Drupal\node\NodeTypeInterface;
 
@@ -15,6 +19,8 @@ use Drupal\node\NodeTypeInterface;
  * and this module declares core_version_requirement ^11 || ^12.
  */
 final class JarvisCanvasHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Font-size slots and their theme defaults, mirroring _jarvis_font_sizes().
@@ -158,6 +164,52 @@ final class JarvisCanvasHooks {
       'exposed_slots' => [],
       'component_tree' => [],
     ])->save();
+  }
+
+  /**
+   * Implements hook_form_FORM_ID_alter() for Manage display.
+   *
+   * Link the Canvas editor from a view mode's "Manage display" form while its
+   * content template is still disabled.
+   *
+   * Nothing else links there: Canvas's own "Create with Canvas" CTA only shows
+   * when NO template exists for the bundle (FieldUiHooks), and its redirect to
+   * the editor only fires once the template is enabled
+   * (ViewModeDisplayController::__invoke). ::nodeTypeInsert() creates the
+   * template disabled — deliberately, so an empty tree cannot blank out every
+   * node — which lands squarely between the two: the template exists, so no
+   * CTA, and it is disabled, so no redirect. A new content type therefore had
+   * no route into Canvas at all short of typing the URL.
+   *
+   * Canvas enables the template itself the first time the editor publishes
+   * (ContentTemplate::autoSavePublish()), from which point its own redirect
+   * takes over and this link stops being rendered.
+   */
+  #[Hook('form_entity_view_display_edit_form_alter')]
+  public function formEntityViewDisplayEditFormAlter(array &$form, FormStateInterface $form_state): void {
+    $display = $form_state->getFormObject()->getEntity();
+    if (!$display instanceof EntityDisplayInterface) {
+      return;
+    }
+    $entity_type_id = $display->getTargetEntityTypeId();
+    $bundle = $display->getTargetBundle();
+    $view_mode = $display->getMode();
+    $template = \Drupal::entityTypeManager()
+      ->getStorage('content_template')
+      ->load("$entity_type_id.$bundle.$view_mode");
+    if ($template === NULL || $template->status()) {
+      return;
+    }
+
+    $form['jarvis_canvas_edit'] = [
+      '#type' => 'link',
+      '#title' => $this->t('Design this view mode with Canvas'),
+      '#url' => Url::fromUri("base:canvas/template/$entity_type_id/$bundle/$view_mode"),
+      '#attributes' => ['class' => ['button', 'button--primary']],
+      '#weight' => -100,
+      // Drop the link as soon as the template is enabled or deleted.
+      '#cache' => ['tags' => $template->getCacheTags()],
+    ];
   }
 
   /**
