@@ -1,0 +1,102 @@
+name: 'Jarvis (existing site)'
+description: 'Adds the Jarvis theme and its Canvas component library to a site that already has its own content types, block layout and configuration. Ships no demo content, no content types, no AI stack, and does NOT change your default theme, front page or block layout. Companion to recipes/jarvis, which is the opinionated blank-site install.'
+type: 'Site'
+install:
+  # --- Component dependency floor -------------------------------------------
+  # Derived from the `dependencies` of the 19 shipped jarvis SDC components,
+  # not guessed: every one requires options; 11 require file, 10 media +
+  # media_library, 8 link, 4 text.
+  - options
+  - file
+  - media
+  - media_library
+  - image
+  - link
+  - text
+  # image.style.portrait and image.style.hero_banner use focal-point effects,
+  # and person.twig/image.twig render through them.
+  - crop
+  - focal_point
+  # image.twig and person.twig call the |image_style filter, which is
+  # twig_tweak's. (The theme's own filter is jarvis_image_style — different
+  # thing, and not a substitute.)
+  - twig_tweak
+  # The two Jarvis text formats are CKEditor 5 formats; without these the
+  # editor config imports have nothing to attach to.
+  - editor
+  - ckeditor5
+  # filter.format.jarvis_html enables the `linkit` filter plugin. Without the
+  # module the config import dies with "The linkit plugin does not exist".
+  - linkit
+  # Required by shipped config, and by the sites this recipe exists for.
+  - layout_builder
+  - path
+  # --- Canvas ---------------------------------------------------------------
+  - canvas
+  - canvas_field_component
+  # Glue: text formats on Canvas props, the content-template CTA, and the
+  # component folder organiser. Depends on canvas, node, file, image.
+  - jarvis_canvas
+  # --- The theme ------------------------------------------------------------
+  # Installed, NOT enabled as default. Switch over yourself when ready:
+  #   drush config:set system.theme default jarvis
+  - jarvis
+  #
+  # Deliberately NOT installed, unlike recipes/jarvis:
+  #   jarvis_blocks + the card/hero/image/text/video block_content types —
+  #     those names are generic enough to collide with an existing site's own.
+  #   default_content and the demo nodes/media/pages.
+  #   The AI stack (key, ai, ai_agents, ai_ckeditor, providers, canvas_ai...).
+  #   webform, metatag, workflows, content_moderation, editoria11y, antibot,
+  #     extlink, back_to_top, coffee, save_edit, better_exposed_filters,
+  #     better_social_sharing_buttons, backup_migrate, asset_injector,
+  #     simple_gmap, navigation, shortcut, claro, field_ui, views_ui.
+  #   Add any of them yourself if you want them; none is needed to render a
+  #   Jarvis component.
+config:
+  # Same reasoning as recipes/jarvis: strict TRUE compares every config name
+  # this recipe can supply against the site's active config and aborts on the
+  # first byte that differs, which on a real existing site is a near-certain
+  # abort. FALSE creates only what is missing.
+  #
+  # The trade-off is silence. Where your site already owns one of these names,
+  # its version stays and ours never lands, with no warning. The exposure is
+  # much smaller here than in recipes/jarvis — 42 files, nearly all namespaced
+  # `jarvis`/`jarvis_image` — but see README for the three that are not.
+  strict: false
+  import:
+    # Recipes skip the config entities shipped by modules they install, so
+    # these have to be pulled back in explicitly. Import creates only what is
+    # absent, so a site that already has them is untouched.
+    #
+    # media/media_library: core.entity_view_mode.media.full and the
+    #   media_library view + form modes, referenced by the jarvis_image
+    #   displays and by filter.format.jarvis_full_html.
+    # image: image.style.large/medium/thumbnail, referenced by the
+    #   jarvis_image form and view displays.
+    # canvas: filter.format.canvas_html_block, which 4 of the shipped
+    #   canvas.pattern.* files reference.
+    media: '*'
+    media_library: '*'
+    image: '*'
+    canvas: '*'
+  actions:
+    # Text formats are permission-gated. Without this, only uid 1 can use the
+    # Jarvis WYSIWYG props, because uid 1 bypasses every permission check and
+    # nobody else has been granted the format.
+    #
+    # jarvis_html keeps filter_html on — restricted, so it is granted to
+    # authenticated, mirroring how core grants basic_html. jarvis_full_html has
+    # filter_html DISABLED — script-capable, the equivalent of core's
+    # full_html, which core grants to no role at all. Left to administrators
+    # deliberately: granting it wider is a stored-XSS vector.
+    user.role.authenticated:
+      grantPermission: 'use text format jarvis_html'
+    #
+    # Deliberately absent, unlike recipes/jarvis:
+    #   system.theme      — your default and admin themes are left alone.
+    #   system.site       — your front page is left alone.
+    #   node.settings     — your admin-theme-for-editing setting is left alone.
+    #   canvas.page_region.jarvis.* — not shipped at all, so Canvas does not
+    #     take over the theme's regions and your existing block layout keeps
+    #     rendering. See README before adding them.

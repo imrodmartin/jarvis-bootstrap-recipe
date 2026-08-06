@@ -1,0 +1,77 @@
+langcode: en
+status: true
+dependencies:
+  module:
+  - link
+  - options
+  theme:
+  - jarvis
+active_version: ccfd9f5ca8a3a005
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        text:
+          required: true
+          field_type: string
+          field_storage_settings: {}
+          field_instance_settings: {}
+          field_widget: string_textfield
+          default_value:
+          - value: Get started
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {}
+        href:
+          required: false
+          field_type: link
+          field_storage_settings: {}
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+          - uri: /node/1
+            options: {}
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+        variant:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {}
+          field_widget: options_select
+          default_value:
+          - value: primary
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {}
+        size:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {}
+          field_widget: options_select
+          default_value:
+          - value: medium
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {}
+        new_tab:
+          required: false
+          field_type: boolean
+          field_storage_settings: {}
+          field_instance_settings: {}
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {}
+    fallback_metadata:
+      slot_definitions: {}
+label: Button
+id: sdc.jarvis.button
+provider: jarvis
+source: sdc
+source_local_id: jarvis:button
