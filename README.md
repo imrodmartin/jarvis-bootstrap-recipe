@@ -302,3 +302,71 @@ No key files? The overlay is a harmless no-op. Key file shape and details:
 
 Deeper recipe details and known limitations:
 [recipes/jarvis/README.md](recipes/jarvis/README.md).
+
+## Cutting a release (maintainers)
+
+This repository is the source of truth, but **composer installs from three
+other repositories**, none of which update themselves:
+
+| Composer package | Mirror repo | Source of truth here |
+|---|---|---|
+| `drupal/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
+| `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_blocks`, `web/modules/custom/jarvis_canvas` |
+| `imrodmartin/jarvis-recipe` | [imrodmartin/jarvis-recipe](https://github.com/imrodmartin/jarvis-recipe) | `recipes/jarvis/` |
+
+**Release the whole set together, or not at all.** These pieces are coupled: an
+SDC prop can need a module hook to become editable, and a component can depend
+on config the recipe ships. Publishing one without the others is how you get a
+site where Canvas silently disables components — a theme-only bump would have
+done exactly that when the Remote video picker landed (theme v2.2.0 needs
+modules v1.2.0).
+
+Untagged work is invisible to composer. A site pinned to `^2.1` keeps resolving
+the old tag no matter how many commits sit on `master`.
+
+```bash
+# 1. Theme — the submodule IS the package repo, so just tag it.
+cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+# 2. Modules — mirror, then tag. --delete so removed files actually go away.
+git clone https://github.com/imrodmartin/jarvis-modules /tmp/jm
+rsync -a --delete web/modules/custom/jarvis_blocks/ /tmp/jm/jarvis_blocks/
+rsync -a --delete web/modules/custom/jarvis_canvas/ /tmp/jm/jarvis_canvas/
+cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+# 3. Recipe — same shape, whenever config/ or content/ changed.
+git clone https://github.com/imrodmartin/jarvis-recipe /tmp/jr
+rsync -a --delete recipes/jarvis/ /tmp/jr/
+cd /tmp/jr && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+```
+
+Watch for `.DS_Store` — `rsync` will happily carry it into a mirror.
+
+Then on a consuming site:
+
+```bash
+composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe
+drush cr
+```
+
+`update`, not `require`: `require` rewrites the version constraint in your
+`composer.json`; `update` moves within the one you already have.
+
+`drush cr` is not optional — `hook_rebuild` is what makes Canvas re-read the
+SDCs and regenerate component config. Afterwards check nothing was switched
+off, because Canvas disables a component whose props it cannot populate and
+**never re-enables it**:
+
+```bash
+drush ev 'foreach (\Drupal::service("keyvalue")->get("canvas:component:reasons")->getAll() as $k => $v) { print "$k\n"; foreach ((array) $v as $r) print "   - " . strip_tags($r) . "\n"; }'
+```
+
+Empty output means everything survived. Anything listed names the component and
+the prop Canvas could not shape; fix that, then re-enable it explicitly — a
+cache rebuild alone will not bring it back.
+
+Config changes (new media types, fields, image styles) reach an existing site
+only by applying a recipe, never by a composer update on its own. For a site
+that already has its own config, use `recipes/jarvis-existing`.
