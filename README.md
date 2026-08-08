@@ -29,6 +29,12 @@ and a configured AI stack. One apply, working site.
   ElevenLabs), nine Canvas AI agents, CKEditor AI, automatic image alt text.
   **No API keys ship in this repo** — see [AI keys](#ai-keys-optional).
 
+> **In a hurry?** [docs/CHEATSHEET.md](docs/CHEATSHEET.md) — copy-paste ddev
+> commands for the two common cases, plus a gotchas table.
+> [docs/INSTALL.md](docs/INSTALL.md) is the same ground with the reasoning, the
+> existing-site recipe, and updating. The sections below add the submodule and
+> by-hand routes.
+
 ## Requirements
 
 - Docker + [ddev](https://ddev.com) (or your own PHP 8.3+ / MariaDB stack)
@@ -38,16 +44,13 @@ and a configured AI stack. One apply, working site.
 
 The theme lives in its own repository as a git submodule, so the
 `--recurse-submodules` flag is **required**:
+This also changes the path to public_html instead of web.
 
 ```bash
 git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-recipe.git mysite
-cd mysite
-ddev start                       # ddev config ships in the repo
-ddev composer install
-ddev drush site:install standard -y
-ddev drush recipe /var/www/html/recipes/jarvis
-ddev drush cache:rebuild         # also organises the Canvas component folders
-ddev drush uli                   # log in
+cd mysite && git mv web public_html && sed -i '' 's|"web/|"public_html/|g' composer.json && sed -i '' 's|^docroot: web$|docroot: public_html|' .ddev/config.yaml
+ddev start -y && ddev composer install
+ddev drush site:install standard --account-name=admin -y && ddev drush recipe /var/www/html/recipes/jarvis && ddev drush cr
 ```
 
 Install with the **standard** profile — the tested, supported path.
@@ -305,3 +308,123 @@ No key files? The overlay is a harmless no-op. Key file shape and details:
 
 Deeper recipe details and known limitations:
 [recipes/jarvis/README.md](recipes/jarvis/README.md).
+
+## Cutting a release (maintainers)
+
+This repository is the source of truth, but **composer installs from three
+other repositories**, none of which update themselves:
+
+| Composer package | Mirror repo | Source of truth here |
+|---|---|---|
+| `drupal/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
+| `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_blocks`, `web/modules/custom/jarvis_canvas` |
+| `imrodmartin/jarvis-recipe` | [imrodmartin/jarvis-recipe](https://github.com/imrodmartin/jarvis-recipe) | `recipes/jarvis/` |
+| `imrodmartin/jarvis-install-recipe` | [imrodmartin/jarvis-install-recipe](https://github.com/imrodmartin/jarvis-install-recipe) | `recipes/jarvis-existing/` |
+
+**Release the whole set together, or not at all.** These pieces are coupled: an
+SDC prop can need a module hook to become editable, and a component can depend
+on config the recipe ships. Publishing one without the others is how you get a
+site where Canvas silently disables components — a theme-only bump would have
+done exactly that when the Remote video picker landed (theme v2.2.0 needs
+modules v1.2.0).
+
+Untagged work is invisible to composer. A site pinned to `^2.1` keeps resolving
+the old tag no matter how many commits sit on `master`.
+
+```bash
+# 0. If any SDC prop changed, update the component reference FIRST — it is
+#    hand-written, nothing regenerates it, so it drifts silently.
+#    web/themes/custom/jarvis/docs/components.html
+#    Each component has a prop table AND an embedded copy of its .component.yml
+#    in a <details class="src"> dropdown; both have to change.
+
+# 1. Theme — the submodule IS the package repo, so just tag it.
+cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+# 2. Modules — mirror, then tag. --delete so removed files actually go away.
+git clone https://github.com/imrodmartin/jarvis-modules /tmp/jm
+rsync -a --delete web/modules/custom/jarvis_blocks/ /tmp/jm/jarvis_blocks/
+rsync -a --delete web/modules/custom/jarvis_canvas/ /tmp/jm/jarvis_canvas/
+cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+# 3. Recipes — same shape, whenever config/ or content/ changed. TWO of them:
+#    recipes/jarvis -> jarvis-recipe, recipes/jarvis-existing -> jarvis-install-recipe.
+#    They share config files, so a config change usually means BOTH.
+git clone https://github.com/imrodmartin/jarvis-recipe /tmp/jr
+rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitignore' \
+  --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis/ /tmp/jr/
+cd /tmp/jr && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+git clone https://github.com/imrodmartin/jarvis-install-recipe /tmp/jir
+rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitignore' \
+  --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis-existing/ /tmp/jir/
+cd /tmp/jir && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+```
+
+### The component reference has two homes
+
+`web/themes/custom/jarvis/docs/components.html` is published twice: as the
+theme's GitHub Pages reference, and mirrored as a claude.ai artifact
+(`d4aaaffd-1ae5-44d2-bccd-931b4f53dfad`). **Republish both together** — a stale
+mirror is worse than an obviously old one, because it looks current.
+
+Nothing generates that file. It went a whole release cycle describing a `video`
+prop that had been replaced and an `image_style` value that had been renamed,
+because an SDC edit does not touch it. Treat it as source, not output: if you
+changed a prop, changed a `meta:enum`, added or removed a component, it needs
+editing by hand.
+
+Sanity-check before publishing — this parses each component card and lists its
+props, which catches a table you edited but a source dropdown you forgot:
+
+```bash
+python3 -c "
+import re,pathlib
+s=pathlib.Path('web/themes/custom/jarvis/docs/components.html').read_text()
+for m in re.finditer(r'<article class=\"comp\" id=\"([^\"]+)\">(.*?)</article>', s, re.S):
+    t=re.search(r'<tbody>(.*?)</tbody>', m.group(2), re.S)
+    print(m.group(1), '->', ', '.join(re.findall(r'class=\"pname\">([^<]+)<', t.group(1))) if t else '(no props)')
+print('cards:', len(re.findall(r'<article class=\"comp\"', s)))
+print('unclosed <code>:', s.count('<code>')-s.count('</code>'))"
+```
+
+The excludes are not optional. Each mirror keeps its own `composer.json` (that
+is what makes it a package) and the recipe mirror also carries a `.gitignore`;
+a bare `--delete` deletes both, and would go for `.git` too. `export.sh` is a
+maintainer script that shells out to `ddev` — it has no business in a
+distributed recipe. And `rsync` will cheerfully carry `.DS_Store` into a mirror.
+
+Bump the version constraints in the recipe mirror's `composer.json` whenever the
+coupling tightens — it requires `drupal/jarvis` and `imrodmartin/jarvis-modules`,
+and leaving those loose lets composer resolve a mismatched set. v1.2.0 requires
+`^2.2` and `^1.2` for exactly that reason.
+
+Then on a consuming site:
+
+```bash
+composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe
+drush cr
+```
+
+`update`, not `require`: `require` rewrites the version constraint in your
+`composer.json`; `update` moves within the one you already have.
+
+`drush cr` is not optional — `hook_rebuild` is what makes Canvas re-read the
+SDCs and regenerate component config. Afterwards check nothing was switched
+off, because Canvas disables a component whose props it cannot populate and
+**never re-enables it**:
+
+```bash
+drush ev 'foreach (\Drupal::service("keyvalue")->get("canvas:component:reasons")->getAll() as $k => $v) { print "$k\n"; foreach ((array) $v as $r) print "   - " . strip_tags($r) . "\n"; }'
+```
+
+Empty output means everything survived. Anything listed names the component and
+the prop Canvas could not shape; fix that, then re-enable it explicitly — a
+cache rebuild alone will not bring it back.
+
+Config changes (new media types, fields, image styles) reach an existing site
+only by applying a recipe, never by a composer update on its own. For a site
+that already has its own config, use `recipes/jarvis-existing`.
