@@ -13,7 +13,7 @@ install:
   - image
   - link
   - text
-  # image.style.portrait and image.style.hero_banner use focal-point effects,
+  # image.style.portrait and image.style.jarvis_hero_banner use focal-point effects,
   # and person.twig/image.twig render through them.
   - crop
   - focal_point

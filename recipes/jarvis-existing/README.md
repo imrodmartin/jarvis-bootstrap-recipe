@@ -69,7 +69,6 @@ lands. Almost everything here is namespaced `jarvis*`, but five names are not:
 | Name | If your site already has it |
 |---|---|
 | `field.storage.media.field_media_image` | Yours wins. Fine in practice — the `jarvis_image` media type simply attaches to your existing image storage. This is what happened in the test above, with core's Image media type already owning it. |
-| `image.style.hero_banner` | Yours wins. If it is a different crop, hero backgrounds render at your dimensions. |
 | `image.style.portrait` | Yours wins. `person.twig` renders through it. |
 | `image.style.wide` | Yours wins. |
 | `core.entity_view_mode.media.hero` | Yours wins. |
@@ -77,7 +76,7 @@ lands. Almost everything here is namespaced `jarvis*`, but five names are not:
 Check before applying:
 
 ```bash
-for n in field.storage.media.field_media_image image.style.hero_banner \
+for n in field.storage.media.field_media_image \
          image.style.portrait image.style.wide core.entity_view_mode.media.hero; do
   drush config:get "$n" >/dev/null 2>&1 && echo "EXISTS: $n"
 done
