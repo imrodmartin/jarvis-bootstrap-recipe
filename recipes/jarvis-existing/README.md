@@ -31,7 +31,15 @@ Article + Basic page, an Image media type and 20 placed blocks, a full
 
 Your default theme, admin theme, front page, block layout, content types,
 media types, field storages and view displays came through byte-identical.
-96 new config objects were added, nearly all named `jarvis*`.
+96 new config objects were added, nearly all named `jarvis*`. (That count is
+from the test run above; the recipe has since gained the `jarvis_video` Remote
+video media type and its field + displays, 7 objects more.)
+
+The Video and Video with Sidebar components take their source from a Remote
+video media item, so `media.type.jarvis_video` ships here even though this
+recipe is otherwise sparing with media config — their component config declares
+a hard dependency on it. It is namespaced, so a site already running core's
+`remote_video` keeps that and simply gains a second, Jarvis-owned type.
 
 Specifically **not** done, unlike `recipes/jarvis`:
 

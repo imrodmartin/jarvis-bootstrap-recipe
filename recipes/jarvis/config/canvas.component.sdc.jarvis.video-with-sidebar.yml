@@ -3,11 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.media.jarvis_video.field_media_oembed_video
-    - field.field.media.video.field_media_video_file
     - media.type.jarvis_video
-    - media.type.video
   module:
-    - file
     - link
     - media
     - media_library
