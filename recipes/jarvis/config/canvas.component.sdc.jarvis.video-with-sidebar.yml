@@ -2,7 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.jarvis_video.field_media_oembed_video
     - field.field.media.video.field_media_video_file
+    - media.type.jarvis_video
     - media.type.video
   module:
     - file
@@ -12,12 +14,12 @@ dependencies:
     - options
   theme:
     - jarvis
-active_version: 1db8fdc4fd7c6369
+active_version: c9e44e032a25ea08
 versioned_properties:
   active:
     settings:
       prop_field_definitions:
-        video:
+        video_media:
           required: false
           field_type: entity_reference
           field_storage_settings:
@@ -26,11 +28,13 @@ versioned_properties:
             handler: 'default:media'
             handler_settings:
               target_bundles:
-                video: video
+                jarvis_video: jarvis_video
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:video␝field_media_video_file␞␟{src↝entity␜␜entity:file␝uri␞␟url}'
-          derived_schema_metadata: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_video␝field_media_oembed_video␞␟value'
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
         video_url:
           required: false
           field_type: link
