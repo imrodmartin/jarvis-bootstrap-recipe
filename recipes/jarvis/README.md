@@ -20,6 +20,15 @@ repository-root README for the quick start.
   modules. Component folders are organised by `jarvis_canvas` on every cache
   rebuild (they cannot ship as config — Canvas auto-creates folders during
   component sync and an item may only live in one folder).
+- **Media types**: `jarvis_image` (local image) and `jarvis_video`
+  (remote/oEmbed), plus core's stock **Document** (`document`, `file` source)
+  and **Video** (`video`, `video_file` source) — byte-identical to the standard
+  profile's, so a standard-profile site keeps its own. The local Video type is
+  what makes Canvas's video prop
+  (`json-schema-definitions://canvas.module/video`, used by the Video
+  Background SDC) resolve to a media-library picker instead of a bare mp4
+  upload field: Canvas binds that prop to every media type whose source plugin
+  is `video_file`, and until one existed there was nothing to pick.
 - **Admin experience**: core Navigation sidebar with shortcuts, and
   `config.import` pulls each module's admin views (content/media/files/
   people/blocks listings), the media-library style/widget, menus, and the
@@ -72,10 +81,15 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 
 > **Existing sites:** everything the recipe ships is namespaced away from the
 > standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
-> (Drupal's own Basic/Full HTML are untouched), the media types are `jarvis_image`/`jarvis_video`,
+> (Drupal's own Basic/Full HTML are untouched), the theme's own media types are
+> `jarvis_image`/`jarvis_video`,
 > the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
 > applying to a site created with the standard profile no longer collides with
-> or overwrites its formats, media types, or block types. Shared field storages
+> or overwrites its formats, media types, or block types. The exceptions are
+> deliberate: the stock `document` and `video` media types (and their field
+> storages/instances/displays) ship under core's own names and are copied
+> byte-for-byte from the standard profile, so a standard site already has them
+> and a minimal site gets them. Shared field storages
 > (`media.field_media_image`, `block_content.body`) are byte-identical with the
 > standard profile's, so they pass the recipe's strict check. Note that applying
 > to an existing site is still an opinionated takeover: it sets the default
