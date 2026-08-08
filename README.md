@@ -337,12 +337,22 @@ cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: �
 
 # 3. Recipe — same shape, whenever config/ or content/ changed.
 git clone https://github.com/imrodmartin/jarvis-recipe /tmp/jr
-rsync -a --delete recipes/jarvis/ /tmp/jr/
+rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitignore' \
+  --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis/ /tmp/jr/
 cd /tmp/jr && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
   && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 ```
 
-Watch for `.DS_Store` — `rsync` will happily carry it into a mirror.
+The excludes are not optional. Each mirror keeps its own `composer.json` (that
+is what makes it a package) and the recipe mirror also carries a `.gitignore`;
+a bare `--delete` deletes both, and would go for `.git` too. `export.sh` is a
+maintainer script that shells out to `ddev` — it has no business in a
+distributed recipe. And `rsync` will cheerfully carry `.DS_Store` into a mirror.
+
+Bump the version constraints in the recipe mirror's `composer.json` whenever the
+coupling tightens — it requires `drupal/jarvis` and `imrodmartin/jarvis-modules`,
+and leaving those loose lets composer resolve a mismatched set. v1.2.0 requires
+`^2.2` and `^1.2` for exactly that reason.
 
 Then on a consuming site:
 
