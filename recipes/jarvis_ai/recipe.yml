@@ -6,5 +6,16 @@ config:
   # recipes never update existing config, so edit keys via the Key UI (or
   # delete + re-apply) once imported.
   strict: false
+  actions:
+    # The base recipe ships elevenlabs.settings with an EMPTY api_key on
+    # purpose: ElevenLabsApiService dereferences the named Key in its
+    # constructor with no null check, so pointing at a Key that does not exist
+    # white-screens anything that builds the service — saving a text format
+    # included. Now that this overlay has imported the Key entities, wire the
+    # ID up. Supply config/key.key.elevenlabs.yml if you apply this recipe;
+    # naming a Key you did not ship puts the crash back.
+    elevenlabs.settings:
+      simpleConfigUpdate:
+        api_key: elevenlabs
 install:
   - key

@@ -31,6 +31,20 @@ Without ddev, the path is just `recipes/jarvis_ai` from the project root.
 No partial config import is needed anymore — the AI configuration itself ships
 in the main recipe; this only adds credentials.
 
+### The one config action
+
+Applying this overlay also sets `elevenlabs.settings.api_key` to `elevenlabs`.
+The base recipe deliberately leaves that value empty, because
+`ElevenLabsApiService::__construct()` dereferences the named Key entity with no
+null check — naming a Key that does not exist white-screens every form that
+builds the service, including saving a text format. The other three providers
+tolerate a dangling ID, so they keep theirs.
+
+That means: **if you apply this overlay, ship `config/key.key.elevenlabs.yml`
+too.** Applying it with the other three keys but not this one re-points the
+setting at a Key that isn't there and reintroduces the crash. If you do not use
+ElevenLabs at all, drop the `elevenlabs.settings` action from `recipe.yml`.
+
 ## Key file shape
 
 Each file is a standard key entity, e.g. `key.key.claude.yml`:

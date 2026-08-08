@@ -53,9 +53,12 @@ install:
   - ai_provider_anthropic
   - ai_provider_openai
   - gemini_provider
-  # TTS provider — ai.settings' default text_to_speech points at it; the
-  # shipped elevenlabs.settings references the key entity id `elevenlabs`
-  # (supplied by the private jarvis_ai overlay), not a secret.
+  # TTS provider — ai.settings' default text_to_speech points at it. Unlike the
+  # other three providers, the shipped elevenlabs.settings leaves `api_key`
+  # EMPTY: ElevenLabsApiService dereferences the named Key entity in its
+  # constructor with no null check, so naming a Key this recipe does not ship
+  # white-screens every form that builds the service — saving a text format
+  # included. The jarvis_ai overlay sets the ID once the Key exists.
   - elevenlabs
   - canvas_ai
   # Admin UX: the navigation sidebar's Shortcuts block needs the shortcut
