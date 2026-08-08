@@ -4,12 +4,14 @@ dependencies:
   config:
     - field.field.node.blog.field_body
     - field.field.node.blog.field_hero_banner
+    - field.field.node.blog.field_meta_tags
     - field.field.node.blog.field_publication_date
     - field.field.node.blog.field_video
     - node.type.blog
   module:
     - datetime
     - media_library
+    - metatag
     - path
     - text
 id: node.blog.default
@@ -39,6 +41,14 @@ content:
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_meta_tags:
+    type: metatag_firehose
+    weight: 9
+    region: content
+    settings:
+      sidebar: true
+      use_details: true
     third_party_settings: {  }
   field_publication_date:
     type: datetime_default

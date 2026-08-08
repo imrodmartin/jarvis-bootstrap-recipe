@@ -14,7 +14,7 @@ and a configured AI stack. One apply, working site.
   colour picks fall back to safe ones, and the theme settings form shows live
   contrast badges with one-click fixes.
 - **Drupal Canvas**, wired: components organised into folders, 5 reusable
-  patterns, content templates for the Blog/Basic/Landing content types, and
+  patterns, content templates for the Blog/Basic content types, and
   two editable demo Canvas pages (a component showcase and a test page).
 - **Demo content** — home page, about page, accessibility statement, three
   blog posts, media, menus. The front page is the Canvas component

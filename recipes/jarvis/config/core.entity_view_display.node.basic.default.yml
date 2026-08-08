@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.basic.field_body
     - field.field.node.basic.field_hero_banner
+    - field.field.node.basic.field_meta_tags
     - image.style.hero_banner
     - node.type.basic
   module:
@@ -39,5 +40,6 @@ content:
     weight: 0
     region: content
 hidden:
+  field_meta_tags: true
   layout_builder__layout: true
   links: true

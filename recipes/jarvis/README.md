@@ -20,6 +20,12 @@ repository-root README for the quick start.
   modules. Component folders are organised by `jarvis_canvas` on every cache
   rebuild (they cannot ship as config — Canvas auto-creates folders during
   component sync and an item may only live in one folder).
+- **Content types**: Blog and Basic only. There is deliberately no `landing_page`
+  type — landing pages are what Canvas pages are for, and shipping a node type
+  that only ever holds a Canvas layout was a second, worse way to do the same
+  job. Both types carry a `field_meta_tags` (Meta tags) field, so an editor can
+  override title/description/OG tags per node; anything left blank falls through
+  to the site-wide metatag defaults the recipe already imports.
 - **Media types**: `jarvis_image` (local image) and `jarvis_video`
   (remote/oEmbed), plus core's stock **Document** (`document`, `file` source)
   and **Video** (`video`, `video_file` source) — byte-identical to the standard
@@ -46,8 +52,8 @@ repository-root README for the quick start.
   the private jarvis_ai overlay (see the AI section below). Until keys exist
   the providers idle.
 - **Imports demo content** (core Default Content format, shipped in
-  `content/`): 7 nodes (Home, About, Accessibility Statement, 3 blog posts,
-  1 landing demo), **2 Canvas pages** (the component showcase and a Test
+  `content/`): 7 nodes (Home, About, Accessibility Statement, 4 blog posts),
+  **2 Canvas pages** (the component showcase and a Test
   Page), 7 block_content entities, the referenced media + files, and the
   main-menu links. Node URL aliases are carried inline, so they attach
   regardless of imported node IDs. The front page is the Canvas component

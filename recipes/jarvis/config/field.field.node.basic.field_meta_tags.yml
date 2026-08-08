@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meta_tags
+    - node.type.basic
+  module:
+    - metatag
+id: node.basic.field_meta_tags
+field_name: field_meta_tags
+entity_type: node
+bundle: basic
+label: 'Meta tags'
+description: 'Per-node SEO overrides. Anything left empty falls back to the site-wide metatag defaults, so filling this in is optional.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag
