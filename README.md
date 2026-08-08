@@ -325,6 +325,12 @@ Untagged work is invisible to composer. A site pinned to `^2.1` keeps resolving
 the old tag no matter how many commits sit on `master`.
 
 ```bash
+# 0. If any SDC prop changed, update the component reference FIRST — it is
+#    hand-written, nothing regenerates it, so it drifts silently.
+#    web/themes/custom/jarvis/docs/components.html
+#    Each component has a prop table AND an embedded copy of its .component.yml
+#    in a <details class="src"> dropdown; both have to change.
+
 # 1. Theme — the submodule IS the package repo, so just tag it.
 cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 
@@ -341,6 +347,33 @@ rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitigno
   --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis/ /tmp/jr/
 cd /tmp/jr && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
   && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+```
+
+### The component reference has two homes
+
+`web/themes/custom/jarvis/docs/components.html` is published twice: as the
+theme's GitHub Pages reference, and mirrored as a claude.ai artifact
+(`d4aaaffd-1ae5-44d2-bccd-931b4f53dfad`). **Republish both together** — a stale
+mirror is worse than an obviously old one, because it looks current.
+
+Nothing generates that file. It went a whole release cycle describing a `video`
+prop that had been replaced and an `image_style` value that had been renamed,
+because an SDC edit does not touch it. Treat it as source, not output: if you
+changed a prop, changed a `meta:enum`, added or removed a component, it needs
+editing by hand.
+
+Sanity-check before publishing — this parses each component card and lists its
+props, which catches a table you edited but a source dropdown you forgot:
+
+```bash
+python3 -c "
+import re,pathlib
+s=pathlib.Path('web/themes/custom/jarvis/docs/components.html').read_text()
+for m in re.finditer(r'<article class=\"comp\" id=\"([^\"]+)\">(.*?)</article>', s, re.S):
+    t=re.search(r'<tbody>(.*?)</tbody>', m.group(2), re.S)
+    print(m.group(1), '->', ', '.join(re.findall(r'class=\"pname\">([^<]+)<', t.group(1))) if t else '(no props)')
+print('cards:', len(re.findall(r'<article class=\"comp\"', s)))
+print('unclosed <code>:', s.count('<code>')-s.count('</code>'))"
 ```
 
 The excludes are not optional. Each mirror keeps its own `composer.json` (that
