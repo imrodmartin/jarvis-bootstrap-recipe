@@ -240,10 +240,14 @@ already has content and config, but know what it does and does not touch:
   recipe's version simply never lands, and you get no warning. Expect to
   reconcile those by hand afterwards.
 - **Watch for name collisions.** The recipe ships generic names that an
-  existing site may already use for something else: `image.style.hero_banner`,
+  existing site may already use for something else:
   `field.storage.node.field_body`, the `card`/`hero`/`image`/`text`/`video`
   block content types and their fields. Yours win; the components that expect
-  the recipe's shape may not find what they need.
+  the recipe's shape may not find what they need. The hero banner image style
+  used to be on that list; it is now namespaced as
+  `image.style.jarvis_hero_banner` so it can never be shadowed. The `document`
+  and `video` media types go the other way on purpose — they keep core's names
+  precisely so a standard-profile site reuses the ones it already has.
 - **Config *actions* still run regardless** — they are what set the default
   theme, the front page and the text-format permissions, and they act on
   whatever config is there.

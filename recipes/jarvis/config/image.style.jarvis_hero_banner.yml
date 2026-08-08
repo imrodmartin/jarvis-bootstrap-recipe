@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - focal_point
-name: hero_banner
-label: 'Hero Banner'
+name: jarvis_hero_banner
+label: 'Jarvis Hero Banner'
 effects:
   7ab75790-f125-4a14-b698-faee1008f147:
     uuid: 7ab75790-f125-4a14-b698-faee1008f147
