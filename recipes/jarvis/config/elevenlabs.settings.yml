@@ -1,1 +1,23 @@
-api_key: elevenlabs
+# Deliberately EMPTY, unlike the other three providers' settings.
+#
+# `api_key` holds a Key entity ID, not a secret. The other providers tolerate an
+# ID that resolves to nothing — ai_provider_anthropic and gemini_provider only
+# read the key when they actually call out, and ai_provider_openai's only
+# unguarded dereference lives in its own config form behind an empty() check and
+# a key-picker. ElevenLabs does it in a SERVICE CONSTRUCTOR with no null check:
+#
+#   $apiKey = $this->configFactory->get(...)->get('api_key');
+#   if ($apiKey) {
+#     $this->apiKey = $this->keyRepository->getKey($apiKey)->getKeyValue();
+#   }
+#   @see Drupal\elevenlabs\ElevenLabsApiService::__construct(), line 95
+#
+# So a non-empty ID naming a Key this recipe does not ship is a WSOD the moment
+# anything instantiates the service — including saving a text format, because
+# ai.settings points text_to_speech at this provider. Empty short-circuits that
+# `if`, which is the same "not configured yet" state ElevenlabsProvider::113
+# already checks for.
+#
+# The private jarvis_ai overlay sets this to `elevenlabs` once the matching Key
+# entity exists.
+api_key: ''

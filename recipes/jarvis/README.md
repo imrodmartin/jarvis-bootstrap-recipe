@@ -20,6 +20,21 @@ repository-root README for the quick start.
   modules. Component folders are organised by `jarvis_canvas` on every cache
   rebuild (they cannot ship as config — Canvas auto-creates folders during
   component sync and an item may only live in one folder).
+- **Content types**: Blog and Basic only. There is deliberately no `landing_page`
+  type — landing pages are what Canvas pages are for, and shipping a node type
+  that only ever holds a Canvas layout was a second, worse way to do the same
+  job. Both types carry a `field_meta_tags` (Meta tags) field, so an editor can
+  override title/description/OG tags per node; anything left blank falls through
+  to the site-wide metatag defaults the recipe already imports.
+- **Media types**: `jarvis_image` (local image) and `jarvis_video`
+  (remote/oEmbed), plus core's stock **Document** (`document`, `file` source)
+  and **Video** (`video`, `video_file` source) — byte-identical to the standard
+  profile's, so a standard-profile site keeps its own. The local Video type is
+  what makes Canvas's video prop
+  (`json-schema-definitions://canvas.module/video`, used by the Video
+  Background SDC) resolve to a media-library picker instead of a bare mp4
+  upload field: Canvas binds that prop to every media type whose source plugin
+  is `video_file`, and until one existed there was nothing to pick.
 - **Admin experience**: core Navigation sidebar with shortcuts, and
   `config.import` pulls each module's admin views (content/media/files/
   people/blocks listings), the media-library style/widget, menus, and the
@@ -37,8 +52,8 @@ repository-root README for the quick start.
   the private jarvis_ai overlay (see the AI section below). Until keys exist
   the providers idle.
 - **Imports demo content** (core Default Content format, shipped in
-  `content/`): 7 nodes (Home, About, Accessibility Statement, 3 blog posts,
-  1 landing demo), **2 Canvas pages** (the component showcase and a Test
+  `content/`): 7 nodes (Home, About, Accessibility Statement, 4 blog posts),
+  **2 Canvas pages** (the component showcase and a Test
   Page), 7 block_content entities, the referenced media + files, and the
   main-menu links. Node URL aliases are carried inline, so they attach
   regardless of imported node IDs. The front page is the Canvas component
@@ -72,10 +87,15 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 
 > **Existing sites:** everything the recipe ships is namespaced away from the
 > standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
-> (Drupal's own Basic/Full HTML are untouched), the media types are `jarvis_image`/`jarvis_video`,
+> (Drupal's own Basic/Full HTML are untouched), the theme's own media types are
+> `jarvis_image`/`jarvis_video`,
 > the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
 > applying to a site created with the standard profile no longer collides with
-> or overwrites its formats, media types, or block types. Shared field storages
+> or overwrites its formats, media types, or block types. The exceptions are
+> deliberate: the stock `document` and `video` media types (and their field
+> storages/instances/displays) ship under core's own names and are copied
+> byte-for-byte from the standard profile, so a standard site already has them
+> and a minimal site gets them. Shared field storages
 > (`media.field_media_image`, `block_content.body`) are byte-identical with the
 > standard profile's, so they pass the recipe's strict check. Note that applying
 > to an existing site is still an opinionated takeover: it sets the default

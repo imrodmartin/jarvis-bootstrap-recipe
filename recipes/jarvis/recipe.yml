@@ -1,5 +1,5 @@
 name: 'Jarvis'
-description: 'Bootstraps a new Drupal site with the Jarvis theme: custom modules, Canvas + media plumbing, the Blog/Basic/Landing content types, and curated demo content (home page, blog posts, about page, media). Installs AND configures the AI stack (providers, Canvas agents, CKEditor AI, alt-text) — everything except API keys, which ship separately via the private jarvis_ai overlay. Contains no secrets; safe to share.'
+description: 'Bootstraps a new Drupal site with the Jarvis theme: custom modules, Canvas + media plumbing, the Blog/Basic content types, and curated demo content (home page, blog posts, about page, media). Installs AND configures the AI stack (providers, Canvas agents, CKEditor AI, alt-text) — everything except API keys, which ship separately via the private jarvis_ai overlay. Contains no secrets; safe to share.'
 type: 'Site'
 install:
   # Core + contrib plumbing
@@ -53,9 +53,12 @@ install:
   - ai_provider_anthropic
   - ai_provider_openai
   - gemini_provider
-  # TTS provider — ai.settings' default text_to_speech points at it; the
-  # shipped elevenlabs.settings references the key entity id `elevenlabs`
-  # (supplied by the private jarvis_ai overlay), not a secret.
+  # TTS provider — ai.settings' default text_to_speech points at it. Unlike the
+  # other three providers, the shipped elevenlabs.settings leaves `api_key`
+  # EMPTY: ElevenLabsApiService dereferences the named Key entity in its
+  # constructor with no null check, so naming a Key this recipe does not ship
+  # white-screens every form that builds the service — saving a text format
+  # included. The jarvis_ai overlay sets the ID once the Key exists.
   - elevenlabs
   - canvas_ai
   # Admin UX: the navigation sidebar's Shortcuts block needs the shortcut
@@ -211,6 +214,6 @@ config:
     core.entity_view_mode.node.full:
       simpleConfigUpdate:
         # Standard ships the Full content view mode DISABLED. Enable it so the
-        # Canvas content templates (basic/blog/landing_page full) surface on
+        # Canvas content templates (basic/blog full) surface on
         # each type's Manage display page.
         status: true

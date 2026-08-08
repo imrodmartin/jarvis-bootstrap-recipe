@@ -4,7 +4,8 @@ dependencies:
   config:
     - field.field.node.basic.field_body
     - field.field.node.basic.field_hero_banner
-    - image.style.hero_banner
+    - field.field.node.basic.field_meta_tags
+    - image.style.jarvis_hero_banner
     - node.type.basic
   module:
     - layout_builder
@@ -32,12 +33,13 @@ content:
     label: hidden
     settings:
       image_link: ''
-      image_style: hero_banner
+      image_style: jarvis_hero_banner
       image_loading:
         attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  field_meta_tags: true
   layout_builder__layout: true
   links: true
