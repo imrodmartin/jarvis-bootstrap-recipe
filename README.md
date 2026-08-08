@@ -29,10 +29,11 @@ and a configured AI stack. One apply, working site.
   ElevenLabs), nine Canvas AI agents, CKEditor AI, automatic image alt text.
   **No API keys ship in this repo** — see [AI keys](#ai-keys-optional).
 
-> **Just want the install commands?** [docs/INSTALL.md](docs/INSTALL.md) is the
-> short composer-only version: a new site from scratch, adding Jarvis to an
-> existing site, and updating. The sections below cover the same ground plus the
-> submodule and by-hand routes.
+> **In a hurry?** [docs/CHEATSHEET.md](docs/CHEATSHEET.md) — copy-paste ddev
+> commands for the two common cases, plus a gotchas table.
+> [docs/INSTALL.md](docs/INSTALL.md) is the same ground with the reasoning, the
+> existing-site recipe, and updating. The sections below add the submodule and
+> by-hand routes.
 
 ## Requirements
 

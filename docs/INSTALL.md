@@ -1,5 +1,7 @@
 # Installing Jarvis with composer
 
+> Just want the commands? [CHEATSHEET.md](CHEATSHEET.md).
+
 Two situations, two packages. Pick the right one — they are not
 interchangeable.
 
