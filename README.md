@@ -38,16 +38,13 @@ and a configured AI stack. One apply, working site.
 
 The theme lives in its own repository as a git submodule, so the
 `--recurse-submodules` flag is **required**:
+This also changes the path to public_html instead of web.
 
 ```bash
 git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-recipe.git mysite
-cd mysite
-ddev start                       # ddev config ships in the repo
-ddev composer install
-ddev drush site:install standard -y
-ddev drush recipe /var/www/html/recipes/jarvis
-ddev drush cache:rebuild         # also organises the Canvas component folders
-ddev drush uli                   # log in
+cd mysite && git mv web public_html && sed -i '' 's|"web/|"public_html/|g' composer.json && sed -i '' 's|^docroot: web$|docroot: public_html|' .ddev/config.yaml
+ddev start -y && ddev composer install
+ddev drush site:install standard --account-name=admin -y && ddev drush recipe /var/www/html/recipes/jarvis && ddev drush cr
 ```
 
 Install with the **standard** profile — the tested, supported path.
