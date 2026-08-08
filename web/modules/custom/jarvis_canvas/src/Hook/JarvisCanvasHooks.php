@@ -9,7 +9,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferencedBundleSpecificBranches;
 use Drupal\canvas\PropShape\CandidateStorablePropShape;
+use Drupal\canvas\TypedData\BetterEntityDataDefinition;
 use Drupal\node\NodeTypeInterface;
 
 /**
@@ -100,6 +105,65 @@ final class JarvisCanvasHooks {
   #[Hook('canvas_storable_prop_shape_alter')]
   public function canvasStorablePropShapeAlter(CandidateStorablePropShape $storable_prop_shape): void {
     $schema = $storable_prop_shape->shape->schema;
+
+    // Remote-video props (the video and video-with-sidebar SDCs): give them the
+    // media library instead of an autocomplete.
+    //
+    // Canvas only knows how to turn a prop into a media picker for two media
+    // SOURCE plugins — Image and VideoFile (see
+    // ShapeMatchingHooks::SCHEMA_TO_MEDIA_SOURCE). There is no shape for oEmbed,
+    // so a component that wants a YouTube/Vimeo item has to go through
+    // content-entity-reference, and Canvas hands that an
+    // entity_reference_autocomplete: you can only pick media whose name you
+    // already know, and you cannot add a new one from the prop. Swapping in
+    // media_library_widget restores browse-and-add.
+    //
+    // Bundles are resolved from the site instead of hardcoding the recipe's
+    // `jarvis_video`, so a site using core's `remote_video` works too. If no
+    // oEmbed video type exists, leave Canvas's default in place rather than
+    // handing the widget an empty bundle list.
+    if (!empty($schema['x-jarvis-remote-video'])) {
+      $branches = [];
+      foreach (\Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple() as $id => $media_type) {
+        if (!str_starts_with((string) $media_type->getSource()->getPluginId(), 'oembed:video')) {
+          continue;
+        }
+        $source_field = $media_type->getSource()->getSourceFieldDefinition($media_type)?->getName();
+        if ($source_field === NULL) {
+          continue;
+        }
+        // The oEmbed source field stores the provider URL as a plain string,
+        // which is exactly what the prop wants — no derivative, no traversal in
+        // the template.
+        $branches["entity:media:$id"] = new FieldPropExpression(
+          BetterEntityDataDefinition::create('media', $id),
+          $source_field,
+          NULL,
+          'value',
+        );
+      }
+      if ($branches) {
+        $bundles = [];
+        foreach (array_keys($branches) as $branch) {
+          $bundle = substr($branch, strlen('entity:media:'));
+          $bundles[$bundle] = $bundle;
+        }
+        $storable_prop_shape->fieldTypeProp = new ReferenceFieldTypePropExpression(
+          referencer: new FieldTypePropExpression('entity_reference', 'entity'),
+          referenced: count($branches) === 1
+            ? reset($branches)
+            : new ReferencedBundleSpecificBranches($branches),
+        );
+        $storable_prop_shape->fieldWidget = 'media_library_widget';
+        $storable_prop_shape->fieldStorageSettings = ['target_type' => 'media'];
+        $storable_prop_shape->fieldInstanceSettings = [
+          'handler' => 'default:media',
+          'handler_settings' => ['target_bundles' => $bundles],
+        ];
+      }
+      return;
+    }
+
     if (($schema['contentMediaType'] ?? NULL) !== 'text/html'
       || empty($schema['x-jarvis-html-format'])) {
       return;
