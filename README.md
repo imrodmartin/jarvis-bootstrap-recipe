@@ -29,6 +29,11 @@ and a configured AI stack. One apply, working site.
   ElevenLabs), nine Canvas AI agents, CKEditor AI, automatic image alt text.
   **No API keys ship in this repo** — see [AI keys](#ai-keys-optional).
 
+> **Just want the install commands?** [docs/INSTALL.md](docs/INSTALL.md) is the
+> short composer-only version: a new site from scratch, adding Jarvis to an
+> existing site, and updating. The sections below cover the same ground plus the
+> submodule and by-hand routes.
+
 ## Requirements
 
 - Docker + [ddev](https://ddev.com) (or your own PHP 8.3+ / MariaDB stack)
@@ -313,6 +318,7 @@ other repositories**, none of which update themselves:
 | `drupal/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
 | `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_blocks`, `web/modules/custom/jarvis_canvas` |
 | `imrodmartin/jarvis-recipe` | [imrodmartin/jarvis-recipe](https://github.com/imrodmartin/jarvis-recipe) | `recipes/jarvis/` |
+| `imrodmartin/jarvis-install-recipe` | [imrodmartin/jarvis-install-recipe](https://github.com/imrodmartin/jarvis-install-recipe) | `recipes/jarvis-existing/` |
 
 **Release the whole set together, or not at all.** These pieces are coupled: an
 SDC prop can need a module hook to become editable, and a component can depend
@@ -341,11 +347,19 @@ rsync -a --delete web/modules/custom/jarvis_canvas/ /tmp/jm/jarvis_canvas/
 cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
   && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 
-# 3. Recipe — same shape, whenever config/ or content/ changed.
+# 3. Recipes — same shape, whenever config/ or content/ changed. TWO of them:
+#    recipes/jarvis -> jarvis-recipe, recipes/jarvis-existing -> jarvis-install-recipe.
+#    They share config files, so a config change usually means BOTH.
 git clone https://github.com/imrodmartin/jarvis-recipe /tmp/jr
 rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitignore' \
   --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis/ /tmp/jr/
 cd /tmp/jr && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
+  && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
+
+git clone https://github.com/imrodmartin/jarvis-install-recipe /tmp/jir
+rsync -a --delete --exclude '.git' --exclude 'composer.json' --exclude '.gitignore' \
+  --exclude 'export.sh' --exclude '.DS_Store' recipes/jarvis-existing/ /tmp/jir/
+cd /tmp/jir && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
   && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 ```
 
