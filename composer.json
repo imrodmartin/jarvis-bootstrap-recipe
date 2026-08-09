@@ -59,6 +59,15 @@
     "conflict": {
         "drupal/drupal": "*"
     },
+    "scripts": {
+        "canvas-autocomplete-fix": "@php scripts/fix-canvas-autocomplete.php",
+        "post-install-cmd": [
+            "@canvas-autocomplete-fix"
+        ],
+        "post-update-cmd": [
+            "@canvas-autocomplete-fix"
+        ]
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -137,8 +146,8 @@
         },
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "drupal/canvas": {
-                "Entity autocomplete: accept the trailing quote core adds when a node title contains a comma or quote (see patches/canvas-autocomplete-quoted-label.patch)": "patches/canvas-autocomplete-quoted-label.patch"
+            "drupal/ai_media_image": {
+                "Resolve the Image-source media type instead of hardcoding the `image` bundle, so the Image Source dropdown appears on sites whose image media type is named something else -- this recipe's is jarvis_image (see patches/ai-media-image-resolve-image-bundle.patch)": "patches/ai-media-image-resolve-image-bundle.patch"
             }
         }
     }
