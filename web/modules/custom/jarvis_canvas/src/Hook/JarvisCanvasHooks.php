@@ -118,10 +118,11 @@ final class JarvisCanvasHooks {
     // already know, and you cannot add a new one from the prop. Swapping in
     // media_library_widget restores browse-and-add.
     //
-    // Bundles are resolved from the site instead of hardcoding the recipe's
-    // `jarvis_video`, so a site using core's `remote_video` works too. If no
-    // oEmbed video type exists, leave Canvas's default in place rather than
-    // handing the widget an empty bundle list.
+    // Bundles are resolved from the site rather than hardcoded, so this works
+    // whichever oEmbed video type a site has -- the recipe ships core's
+    // `remote_video`, but a site that renamed it, or carries more than one, is
+    // covered too. If no oEmbed video type exists, leave Canvas's default in
+    // place rather than handing the widget an empty bundle list.
     if (!empty($schema['x-jarvis-remote-video'])) {
       $branches = [];
       foreach (\Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple() as $id => $media_type) {

@@ -67,9 +67,12 @@ carry stability flags that only work in the root `composer.json`.
 drush site:install standard --account-name=admin -y
 ```
 
-Install with the **standard** profile — the tested path. Everything Jarvis ships
-is namespaced (`jarvis_html`, `jarvis_image`, `jarvis_basic`), so standard's own
-formats, block types and media types are left untouched.
+Install with the **standard** profile — the tested path. What Jarvis adds is
+namespaced (`jarvis_html`, `jarvis_basic`), so standard's own formats and block
+types are left untouched. Media types are the deliberate exception: Jarvis uses
+core's `image`, `remote_video`, `video` and `document` bundles rather than
+namespaced copies, since contrib widely assumes those names. Media types the
+site already has are left as they are.
 
 Apply the recipe with an **absolute** path; a relative one resolves against the
 docroot and fails:
