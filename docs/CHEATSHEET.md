@@ -93,6 +93,67 @@ config.
 | Recipe aborts on `markdownPaste` | `drupal/ckeditor5_markdown` not required |
 | `web/themes/custom/jarvis` empty | cloned without `--recurse-submodules` — fix with `git submodule update --init` |
 | Recipe path not found | relative path used, or `recipes/jarvis` vs `recipes/jarvis-recipe` confused |
-| Components missing from Canvas | disabled — run the keyvalue check above |
+| Components missing from Canvas | disabled — run the keyvalue check above; if you just deleted a media type, see below |
+| Media reference field accepts nothing | its `target_bundles` was emptied by a media type deletion — see below |
 | AI features do nothing | no API keys ship in the repo; by design |
 | composer prompts for a GitHub token | `"no-api": true` missing from a repositories entry |
+
+## Deleting or renaming a media type
+
+**Repoint everything that references the bundle BEFORE you delete it.** Deleting
+a media type fires Drupal's config dependency removal, and it does not simply
+delete the dependents — it *quietly mutates* them:
+
+- **Entity reference fields** keep existing, with `target_bundles` emptied. The
+  field then references nothing and the widget offers no options. You get one
+  warning per field on the CLI and nothing at all in the UI afterwards.
+- **Canvas components** are reset to their fallback state: `status: false`,
+  `active_version: fallback`, `dependencies: []`, and the real settings moved
+  out of `versioned_properties.active` into a keyed version, leaving `active`
+  holding only a `last_active_version` marker. They vanish from the Canvas
+  library. Re-enabling alone does not fix them — `active_version` is still
+  `fallback`.
+
+Correct order when renaming a bundle (this is what the `jarvis_image` → `image`
+migration did):
+
+1. Create the new media type
+2. Move the content: update `bundle` in `media`, `media_field_data`,
+   `media__field_media_*` and `media_revision__field_media_*`
+3. Repoint every referrer — field `target_bundles`, `media_embed`'s
+   `allowed_media_types`, Canvas component `prop_field_definitions`
+4. **Then** delete the old type, which by now has no dependents
+5. Remap Canvas version pins in content (`canvas_page__components` and
+   `canvas_page_revision__components`), because changing `target_bundles`
+   changes the component version hash
+
+Take `ddev snapshot` first. Doing steps 3 and 4 in the wrong order is recoverable
+but tedious.
+
+### Recovering components already reset to fallback
+
+Do not guess the version. Every component keeps its history in
+`versioned_properties`; find the one whose stored key equals the hash of its own
+settings and restore that:
+
+```bash
+ddev drush ev '$m=\Drupal::service(Drupal\canvas\ComponentSource\ComponentSourceManager::class);
+foreach (\Drupal::configFactory()->listAll("canvas.component.sdc.") as $n) {
+  $cfg=\Drupal::configFactory()->getEditable($n); $c=$cfg->getRawData();
+  if ($c["active_version"] !== "fallback") continue;
+  foreach ($c["versioned_properties"] as $k => $v) {
+    if ($k === "active" || !isset($v["settings"]["prop_field_definitions"])) continue;
+    try { $h=$m->createInstance($c["source"],["local_source_id"=>$c["source_local_id"],...$v["settings"]])->generateVersionHash(); } catch (\Throwable $e) { continue; }
+    if ($h === $k) { $c["versioned_properties"]["active"]=$v; $c["active_version"]=$k; $c["status"]=TRUE; $cfg->setData($c)->save(TRUE); print "restored ".$c["id"]." -> $k\n"; break; }
+  }
+}'
+```
+
+Keep the historical version keys — content pinned to an older version needs them
+to still exist. Afterwards confirm nothing dangles:
+
+```bash
+ddev drush ev '$a=[]; foreach (\Drupal::configFactory()->listAll("canvas.component.") as $n) { $d=\Drupal::config($n)->getRawData(); foreach (array_keys($d["versioned_properties"]) as $k) if ($k!=="active") $a[$d["id"]][$k]=1; $a[$d["id"]][$d["active_version"]]=1; }
+$b=0; foreach (["canvas_page__components","canvas_page_revision__components"] as $t) foreach (\Drupal::database()->query("SELECT DISTINCT components_component_id cid, components_component_version v FROM $t") as $r) if (!isset($a[$r->cid][$r->v])) { $b++; print "DANGLING $t: $r->cid @ $r->v\n"; }
+print "dangling pins: $b\n";'
+```
