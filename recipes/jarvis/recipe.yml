@@ -156,6 +156,31 @@ config:
       - views.view.who_s_new
       - views.view.who_s_online
   actions:
+    # The media types are core's `image` and `remote_video`, not namespaced
+    # copies, so contrib that assumes the conventional bundle names works --
+    # ai_media_image hardcodes `image` in four places and silently offered no
+    # AI generation at all while this recipe used `jarvis_image`.
+    #
+    # The catch: `strict: false` above means any config the site ALREADY has is
+    # left alone. On a standard-profile site media.type.image and its default
+    # form display already exist, so the shipped
+    # core.entity_form_display.media.image.default -- the only file that
+    # actually differs from core's own image_media_type recipe -- never lands,
+    # and editors lose focal-point cropping. A config action is not skippable,
+    # so set the widget explicitly. On a minimal site the shipped file already
+    # matches this and the action is a no-op.
+    core.entity_form_display.media.image.default:
+      setComponent:
+        - field_media_image
+        - type: image_focal_point
+          region: content
+          weight: 0
+          settings:
+            progress_indicator: throbber
+            preview_image_style: thumbnail
+            preview_link: true
+            offsets: '50,50'
+          third_party_settings: {  }
     # The recipe ships filter.format.jarvis_html and jarvis_full_html plus their
     # CKEditor configs, but shipped nothing that lets anyone USE them. Text
     # formats are permission-gated, so before this only uid 1 (which bypasses

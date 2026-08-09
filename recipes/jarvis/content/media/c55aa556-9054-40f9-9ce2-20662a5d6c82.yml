@@ -2,7 +2,7 @@ _meta:
   version: '1.0'
   entity_type: media
   uuid: c55aa556-9054-40f9-9ce2-20662a5d6c82
-  bundle: jarvis_video
+  bundle: remote_video
   default_langcode: en
 default:
   status:

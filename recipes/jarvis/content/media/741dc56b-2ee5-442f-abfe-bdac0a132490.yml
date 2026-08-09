@@ -2,7 +2,7 @@ _meta:
   version: '1.0'
   entity_type: media
   uuid: 741dc56b-2ee5-442f-abfe-bdac0a132490
-  bundle: jarvis_image
+  bundle: image
   default_langcode: en
   depends:
     6c1fbfc6-ffc1-4bc6-a29b-92f9d38f103a: file

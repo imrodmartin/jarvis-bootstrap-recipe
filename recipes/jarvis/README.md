@@ -26,7 +26,7 @@ repository-root README for the quick start.
   job. Both types carry a `field_meta_tags` (Meta tags) field, so an editor can
   override title/description/OG tags per node; anything left blank falls through
   to the site-wide metatag defaults the recipe already imports.
-- **Media types**: `jarvis_image` (local image) and `jarvis_video`
+- **Media types**: `image` (local image) and `remote_video`
   (remote/oEmbed), plus core's stock **Document** (`document`, `file` source)
   and **Video** (`video`, `video_file` source) — byte-identical to the standard
   profile's, so a standard-profile site keeps its own. The local Video type is
@@ -88,7 +88,7 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 > **Existing sites:** everything the recipe ships is namespaced away from the
 > standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
 > (Drupal's own Basic/Full HTML are untouched), the theme's own media types are
-> `jarvis_image`/`jarvis_video`,
+> `image`/`remote_video`,
 > the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
 > applying to a site created with the standard profile no longer collides with
 > or overwrites its formats, media types, or block types. The exceptions are

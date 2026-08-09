@@ -144,11 +144,6 @@
                 "      composer remove drupal/core-project-message"
             ]
         },
-        "composer-exit-on-patch-failure": true,
-        "patches": {
-            "drupal/ai_media_image": {
-                "Resolve the Image-source media type instead of hardcoding the `image` bundle, so the Image Source dropdown appears on sites whose image media type is named something else -- this recipe's is jarvis_image (see patches/ai-media-image-resolve-image-bundle.patch)": "patches/ai-media-image-resolve-image-bundle.patch"
-            }
-        }
+        "composer-exit-on-patch-failure": true
     }
 }
