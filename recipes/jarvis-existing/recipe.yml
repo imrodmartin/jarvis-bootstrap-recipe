@@ -62,7 +62,10 @@ config:
   # The trade-off is silence. Where your site already owns one of these names,
   # its version stays and ours never lands, with no warning. The exposure is
   # much smaller here than in recipes/jarvis — 42 files, nearly all namespaced
-  # `jarvis`/`jarvis_image` — but see README for the three that are not.
+  # `jarvis*` — but see README for the ones that are not. The media types are
+  # the deliberate exception: core's own `image`/`remote_video`, because
+  # contrib assumes those names, so on a site that already has them nothing
+  # lands and nothing is duplicated.
   strict: false
   import:
     # Recipes skip the config entities shipped by modules they install, so
@@ -70,10 +73,10 @@ config:
     # absent, so a site that already has them is untouched.
     #
     # media/media_library: core.entity_view_mode.media.full and the
-    #   media_library view + form modes, referenced by the jarvis_image
+    #   media_library view + form modes, referenced by the image
     #   displays and by filter.format.jarvis_full_html.
     # image: image.style.large/medium/thumbnail, referenced by the
-    #   jarvis_image form and view displays.
+    #   image form and view displays.
     # canvas: filter.format.canvas_html_block, which 4 of the shipped
     #   canvas.pattern.* files reference.
     media: '*'
@@ -81,6 +84,25 @@ config:
     image: '*'
     canvas: '*'
   actions:
+    # `strict: false` means config the site already owns is left alone. On any
+    # site that already has core's Image media type -- which is the whole point
+    # of this recipe -- the shipped
+    # core.entity_form_display.media.image.default therefore never lands, and
+    # editors lose focal-point cropping on images. A config action is not
+    # skippable, so set the widget explicitly; where the shipped file did land
+    # it already matches and this is a no-op.
+    core.entity_form_display.media.image.default:
+      setComponent:
+        - field_media_image
+        - type: image_focal_point
+          region: content
+          weight: 0
+          settings:
+            progress_indicator: throbber
+            preview_image_style: thumbnail
+            preview_link: true
+            offsets: '50,50'
+          third_party_settings: {  }
     # Text formats are permission-gated. Without this, only uid 1 can use the
     # Jarvis WYSIWYG props, because uid 1 bypasses every permission check and
     # nobody else has been granted the format.

@@ -4,9 +4,9 @@ dependencies:
   config:
     - canvas.component.sdc.jarvis.person
     - canvas.component.sdc.jarvis.three-column
-    - field.field.media.jarvis_image.field_media_image
+    - field.field.media.image.field_media_image
     - image.style.canvas_parametrized_width
-    - media.type.jarvis_image
+    - media.type.image
   module:
     - file
     - link

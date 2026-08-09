@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: jarvis_image
+id: image
 label: Image
 description: 'A locally hosted image file.'
 source: image

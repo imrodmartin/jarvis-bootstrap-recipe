@@ -32,14 +32,15 @@ Article + Basic page, an Image media type and 20 placed blocks, a full
 Your default theme, admin theme, front page, block layout, content types,
 media types, field storages and view displays came through byte-identical.
 96 new config objects were added, nearly all named `jarvis*`. (That count is
-from the test run above; the recipe has since gained the `jarvis_video` Remote
+from the test run above; the recipe has since gained the `remote_video` Remote
 video media type and its field + displays, 7 objects more.)
 
 The Video and Video with Sidebar components take their source from a Remote
-video media item, so `media.type.jarvis_video` ships here even though this
+video media item, so `media.type.remote_video` ships here even though this
 recipe is otherwise sparing with media config — their component config declares
-a hard dependency on it. It is namespaced, so a site already running core's
-`remote_video` keeps that and simply gains a second, Jarvis-owned type.
+a hard dependency on it. It is core's own bundle name, not a namespaced copy,
+so a site already running `remote_video` keeps exactly what it has: `strict`
+is false, the existing type is left alone, and no second type is created.
 
 Specifically **not** done, unlike `recipes/jarvis`:
 
@@ -76,7 +77,7 @@ lands. Almost everything here is namespaced `jarvis*`, but five names are not:
 
 | Name | If your site already has it |
 |---|---|
-| `field.storage.media.field_media_image` | Yours wins. Fine in practice — the `jarvis_image` media type simply attaches to your existing image storage. This is what happened in the test above, with core's Image media type already owning it. |
+| `field.storage.media.field_media_image` | Yours wins. Fine in practice — the `image` media type simply attaches to your existing image storage. This is what happened in the test above, with core's Image media type already owning it. |
 | `image.style.portrait` | Yours wins. `person.twig` renders through it. |
 | `image.style.wide` | Yours wins. |
 | `core.entity_view_mode.media.hero` | Yours wins. |
