@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_hero_banner
-    - media.type.jarvis_image
+    - media.type.image
     - node.type.blog
 id: node.blog.field_hero_banner
 field_name: field_hero_banner
@@ -19,7 +19,7 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      jarvis_image: jarvis_image
+      image: image
     sort:
       field: _none
       direction: ASC

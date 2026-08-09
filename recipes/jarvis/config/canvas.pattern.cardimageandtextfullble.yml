@@ -5,14 +5,14 @@ dependencies:
     - canvas.component.sdc.jarvis.card-full-image
     - canvas.component.sdc.jarvis.image
     - canvas.component.sdc.jarvis.wysiwyg
-    - field.field.media.jarvis_image.field_media_image
+    - field.field.media.image.field_media_image
     - filter.format.jarvis_full_html
     - filter.format.jarvis_html
     - image.style.canvas_parametrized_width
-    - media.type.jarvis_image
+    - media.type.image
   content:
     - 'file:file:6c1fbfc6-ffc1-4bc6-a29b-92f9d38f103a'
-    - 'media:jarvis_image:741dc56b-2ee5-442f-abfe-bdac0a132490'
+    - 'media:image:741dc56b-2ee5-442f-abfe-bdac0a132490'
   module:
     - file
     - media
@@ -33,7 +33,7 @@ component_tree:
     slot: media
     uuid: 24c0e4e3-bd09-44b3-8dbd-24aaca78c9e8
     component_id: sdc.jarvis.image
-    component_version: 65afb59a337299ea
+    component_version: 7205cc6197c6ffcd
     inputs:
       image:
         target_id: '6'

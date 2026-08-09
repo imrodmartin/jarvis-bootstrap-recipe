@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.jarvis_video.field_media_oembed_video
-    - media.type.jarvis_video
+    - field.field.media.remote_video.field_media_oembed_video
+    - media.type.remote_video
   module:
     - link
     - media
@@ -11,7 +11,7 @@ dependencies:
     - options
   theme:
     - jarvis
-active_version: c9e44e032a25ea08
+active_version: 9ed40be7ce54e007
 versioned_properties:
   active:
     settings:
@@ -25,10 +25,10 @@ versioned_properties:
             handler: 'default:media'
             handler_settings:
               target_bundles:
-                jarvis_video: jarvis_video
+                remote_video: remote_video
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_video␝field_media_oembed_video␞␟value'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:remote_video␝field_media_oembed_video␞␟value'
           derived_schema_metadata:
             string_shape:
               format: uri-reference

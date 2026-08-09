@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.jarvis_image.field_media_image
+    - field.field.media.image.field_media_image
     - image.style.canvas_parametrized_width
-    - media.type.jarvis_image
+    - media.type.image
   module:
     - file
     - link
@@ -13,7 +13,7 @@ dependencies:
     - options
   theme:
     - jarvis
-active_version: d18df0aa7e647dd8
+active_version: d0b84c39449f2575
 versioned_properties:
   active:
     settings:
@@ -89,10 +89,10 @@ versioned_properties:
             handler: 'default:media'
             handler_settings:
               target_bundles:
-                jarvis_image: jarvis_image
+                image: image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false
@@ -256,10 +256,10 @@ versioned_properties:
             handler: 'default:media'
             handler_settings:
               target_bundles:
-                jarvis_image: jarvis_image
+                image: image
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:jarvis_image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
           derived_schema_metadata: {  }
         overlay:
           required: false

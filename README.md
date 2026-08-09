@@ -54,9 +54,12 @@ ddev drush site:install standard --account-name=admin -y && ddev drush recipe /v
 ```
 
 Install with the **standard** profile — the tested, supported path.
-On a standard-profile site, everything Jarvis ships is namespaced
-(`jarvis_html`, `jarvis_image`, `jarvis_basic`, …) so the site's own Basic
-HTML format, block types, and media types are left untouched.
+On a standard-profile site, what Jarvis adds is namespaced
+(`jarvis_html`, `jarvis_basic`, …) so the site's own Basic HTML format and
+block types are left untouched. Media types are the deliberate exception:
+Jarvis uses core's own `image`, `remote_video`, `video` and `document`
+bundles rather than namespaced copies, because contrib widely assumes those
+names. Media types the site already has are left as they are.
 
 Cloned without submodules by accident? `git submodule update --init` fixes it.
 
