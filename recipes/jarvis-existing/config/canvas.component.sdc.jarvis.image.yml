@@ -2,17 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
-  - field.field.media.image.field_media_image
-  - image.style.canvas_parametrized_width
-  - media.type.image
+    - field.field.media.image.field_media_image
+    - image.style.canvas_parametrized_width
+    - media.type.image
   module:
-  - file
-  - media
-  - media_library
-  - options
+    - file
+    - media
+    - media_library
+    - options
   theme:
-  - jarvis
-active_version: 7205cc6197c6ffcd
+    - jarvis
+_core:
+  default_config_hash: QTlf5WcCAR8JLk2sNVoBKhwjYg_Y_dQSkZOhibZTaMg
+active_version: 753d37868a34a78b
 versioned_properties:
   active:
     settings:
@@ -23,134 +25,126 @@ versioned_properties:
           field_storage_settings:
             target_type: media
           field_instance_settings:
-            handler: default:media
+            handler: 'default:media'
             handler_settings:
               target_bundles:
                 image: image
           field_widget: media_library_widget
-          default_value: {}
-          expression: ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}
-          derived_schema_metadata: {}
+          default_value: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝field_media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          derived_schema_metadata: {  }
         image_style:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
-        image_uri:
-          required: false
-          field_type: string
-          field_storage_settings: {}
-          field_instance_settings: {}
-          field_widget: string_textfield
-          default_value: null
-          expression: ℹ︎string␟value
-          derived_schema_metadata:
-            string_shape: {}
+          derived_schema_metadata: {  }
         caption:
           required: false
           field_type: string
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: string_textfield
           default_value: null
           expression: ℹ︎string␟value
           derived_schema_metadata:
-            string_shape: {}
+            string_shape: {  }
         full_width:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value:
-          - value: false
+            -
+              value: false
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         match_height:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         rounded:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         priority:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         padding_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         margin_size:
           required: false
           field_type: list_string
           field_storage_settings:
             allowed_values_function: canvas_load_allowed_values_for_component_prop
-          field_instance_settings: {}
+          field_instance_settings: {  }
           field_widget: options_select
           default_value: null
           expression: ℹ︎list_string␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
         vertical_padding:
           required: false
           field_type: boolean
-          field_storage_settings: {}
-          field_instance_settings: {}
+          field_storage_settings: {  }
+          field_instance_settings: {  }
           field_widget: boolean_checkbox
           default_value: null
           expression: ℹ︎boolean␟value
-          derived_schema_metadata: {}
+          derived_schema_metadata: {  }
     fallback_metadata:
-      slot_definitions: {}
+      slot_definitions: {  }
 label: Image
 id: sdc.jarvis.image
 provider: jarvis
 source: sdc
-source_local_id: jarvis:image
+source_local_id: 'jarvis:image'
+
