@@ -96,13 +96,11 @@ a second look, and only if their dimensions differ from what Jarvis expects.
 
 ## Block content types
 
-`recipes/jarvis` ships `card`, `hero`, `image`, `text` and `video` block
-content types plus the `jarvis_blocks` module, which maps them to SDCs. Those
-names collide with an existing site's own too easily, so they are omitted here.
-The 19 Jarvis SDC components do not need them.
-
-If you want that mapping and know the names are free, install `jarvis_blocks`
-and copy `block_content.type.*` plus their `field.*` config across.
+Earlier releases shipped `card`, `hero`, `image`, `text` and `video` block
+content types plus a `jarvis_blocks` module mapping them to SDCs. That whole
+pathway has been retired — nothing rendered those blocks on a Canvas site,
+and the generic names collided with existing sites' own types. The Jarvis
+SDC components never needed them.
 
 ## What gets installed
 

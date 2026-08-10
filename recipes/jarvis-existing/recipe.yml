@@ -43,8 +43,6 @@ install:
   - jarvis
   #
   # Deliberately NOT installed, unlike recipes/jarvis:
-  #   jarvis_blocks + the card/hero/image/text/video block_content types —
-  #     those names are generic enough to collide with an existing site's own.
   #   default_content and the demo nodes/media/pages.
   #   The AI stack (key, ai, ai_agents, ai_ckeditor, providers, canvas_ai...).
   #   webform, metatag, workflows, content_moderation, editoria11y, antibot,
