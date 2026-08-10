@@ -8,7 +8,7 @@ and a configured AI stack. One apply, working site.
 
 ## What you get
 
-- **The Jarvis theme** — 20 SDC components (hero, cards, CTA, stats, people,
+- **The Jarvis theme** — 21 SDC components (hero, cards, CTA, stats, people,
   video, maps, 1/2/3-column layouts, rich text …) with automatic WCAG
   contrast enforcement: image overlays darken until text passes AA, unsafe
   colour picks fall back to safe ones, and the theme settings form shows live
@@ -16,7 +16,7 @@ and a configured AI stack. One apply, working site.
 - **Drupal Canvas**, wired: components organised into folders, 5 reusable
   patterns, content templates for the Blog/Basic content types, and
   two editable demo Canvas pages (a component showcase and a test page).
-- **Demo content** — home page, about page, accessibility statement, three
+- **Demo content** — home page, about page, accessibility statement, four
   blog posts, media, menus. The front page is the Canvas component
   showcase (`/page/2`).
 - **A real admin experience** — Claro admin theme, the core Navigation
@@ -44,7 +44,8 @@ and a configured AI stack. One apply, working site.
 
 The theme lives in its own repository as a git submodule, so the
 `--recurse-submodules` flag is **required**:
-This also changes the path to public_html instead of web.
+
+### This also changes the path to public_html instead of web.
 
 ```bash
 git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-recipe.git mysite
@@ -314,7 +315,7 @@ Deeper recipe details and known limitations:
 
 ## Cutting a release (maintainers)
 
-This repository is the source of truth, but **composer installs from three
+This repository is the source of truth, but **composer installs from four
 other repositories**, none of which update themselves:
 
 | Composer package | Mirror repo | Source of truth here |
