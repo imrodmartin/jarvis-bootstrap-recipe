@@ -12,7 +12,9 @@ dependencies:
     - options
   theme:
     - jarvis
-active_version: 7205cc6197c6ffcd
+_core:
+  default_config_hash: QTlf5WcCAR8JLk2sNVoBKhwjYg_Y_dQSkZOhibZTaMg
+active_version: 753d37868a34a78b
 versioned_properties:
   active:
     settings:
@@ -41,16 +43,6 @@ versioned_properties:
           default_value: null
           expression: ℹ︎list_string␟value
           derived_schema_metadata: {  }
-        image_uri:
-          required: false
-          field_type: string
-          field_storage_settings: {  }
-          field_instance_settings: {  }
-          field_widget: string_textfield
-          default_value: null
-          expression: ℹ︎string␟value
-          derived_schema_metadata:
-            string_shape: {  }
         caption:
           required: false
           field_type: string
@@ -155,3 +147,4 @@ id: sdc.jarvis.image
 provider: jarvis
 source: sdc
 source_local_id: 'jarvis:image'
+
