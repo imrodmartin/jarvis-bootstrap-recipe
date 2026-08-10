@@ -14,8 +14,8 @@ repository-root README for the quick start.
   settings (colours, fonts, sizes, logo). Claro becomes the admin theme and
   content is edited in it, like the standard profile.
 - **Canvas, fully wired**: canvas + canvas_field_component, component config
-  for the theme's 16 SDCs and the block/views components the library folders
-  use, content templates for the three content types, page regions, 5
+  for the theme's 21 SDCs and the block/views components the library folders
+  use, content templates for the two content types, page regions, 5
   reusable patterns, and the custom `jarvis_blocks` + `jarvis_canvas` glue
   modules. Component folders are organised by `jarvis_canvas` on every cache
   rebuild (they cannot ship as config — Canvas auto-creates folders during
