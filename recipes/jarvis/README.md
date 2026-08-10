@@ -89,14 +89,15 @@ Without ddev (drush run from the project root), the path is just `recipes/jarvis
 > standard profile's config — text formats are `jarvis_html`/`jarvis_full_html`
 > (Drupal's own Basic/Full HTML are untouched), the theme's own media types are
 > `image`/`remote_video`,
-> the basic block type is `jarvis_basic`, the Linkit profile is `jarvis` — so
+> the Linkit profile is `jarvis` — so
 > applying to a site created with the standard profile no longer collides with
-> or overwrites its formats, media types, or block types. The exceptions are
+> or overwrites its formats or media types. The recipe ships no block types of
+> its own, so the site's Basic block type is untouched. The exceptions are
 > deliberate: the stock `document` and `video` media types (and their field
 > storages/instances/displays) ship under core's own names and are copied
 > byte-for-byte from the standard profile, so a standard site already has them
 > and a minimal site gets them. Shared field storages
-> (`media.field_media_image`, `block_content.body`) are byte-identical with the
+> (`media.field_media_image`) are byte-identical with the
 > standard profile's, so they pass the recipe's strict check. Note that applying
 > to an existing site is still an opinionated takeover: it sets the default
 > theme to Jarvis, the admin theme to Claro, the front page to the demo Canvas

@@ -68,8 +68,8 @@ drush site:install standard --account-name=admin -y
 ```
 
 Install with the **standard** profile — the tested path. What Jarvis adds is
-namespaced (`jarvis_html`, `jarvis_basic`), so standard's own formats and block
-types are left untouched. Media types are the deliberate exception: Jarvis uses
+namespaced (`jarvis_html`, `jarvis_full_html`), so standard's own formats and
+block types are left untouched — Jarvis ships no block types of its own. Media types are the deliberate exception: Jarvis uses
 core's `image`, `remote_video`, `video` and `document` bundles rather than
 namespaced copies, since contrib widely assumes those names. Media types the
 site already has are left as they are.
