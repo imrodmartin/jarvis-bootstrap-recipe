@@ -90,15 +90,12 @@ install:
   - save_edit
   - better_exposed_filters
   - better_social_sharing_buttons
-  # Custom modules shipped in this codebase
-  - jarvis_blocks
+  # Custom module shipped in this codebase
   - jarvis_canvas
   # The theme itself. Recipes install themes from this same list, before config
   # import and config actions run. Without it, a site that has not already run
   # `theme:install jarvis` has no auto-created blocks for the block.block.*
   # actions to act on, and the recipe aborts with "Entity ... does not exist".
-  - jarvis
-  # The theme
   - jarvis
 config:
   # Core defaults `strict` to TRUE, which compares EVERY config name this

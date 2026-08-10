@@ -196,7 +196,6 @@ git clone --depth 1 https://github.com/imrodmartin/jarvis-bootstrap-recipe.git /
 mkdir -p recipes web/modules/custom
 cp -r /tmp/jarvis-src/recipes/jarvis recipes/
 cp -r /tmp/jarvis-src/recipes/jarvis_ai recipes/
-cp -r /tmp/jarvis-src/web/modules/custom/jarvis_blocks web/modules/custom/
 cp -r /tmp/jarvis-src/web/modules/custom/jarvis_canvas web/modules/custom/
 rm -rf /tmp/jarvis-src
 
@@ -307,7 +306,6 @@ No key files? The overlay is a harmless no-op. Key file shape and details:
 | `recipes/jarvis/` | The site recipe: config, demo content, README |
 | `recipes/jarvis_ai/` | Private keys-only overlay (key files gitignored) |
 | `web/themes/custom/jarvis/` | The theme — git submodule of [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) |
-| `web/modules/custom/jarvis_blocks` | Block content types → SDC mapping |
 | `web/modules/custom/jarvis_canvas` | Canvas glue: text formats on props, template CTA, folder organiser |
 
 Deeper recipe details and known limitations:
@@ -321,7 +319,7 @@ other repositories**, none of which update themselves:
 | Composer package | Mirror repo | Source of truth here |
 |---|---|---|
 | `drupal/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
-| `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_blocks`, `web/modules/custom/jarvis_canvas` |
+| `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_canvas` |
 | `imrodmartin/jarvis-recipe` | [imrodmartin/jarvis-recipe](https://github.com/imrodmartin/jarvis-recipe) | `recipes/jarvis/` |
 | `imrodmartin/jarvis-install-recipe` | [imrodmartin/jarvis-install-recipe](https://github.com/imrodmartin/jarvis-install-recipe) | `recipes/jarvis-existing/` |
 
@@ -346,8 +344,9 @@ the old tag no matter how many commits sit on `master`.
 cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 
 # 2. Modules — mirror, then tag. --delete so removed files actually go away.
+#    (jarvis_blocks was retired; on the first sync after that, also
+#    `rm -rf /tmp/jm/jarvis_blocks` so the mirror drops it.)
 git clone https://github.com/imrodmartin/jarvis-modules /tmp/jm
-rsync -a --delete web/modules/custom/jarvis_blocks/ /tmp/jm/jarvis_blocks/
 rsync -a --delete web/modules/custom/jarvis_canvas/ /tmp/jm/jarvis_canvas/
 cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
   && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -

@@ -33,7 +33,7 @@ component_tree:
     slot: media
     uuid: 24c0e4e3-bd09-44b3-8dbd-24aaca78c9e8
     component_id: sdc.jarvis.image
-    component_version: 7205cc6197c6ffcd
+    component_version: 753d37868a34a78b
     inputs:
       image:
         target_id: '6'

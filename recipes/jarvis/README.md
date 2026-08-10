@@ -16,8 +16,8 @@ repository-root README for the quick start.
 - **Canvas, fully wired**: canvas + canvas_field_component, component config
   for the theme's 21 SDCs and the block/views components the library folders
   use, content templates for the two content types, page regions, 5
-  reusable patterns, and the custom `jarvis_blocks` + `jarvis_canvas` glue
-  modules. Component folders are organised by `jarvis_canvas` on every cache
+  reusable patterns, and the custom `jarvis_canvas` glue
+  module. Component folders are organised by `jarvis_canvas` on every cache
   rebuild (they cannot ship as config — Canvas auto-creates folders during
   component sync and an item may only live in one folder).
 - **Content types**: Blog and Basic only. There is deliberately no `landing_page`
@@ -54,7 +54,7 @@ repository-root README for the quick start.
 - **Imports demo content** (core Default Content format, shipped in
   `content/`): 7 nodes (Home, About, Accessibility Statement, 4 blog posts),
   **2 Canvas pages** (the component showcase and a Test
-  Page), 7 block_content entities, the referenced media + files, and the
+  Page), 3 block_content entities, the referenced media + files, and the
   main-menu links. Node URL aliases are carried inline, so they attach
   regardless of imported node IDs. The front page is the Canvas component
   showcase (`/page/2`).

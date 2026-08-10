@@ -183,7 +183,7 @@ release adds config, re-apply the recipe.
 | Package | What it is |
 |---|---|
 | `drupal/jarvis` | The theme. Repo: `imrodmartin/jarvis`. |
-| `imrodmartin/jarvis-modules` | `jarvis_blocks` + `jarvis_canvas` glue modules. |
+| `imrodmartin/jarvis-modules` | `jarvis_canvas` glue module. |
 | `imrodmartin/jarvis-recipe` | Full-site recipe (new sites). |
 | `imrodmartin/jarvis-install-recipe` | Existing-site recipe. |
 
