@@ -402,8 +402,9 @@ distributed recipe. And `rsync` will cheerfully carry `.DS_Store` into a mirror.
 
 Bump the version constraints in the recipe mirror's `composer.json` whenever the
 coupling tightens — it requires `drupal/jarvis` and `imrodmartin/jarvis-modules`,
-and leaving those loose lets composer resolve a mismatched set. v1.2.0 requires
-`^2.2` and `^1.2` for exactly that reason.
+and leaving those loose lets composer resolve a mismatched set. Recipe v2.0.0
+requires theme `^2.3` and modules `^2.0` for exactly that reason (the image
+SDC schema changed and jarvis_blocks was retired in the same release).
 
 Then on a consuming site:
 
