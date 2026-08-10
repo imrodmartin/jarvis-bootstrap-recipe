@@ -44,7 +44,8 @@ and a configured AI stack. One apply, working site.
 
 The theme lives in its own repository as a git submodule, so the
 `--recurse-submodules` flag is **required**:
-This also changes the path to public_html instead of web.
+
+###This also changes the path to public_html instead of web.###
 
 ```bash
 git clone --recurse-submodules https://github.com/imrodmartin/jarvis-bootstrap-recipe.git mysite
