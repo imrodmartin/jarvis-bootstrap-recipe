@@ -66,4 +66,4 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 ## The Takeaway
 
-Nineteen components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.
+Twenty-one components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.
