@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\jarvis_canvas\Hook;
 
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
+use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -68,7 +69,7 @@ final class JarvisCanvasHooks {
   public function pageAttachments(array &$attachments): void {
     $declarations = [];
     foreach (self::FONT_SIZES as $key => [$default, $unit]) {
-      $value = theme_get_setting('jarvis_fs_' . $key, 'jarvis');
+      $value = \Drupal::service(ThemeSettingsProvider::class)->getSetting('jarvis_fs_' . $key, 'jarvis');
       $value = is_numeric($value) ? (float) $value : $default;
       // Base is absolute; the rest become em so they scale from it.
       $declarations[] = $unit === 'px'
