@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for Jarvis Canvas.
+ *
+ * These stay procedural: install/update hooks are not dispatched through the
+ * OOP #[Hook] attribute system that the rest of this module uses.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Creates the disabled Full-content template for node types missing one.
+ *
+ * Mirrors JarvisCanvasHooks::nodeTypeInsert(), which only fires for content
+ * types created AFTER this module is installed. A type that predates the
+ * module — an upgraded site, a template deleted in the Canvas UI — otherwise
+ * has no route into Canvas at all: Canvas's own "Create with Canvas" CTA is
+ * broken on Drupal 11.4 (https://www.drupal.org/project/canvas/issues/3498525)
+ * and the "Design this view mode with Canvas" link on Manage display only
+ * renders when a disabled template already exists.
+ *
+ * Templates are created disabled for the same reason as in nodeTypeInsert():
+ * an enabled template with an empty component tree renders every node of the
+ * bundle as a blank page.
+ */
+function _jarvis_canvas_backfill_templates(): void {
+  $etm = \Drupal::entityTypeManager();
+  $storage = $etm->getStorage('content_template');
+  foreach (array_keys($etm->getStorage('node_type')->loadMultiple()) as $bundle) {
+    $id = "node.$bundle.full";
+    if ($storage->load($id)) {
+      continue;
+    }
+    $storage->create([
+      'id' => $id,
+      'status' => FALSE,
+      'content_entity_type_id' => 'node',
+      'content_entity_type_bundle' => $bundle,
+      'content_entity_type_view_mode' => 'full',
+      'exposed_slots' => [],
+      'component_tree' => [],
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_install().
+ */
+function jarvis_canvas_install(): void {
+  // Safe during recipe apply: the recipe installs modules before it imports
+  // config, so its node types (and their shipped, enabled templates) do not
+  // exist yet at this point — nothing here can collide with them.
+  _jarvis_canvas_backfill_templates();
+}
+
+/**
+ * Backfill disabled Canvas templates for content types that predate the module.
+ */
+function jarvis_canvas_update_11001(): void {
+  _jarvis_canvas_backfill_templates();
+}
