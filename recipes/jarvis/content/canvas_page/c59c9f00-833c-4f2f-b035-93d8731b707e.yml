@@ -337,7 +337,7 @@ default:
       component_id: sdc.jarvis.card
       inputs:
         variant: background
-        overlay: 40
+        overlay: 0
         text_color: black
         title: 'Hero + CTA'
         body:
@@ -363,7 +363,7 @@ default:
       component_id: sdc.jarvis.card
       inputs:
         variant: background
-        overlay: 40
+        overlay: 0
         text_color: black
         title: 'Cards + grids'
         body:

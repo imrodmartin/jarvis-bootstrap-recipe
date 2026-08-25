@@ -417,7 +417,7 @@ default:
       component_id: sdc.jarvis.card
       inputs:
         variant: background
-        overlay: 40
+        overlay: 0
         title: 'Card title'
         body:
           value: '<p>Short supporting copy for this card.</p>'
