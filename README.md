@@ -183,6 +183,41 @@ vendor/bin/drush --root=public_html recipe "$(pwd)/recipes/jarvis-recipe" \
   && vendor/bin/drush --root=public_html cr \
   && vendor/bin/drush --root=public_html uli
 ```
+## The theme is not standalone
+
+`drupal/jarvis` requires `imrodmartin/jarvis-modules` (the `jarvis_canvas`
+module) and declares it in both `composer.json` and `jarvis.info.yml`. This is
+a hard dependency, not a nice-to-have: four templates call Twig filters that
+module provides, and Twig raises `Unknown "…" filter` at compile time when they
+are absent, so the theme white-screens rather than losing a feature.
+
+| Template | Filter | Provides |
+|---|---|---|
+| `components/hero/hero.twig` | `jarvis_overlay_alpha` | Server-side WCAG overlay contrast |
+| `components/card/card.twig` | `jarvis_overlay_alpha` | Server-side WCAG overlay contrast |
+| `templates/jarvis-columns-shell.html.twig` | `jarvis_overlay_alpha` | Server-side WCAG overlay contrast |
+| `components/image/image.twig` | `jarvis_image_style` | Named image styles on a Canvas image prop |
+
+The module also supplies things that *do* degrade quietly rather than break:
+the Remote video media picker on the video components (`x-jarvis-remote-video`
+— without it Canvas falls back to an entity-reference autocomplete, so you can
+only pick media you can already name), the Basic/Full HTML formats on rich-text
+props (`x-jarvis-html-format`), and the auto-created Canvas template per
+content type.
+
+Because the theme now declares the dependency, Drupal refuses to install it
+without the module and names what is missing, instead of failing at render
+time. It also refuses to uninstall `jarvis_canvas` while Jarvis is installed.
+
+Installing the theme on its own still means adding the modules repository —
+the packages are VCS, not Packagist:
+
+```bash
+composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
+composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
+composer require drupal/jarvis
+```
+
 ## Add Jarvis by hand (no composer package)
 
 Prefer to vendor the pieces yourself? Assemble the four pieces, then apply:
@@ -306,7 +341,7 @@ No key files? The overlay is a harmless no-op. Key file shape and details:
 | `recipes/jarvis/` | The site recipe: config, demo content, README |
 | `recipes/jarvis_ai/` | Private keys-only overlay (key files gitignored) |
 | `web/themes/custom/jarvis/` | The theme — git submodule of [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) |
-| `web/modules/custom/jarvis_canvas` | Canvas glue: text formats on props, template CTA, folder organiser |
+| `web/modules/custom/jarvis_canvas` | **Required by the theme.** Canvas glue: overlay-contrast + image-style Twig filters, text formats on props, template CTA, folder organiser |
 
 Deeper recipe details and known limitations:
 [recipes/jarvis/README.md](recipes/jarvis/README.md).
@@ -332,6 +367,11 @@ modules v1.2.0).
 
 Untagged work is invisible to composer. A site pinned to `^2.1` keeps resolving
 the old tag no matter how many commits sit on `master`.
+
+The theme's own `composer.json` requires `imrodmartin/jarvis-modules` too, so a
+**major** modules bump means editing that constraint in the theme repo before
+tagging it — otherwise the theme resolves the previous major and its Twig
+filters go missing.
 
 ```bash
 # 0. If any SDC prop changed, update the component reference FIRST — it is

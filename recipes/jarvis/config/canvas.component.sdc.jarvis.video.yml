@@ -11,7 +11,7 @@ dependencies:
     - options
   theme:
     - jarvis
-active_version: 306e4bfb5d9bc4a7
+active_version: cf7e4d4889d2eb11
 versioned_properties:
   active:
     settings:
@@ -42,7 +42,7 @@ versioned_properties:
           field_widget: link_default
           default_value:
             -
-              uri: 'https://www.youtube.com/embed/aqz-KE-bpKQ'
+              uri: /sites/default/files/demo.mp4
               options: {  }
           expression: ℹ︎link␟url
           derived_schema_metadata:

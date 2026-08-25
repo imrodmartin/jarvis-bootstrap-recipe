@@ -136,13 +136,12 @@ default:
       uuid: 7bf16dc1-2496-4536-8351-18bb7a9f47d6
       component_id: sdc.jarvis.video
       inputs:
-        video_url:
-          uri: 'https://youtu.be/CzsVnB6YQ3k?list=PL-uvhR-tfZnWEbxaDXMzQcrkbcmLpN421'
-          options: {  }
+        video_media:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: c55aa556-9054-40f9-9ce2-20662a5d6c82
+            target_type: media
         aspect: 16x9
         full_width: true
-        autoplay: true
-        muted: true
         vertical_padding: false
     -
       uuid: ef1bd3b8-3d09-4eca-b3ff-1222b0a39781
@@ -418,7 +417,7 @@ default:
       component_id: sdc.jarvis.card
       inputs:
         variant: background
-        overlay: 0
+        overlay: 40
         title: 'Card title'
         body:
           value: '<p>Short supporting copy for this card.</p>'

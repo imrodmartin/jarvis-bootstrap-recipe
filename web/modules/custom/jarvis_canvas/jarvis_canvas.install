@@ -1,0 +1,216 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for Jarvis Canvas.
+ *
+ * These stay procedural: install/update hooks are not dispatched through the
+ * OOP #[Hook] attribute system that the rest of this module uses.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\RevisionableInterface;
+
+/**
+ * The overlay floor, in percent, given to an unprotected dark-text placement.
+ *
+ * Matches the components' own default. It is only a floor: js/contrast.js
+ * samples the image at runtime and raises it further when the text still
+ * fails WCAG AA.
+ */
+const JARVIS_CANVAS_DARK_TEXT_OVERLAY_FLOOR = 40;
+
+/**
+ * Raises a zero overlay on a dark-text placement that sits over an image.
+ *
+ * Hero and card used to force the overlay to 0 whenever the text colour was
+ * dark, on the theory that dark text belonged on the bare photo. Canvas stored
+ * that 0 as the author's value, so it survives the fix: the template now emits
+ * a white overlay for dark text, but at an opacity of zero. js/contrast.js
+ * raises it on the live site, which means those placements render correctly
+ * only where JavaScript runs — black text on a dark photo measures about
+ * 1.2:1 without it.
+ *
+ * Only a stored 0 is touched. Anything the author deliberately raised is left
+ * exactly as it is.
+ *
+ * @param array $inputs
+ *   The placement's decoded inputs.
+ * @param string $component_id
+ *   The placement's component ID.
+ *
+ * @return array|null
+ *   The rewritten inputs, or NULL when this placement needs no change.
+ */
+function _jarvis_canvas_raise_dark_overlay(array $inputs, string $component_id): ?array {
+  // The only two components that paint an author-tunable overlay over a
+  // background image. They spell "dark text" differently.
+  $dark_value = match ($component_id) {
+    'sdc.jarvis.hero' => 'dark',
+    'sdc.jarvis.card' => 'black',
+    default => NULL,
+  };
+  if ($dark_value === NULL) {
+    return NULL;
+  }
+  // The card only renders an overlay in its background variant; an image-top
+  // card puts its text on the card body, not on the photo.
+  if ($component_id === 'sdc.jarvis.card' && ($inputs['variant'] ?? NULL) !== 'background') {
+    return NULL;
+  }
+  if (($inputs['text_color'] ?? NULL) !== $dark_value) {
+    return NULL;
+  }
+  // No image means no overlay element is rendered at all.
+  if (empty($inputs['image'])) {
+    return NULL;
+  }
+  // A prop bound to a field rather than stored statically is not ours to
+  // rewrite — is_scalar() keeps those (and any future shape) out.
+  $overlay = $inputs['overlay'] ?? NULL;
+  if (!is_scalar($overlay) || (int) $overlay !== 0) {
+    return NULL;
+  }
+  $inputs['overlay'] = JARVIS_CANVAS_DARK_TEXT_OVERLAY_FLOOR;
+  return $inputs;
+}
+
+/**
+ * Rewrites one component tree, returning the new tree or NULL if unchanged.
+ *
+ * Config entities hand back a plain array of items whose `inputs` is an array;
+ * the canvas_page field hands back items whose `inputs` is a JSON string. The
+ * encoding is preserved per item so neither storage is reformatted.
+ */
+function _jarvis_canvas_rewrite_tree(array $items): ?array {
+  $changed = FALSE;
+  foreach ($items as $delta => $item) {
+    $inputs = $item['inputs'] ?? [];
+    $is_json = is_string($inputs);
+    $decoded = $is_json ? Json::decode($inputs) : $inputs;
+    if (!is_array($decoded)) {
+      continue;
+    }
+    $new = _jarvis_canvas_raise_dark_overlay($decoded, (string) ($item['component_id'] ?? ''));
+    if ($new === NULL) {
+      continue;
+    }
+    $items[$delta]['inputs'] = $is_json ? Json::encode($new) : $new;
+    $changed = TRUE;
+  }
+  return $changed ? $items : NULL;
+}
+
+/**
+ * Saves an entity without spawning a revision or re-running content hooks.
+ */
+function _jarvis_canvas_save_quietly(EntityInterface $entity): void {
+  if ($entity instanceof RevisionableInterface) {
+    $entity->setNewRevision(FALSE);
+  }
+  // A data repair, not an editorial change: keep pathauto, search indexing and
+  // friends out of it.
+  $entity->setSyncing(TRUE);
+  $entity->save();
+}
+
+/**
+ * Gives dark-text hero/card placements over an image a real overlay floor.
+ */
+function jarvis_canvas_update_11002(array &$sandbox): string {
+  $etm = \Drupal::entityTypeManager();
+
+  // Config trees are few and are handled in the first pass only.
+  if (!isset($sandbox['ids'])) {
+    $sandbox['config'] = 0;
+    $sandbox['content'] = 0;
+    $sandbox['failed'] = [];
+
+    foreach (['pattern', 'content_template', 'page_region'] as $type) {
+      if (!$etm->hasDefinition($type)) {
+        continue;
+      }
+      foreach ($etm->getStorage($type)->loadMultiple() as $entity) {
+        $tree = $entity->get('component_tree');
+        if (!is_array($tree) || !($new = _jarvis_canvas_rewrite_tree($tree))) {
+          continue;
+        }
+        try {
+          $entity->set('component_tree', $new)->save();
+          $sandbox['config']++;
+        }
+        catch (\Throwable $e) {
+          $sandbox['failed'][] = "$type:" . $entity->id() . ' — ' . $e->getMessage();
+        }
+      }
+    }
+
+    // Discover the content trees rather than assuming canvas_page: a site can
+    // add the field to nodes or anything else.
+    $sandbox['fields'] = \Drupal::service('entity_field.manager')
+      ->getFieldMapByFieldType('component_tree');
+    $sandbox['ids'] = [];
+    foreach ($sandbox['fields'] as $entity_type_id => $fields) {
+      $ids = $etm->getStorage($entity_type_id)->getQuery()
+        ->accessCheck(FALSE)
+        ->execute();
+      foreach ($ids as $id) {
+        $sandbox['ids'][] = [$entity_type_id, $id];
+      }
+    }
+    $sandbox['total'] = count($sandbox['ids']);
+  }
+
+  // Batched: a large site can hold more canvas pages than fit in one request.
+  $slice = array_splice($sandbox['ids'], 0, 50);
+  foreach ($slice as [$entity_type_id, $id]) {
+    $entity = $etm->getStorage($entity_type_id)->load($id);
+    if (!$entity) {
+      continue;
+    }
+    $entity_changed = FALSE;
+    foreach (array_keys($sandbox['fields'][$entity_type_id]) as $field_name) {
+      if (!$entity->hasField($field_name)) {
+        continue;
+      }
+      $items = array_map(
+        static fn ($item) => $item->getValue(),
+        iterator_to_array($entity->get($field_name))
+      );
+      if ($new = _jarvis_canvas_rewrite_tree($items)) {
+        $entity->set($field_name, $new);
+        $entity_changed = TRUE;
+      }
+    }
+    if (!$entity_changed) {
+      continue;
+    }
+    try {
+      _jarvis_canvas_save_quietly($entity);
+      $sandbox['content']++;
+    }
+    catch (\Throwable $e) {
+      $sandbox['failed'][] = "$entity_type_id:$id — " . $e->getMessage();
+    }
+  }
+
+  $sandbox['#finished'] = $sandbox['ids'] ? 1 - (count($sandbox['ids']) / max(1, $sandbox['total'])) : 1;
+  if ($sandbox['#finished'] < 1) {
+    return sprintf('Raised %d placement(s) so far; %d entities left to check.',
+      $sandbox['config'] + $sandbox['content'], count($sandbox['ids']));
+  }
+
+  $summary = sprintf(
+    'Gave a %d%% overlay floor to dark-text hero/card placements over an image: %d config tree(s), %d content entity(ies).',
+    JARVIS_CANVAS_DARK_TEXT_OVERLAY_FLOOR, $sandbox['config'], $sandbox['content']
+  );
+  if ($sandbox['failed']) {
+    // Report rather than throw: one unsaveable entity should not block the
+    // rest of the site's updates.
+    $summary .= ' Could not save: ' . implode('; ', $sandbox['failed']);
+  }
+  return $summary;
+}
