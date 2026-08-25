@@ -15,11 +15,63 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 
 /**
+ * Creates the disabled Full-content template for node types missing one.
+ *
+ * Mirrors JarvisCanvasHooks::nodeTypeInsert(), which only fires for content
+ * types created AFTER this module is installed. A type that predates the
+ * module — an upgraded site, a template deleted in the Canvas UI — otherwise
+ * has no route into Canvas at all: Canvas's own "Create with Canvas" CTA is
+ * broken on Drupal 11.4 (https://www.drupal.org/project/canvas/issues/3498525)
+ * and the "Design this view mode with Canvas" link on Manage display only
+ * renders when a disabled template already exists.
+ *
+ * Templates are created disabled for the same reason as in nodeTypeInsert():
+ * an enabled template with an empty component tree renders every node of the
+ * bundle as a blank page.
+ */
+function _jarvis_canvas_backfill_templates(): void {
+  $etm = \Drupal::entityTypeManager();
+  $storage = $etm->getStorage('content_template');
+  foreach (array_keys($etm->getStorage('node_type')->loadMultiple()) as $bundle) {
+    $id = "node.$bundle.full";
+    if ($storage->load($id)) {
+      continue;
+    }
+    $storage->create([
+      'id' => $id,
+      'status' => FALSE,
+      'content_entity_type_id' => 'node',
+      'content_entity_type_bundle' => $bundle,
+      'content_entity_type_view_mode' => 'full',
+      'exposed_slots' => [],
+      'component_tree' => [],
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_install().
+ */
+function jarvis_canvas_install(): void {
+  // Safe during recipe apply: the recipe installs modules before it imports
+  // config, so its node types (and their shipped, enabled templates) do not
+  // exist yet at this point — nothing here can collide with them.
+  _jarvis_canvas_backfill_templates();
+}
+
+/**
+ * Backfill disabled Canvas templates for content types that predate the module.
+ */
+function jarvis_canvas_update_11001(): void {
+  _jarvis_canvas_backfill_templates();
+}
+
+/**
  * The overlay floor, in percent, given to an unprotected dark-text placement.
  *
- * Matches the components' own default. It is only a floor: js/contrast.js
- * samples the image at runtime and raises it further when the text still
- * fails WCAG AA.
+ * Matches the components' own default. It is only a floor: the
+ * jarvis_overlay_alpha Twig filter samples the image server-side and raises it
+ * further when the text still fails WCAG AA.
  */
 const JARVIS_CANVAS_DARK_TEXT_OVERLAY_FLOOR = 40;
 
@@ -28,11 +80,15 @@ const JARVIS_CANVAS_DARK_TEXT_OVERLAY_FLOOR = 40;
  *
  * Hero and card used to force the overlay to 0 whenever the text colour was
  * dark, on the theory that dark text belonged on the bare photo. Canvas stored
- * that 0 as the author's value, so it survives the fix: the template now emits
- * a white overlay for dark text, but at an opacity of zero. js/contrast.js
- * raises it on the live site, which means those placements render correctly
- * only where JavaScript runs — black text on a dark photo measures about
- * 1.2:1 without it.
+ * that 0 as the author's value, so it outlives the fix. Black text on a dark
+ * photo measures about 1.2:1 with no overlay at all.
+ *
+ * NOTE: jarvis_overlay_alpha now solves the opacity server-side and treats the
+ * stored value only as a floor, so a stored 0 is already raised to whatever
+ * the image needs. This hook therefore no longer protects anything the filter
+ * does not; all it does is stop the author's floor being 0. Keep it only if
+ * you want that floor recorded in the content — it will over-darken a
+ * placement whose image genuinely needs less than 40%.
  *
  * Only a stored 0 is touched. Anything the author deliberately raised is left
  * exactly as it is.
