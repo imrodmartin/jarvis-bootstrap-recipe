@@ -97,6 +97,8 @@ config.
 | Media reference field accepts nothing | its `target_bundles` was emptied by a media type deletion — see below |
 | AI features do nothing | no API keys ship in the repo; by design |
 | composer prompts for a GitHub token | `"no-api": true` missing from a repositories entry |
+| `drush updb` refuses: `jarvis_blocks` is missing | upgraded from modules 1.x, which shipped it; 2.x dropped it. Uninstall it — see INSTALL.md "Coming from modules 1.x" |
+| Video component renders nothing | since theme 3.0 `video_url` is files-only; hosted players come from the media library's Remote video field |
 
 ## Deleting or renaming a media type
 

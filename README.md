@@ -384,8 +384,8 @@ filters go missing.
 cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 
 # 2. Modules — mirror, then tag. --delete so removed files actually go away.
-#    (jarvis_blocks was retired; on the first sync after that, also
-#    `rm -rf /tmp/jm/jarvis_blocks` so the mirror drops it.)
+#    The mirror carries jarvis_canvas only; jarvis_blocks was retired and
+#    dropped from the package at v2.0.0.
 git clone https://github.com/imrodmartin/jarvis-modules /tmp/jm
 rsync -a --delete web/modules/custom/jarvis_canvas/ /tmp/jm/jarvis_canvas/
 cd /tmp/jm && git add -A && git commit -m "Sync from jarvis-bootstrap-recipe: …" \
@@ -442,9 +442,11 @@ distributed recipe. And `rsync` will cheerfully carry `.DS_Store` into a mirror.
 
 Bump the version constraints in the recipe mirror's `composer.json` whenever the
 coupling tightens — it requires `drupal/jarvis` and `imrodmartin/jarvis-modules`,
-and leaving those loose lets composer resolve a mismatched set. Recipe v2.0.0
-requires theme `^2.3` and modules `^2.0` for exactly that reason (the image
-SDC schema changed and jarvis_blocks was retired in the same release).
+and leaving those loose lets composer resolve a mismatched set. Recipe v3.0.0
+requires theme `^3.0` and modules `^2.1` for exactly that reason — the theme
+calls `jarvis_overlay_alpha`, which only exists from modules 2.1.0, so a looser
+floor would let composer resolve a modules version whose Twig extension has no
+such filter and white-screen every hero, card, column and image.
 
 Then on a consuming site:
 

@@ -166,6 +166,57 @@ drush cache:rebuild
 (3.0.0 needs `11001`, which backfills a Canvas template for content types
 that predate the module).
 
+### Coming from modules 1.x: uninstall jarvis_blocks first
+
+The 1.x package shipped **two** modules, `jarvis_blocks` and `jarvis_canvas`.
+The 2.x line dropped `jarvis_blocks`, so upgrading deletes its directory while
+`core.extension` still lists it as installed. Drupal then refuses *every*
+database update on the site, not just Jarvis's:
+
+```
+The following module is marked as installed in the core.extension
+configuration, but it is missing:
+ * jarvis_blocks
+```
+
+It will not appear in `drush pm:list` — that only shows extensions found on
+disk — which makes it easy to misread as a Jarvis 3.0 bug. It is not; it is a
+leftover from the 1.x package.
+
+Uninstall it **before** upgrading, while the files are still present:
+
+```bash
+drush pm:uninstall jarvis_blocks -y
+```
+
+If you have already upgraded and are stuck, restore the code temporarily so
+Drupal can uninstall it cleanly, then delete it again:
+
+```bash
+cd "$(drush php:eval 'print DRUPAL_ROOT;')/modules/custom"
+curl -L https://github.com/imrodmartin/jarvis-modules/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip-components=1 jarvis-modules-1.2.0/jarvis_blocks
+drush cr && drush pm:uninstall jarvis_blocks -y
+```
+
+Then remove the restored directory and run `drush cr && drush updatedb`.
+
+**Check for content first.** `jarvis_blocks` owns five block content types with
+generic names — `card`, `hero`, `image`, `text`, `video` — plus their field
+storages. Uninstalling deletes those types and every block of them:
+
+```bash
+drush sqlq "SELECT type, COUNT(*) AS n FROM block_content_field_data GROUP BY type"
+```
+
+If any of those five hold blocks you want, keep the restored directory
+permanently instead of uninstalling. It is self-contained module code with no
+dependency on the theme, and Composer will not touch it — 2.x and later no
+longer ship it.
+
+Editing `jarvis_blocks` out of `core.extension` by hand clears the error but
+strands the block types, field storages and any placed blocks as orphaned
+config, which resurfaces later as config-import failures.
+
 The cache rebuild is not optional: `hook_rebuild` is what makes Canvas re-read
 the components and regenerate their config.
 
