@@ -152,11 +152,19 @@ composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-reci
 ```
 
 ```bash
+drush updatedb
+```
+
+```bash
 drush cache:rebuild
 ```
 
 `update`, not `require` — `require` rewrites the version constraint in your
 `composer.json`; `update` moves within the one you already have.
+
+`drush updatedb` is not optional either: `jarvis_canvas` ships update hooks
+(3.0.0 needs `11001`, which backfills a Canvas template for content types
+that predate the module).
 
 The cache rebuild is not optional: `hook_rebuild` is what makes Canvas re-read
 the components and regenerate their config.
@@ -189,5 +197,8 @@ release adds config, re-apply the recipe.
 
 They are coupled and released together: the theme's video components need the
 module's prop-shape hook, and its renamed image style needs the recipes' config.
-Both recipes pin `drupal/jarvis ^2.2` and `imrodmartin/jarvis-modules ^1.2`, so
-composer cannot resolve a mismatched set.
+Both recipes pin `drupal/jarvis ^3.0` and `imrodmartin/jarvis-modules ^2.1`,
+and the theme itself pins `imrodmartin/jarvis-modules ^2.1`, so composer cannot
+resolve a mismatched set. The theme's floor is `^2.1` rather than `^2.0`
+because `jarvis_overlay_alpha` — which four templates call — only exists from
+modules 2.1.0.
