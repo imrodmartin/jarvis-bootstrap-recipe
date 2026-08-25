@@ -380,6 +380,12 @@ filters go missing.
 #    Each component has a prop table AND an embedded copy of its .component.yml
 #    in a <details class="src"> dropdown; both have to change.
 
+# 0b. Pre-tag checks. Neither implies the other, and a green hashcheck does
+#     NOT mean the recipe installs — jarvis-recipe v3.0.0 passed it and
+#     fataled on every install.
+ddev drush php:script scripts/check-content-import-order.php   # content import order
+ddev drush php:script hashcheck                                # component active_version drift
+
 # 1. Theme — the submodule IS the package repo, so just tag it.
 cd web/themes/custom/jarvis && git tag -a vX.Y.Z -m "…" && git push origin master vX.Y.Z && cd -
 
@@ -448,11 +454,14 @@ calls `jarvis_overlay_alpha`, which only exists from modules 2.1.0, so a looser
 floor would let composer resolve a modules version whose Twig extension has no
 such filter and white-screen every hero, card, column and image.
 
-Then on a consuming site:
+Then on a consuming site. Run the video check FIRST if it is coming from
+before theme 3.0 — `video_url` became files-only, so any placement holding a
+pasted player URL renders nothing afterwards, silently:
 
 ```bash
+drush php:script scripts/check-video-placements.php
 composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe
-drush cr
+drush updatedb && drush cr
 ```
 
 `update`, not `require`: `require` rewrites the version constraint in your
