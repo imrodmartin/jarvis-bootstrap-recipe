@@ -59,11 +59,28 @@ config:
   #
   # The trade-off is silence. Where your site already owns one of these names,
   # its version stays and ours never lands, with no warning. The exposure is
-  # much smaller here than in recipes/jarvis — 42 files, nearly all namespaced
+  # much smaller here than in recipes/jarvis — 66 files, nearly all namespaced
   # `jarvis*` — but see README for the ones that are not. The media types are
-  # the deliberate exception: core's own `image`/`remote_video`, because
-  # contrib assumes those names, so on a site that already has them nothing
-  # lands and nothing is duplicated.
+  # the deliberate exception: core's own `image`, `remote_video`, `video` and
+  # `document`, because contrib assumes those names, so on a site that already
+  # has them nothing lands and nothing is duplicated.
+  #
+  # `video` is not optional. Canvas derives the Video Background component's
+  # `video` prop by looking for a media type whose source is `video_file`
+  # (ShapeMatchingHooks::SCHEMA_TO_MEDIA_SOURCE). Find none and it silently
+  # falls back to a bare `file`/`file_generic` field, which has no working
+  # upload inside the Canvas tray — the component looks fine and cannot be
+  # given a video. Worse, this recipe ships
+  # canvas.component.sdc.jarvis.video-background already bound to the media
+  # type (active_version e8e97fbf1b21add3); without the bundle the first
+  # `drush cr` re-derives it down to the file fallback. Core ships NO media
+  # types by default — not from `media`, not from the standard profile; they
+  # come from core recipes like `local_video_media_type` — so "the site has
+  # media enabled" is no guarantee the bundle exists.
+  #
+  # `document` is not referenced by any shipped component. It ships because
+  # Jarvis sites use it for file listings, and because a site that has media
+  # but not `document` is the common case, not the rare one.
   strict: false
   import:
     # Recipes skip the config entities shipped by modules they install, so

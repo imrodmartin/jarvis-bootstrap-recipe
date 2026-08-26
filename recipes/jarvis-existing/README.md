@@ -32,15 +32,46 @@ Article + Basic page, an Image media type and 20 placed blocks, a full
 Your default theme, admin theme, front page, block layout, content types,
 media types, field storages and view displays came through byte-identical.
 96 new config objects were added, nearly all named `jarvis*`. (That count is
-from the test run above; the recipe has since gained the `remote_video` Remote
-video media type and its field + displays, 7 objects more.)
+from the test run above; the recipe has since gained the `remote_video`,
+`video` and `document` media types with their fields + displays, 21 objects
+more.)
 
-The Video and Video with Sidebar components take their source from a Remote
-video media item, so `media.type.remote_video` ships here even though this
-recipe is otherwise sparing with media config — their component config declares
-a hard dependency on it. It is core's own bundle name, not a namespaced copy,
-so a site already running `remote_video` keeps exactly what it has: `strict`
-is false, the existing type is left alone, and no second type is created.
+### The four media types, and why they ship
+
+This recipe is otherwise sparing with media config, but it ships four of core's
+own bundle names — `image`, `remote_video`, `video`, `document`. They are core's
+names, not namespaced copies, so a site already running them keeps exactly what
+it has: `strict` is false, the existing type is left alone, and no second type
+is created.
+
+- **`remote_video`** — Video and Video with Sidebar take their source from a
+  Remote video media item, and their component config declares a hard
+  dependency on it.
+- **`video`** — Video Background needs it, and needs it *present at derivation
+  time*. Canvas shapes that component's `video` prop by looking for a media type
+  whose source plugin is `video_file`. Find none and it silently falls back to a
+  bare `file` field with the `file_generic` widget, which has no working upload
+  path inside the Canvas tray: editors get an upload control that does nothing.
+  This recipe ships `canvas.component.sdc.jarvis.video-background` already bound
+  to the media type (`active_version: e8e97fbf1b21add3`), so without the bundle
+  the recipe lands correct config and the first `drush cr` re-derives it *down*
+  to the broken fallback (`2ce6521465d858f5`).
+- **`document`** — no shipped component references it; it ships because Jarvis
+  sites use it for file listings and because adding it later is the same trap.
+
+Do not assume an existing site already has these. **Core ships no media types
+at all** — not from the `media` module, not from the standard profile. They come
+from core recipes (`image_media_type`, `local_video_media_type`,
+`document_media_type`, `remote_video_media_type`, `audio_media_type`), so
+"the site has media enabled" says nothing about which bundles exist.
+
+If you hit the dead upload on a site installed before this fix: create the
+`video` media type (source `video_file`, source field
+`field_media_video_file`), run `drush cr`, and confirm `active_version` is
+`e8e97fbf1b21add3`. Video Background blocks already placed on pages stay pinned
+to the old version — `file` to `entity_reference` is not a backward-compatible
+change, so Canvas's instance updater will not migrate them and they must be
+deleted and re-added.
 
 Specifically **not** done, unlike `recipes/jarvis`:
 
