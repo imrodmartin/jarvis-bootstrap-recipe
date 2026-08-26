@@ -47,15 +47,25 @@ is created.
 - **`remote_video`** — Video and Video with Sidebar take their source from a
   Remote video media item, and their component config declares a hard
   dependency on it.
-- **`video`** — Video Background needs it, and needs it *present at derivation
-  time*. Canvas shapes that component's `video` prop by looking for a media type
-  whose source plugin is `video_file`. Find none and it silently falls back to a
-  bare `file` field with the `file_generic` widget, which has no working upload
-  path inside the Canvas tray: editors get an upload control that does nothing.
-  This recipe ships `canvas.component.sdc.jarvis.video-background` already bound
-  to the media type (`active_version: e8e97fbf1b21add3`), so without the bundle
-  the recipe lands correct config and the first `drush cr` re-derives it *down*
-  to the broken fallback (`2ce6521465d858f5`).
+- **`video`** — Video Background needs it, and without it this recipe **aborts**.
+  `canvas.component.sdc.jarvis.video-background` declares a hard config
+  dependency on `media.type.video`, so applying to a site with no `video_file`
+  bundle fails with exit 1:
+
+  ```
+  Missing bundle entity, entity type media_type, entity id video.
+  ```
+
+  It fails *late* — 7 modules and the theme are already installed, and the
+  formats, image styles and `media.type.document` have landed. Only the
+  video-background component config is missing. A later `drush cr` then creates
+  that component from scratch, and Canvas derives its `video` prop by looking
+  for a media type whose source plugin is `VideoFile`. Finding none, it falls
+  back to a bare `file` field with the `file_generic` widget, capped at mp4 —
+  a widget with no working upload path inside the Canvas tray. Editors get an
+  upload control that does nothing, the component is never disabled, and it
+  does not appear in `canvas:component:reasons`. End state:
+  `active_version: 2ce6521465d858f5` instead of `e8e97fbf1b21add3`.
 - **`document`** — no shipped component references it; it ships because Jarvis
   sites use it for file listings and because adding it later is the same trap.
 
@@ -72,6 +82,19 @@ If you hit the dead upload on a site installed before this fix: create the
 to the old version — `file` to `entity_reference` is not a backward-compatible
 change, so Canvas's instance updater will not migrate them and they must be
 deleted and re-added.
+
+### Verified
+
+Scratch install, 2026-08-26, Drupal 11.4 + theme 3.0.0 + modules 2.1.0, on a
+site seeded with core's `image_media_type` and `remote_video_media_type` only —
+the same starting shape as a real existing site:
+
+| Recipe | Result |
+|---|---|
+| this one | applies clean; `active_version` stays `e8e97fbf1b21add3` across two `drush cr` runs, one stored version, prop bound to `media_library_widget` |
+| same recipe, 7 `video` files removed | aborts exit 1; after `drush cr` the component is recreated as `2ce6521465d858f5`, `field_type: file`, `file_generic` |
+
+One variable between the two runs, so the media type is the cause.
 
 Specifically **not** done, unlike `recipes/jarvis`:
 

@@ -65,18 +65,30 @@ config:
   # `document`, because contrib assumes those names, so on a site that already
   # has them nothing lands and nothing is duplicated.
   #
-  # `video` is not optional. Canvas derives the Video Background component's
-  # `video` prop by looking for a media type whose source is `video_file`
-  # (ShapeMatchingHooks::SCHEMA_TO_MEDIA_SOURCE). Find none and it silently
-  # falls back to a bare `file`/`file_generic` field, which has no working
-  # upload inside the Canvas tray — the component looks fine and cannot be
-  # given a video. Worse, this recipe ships
-  # canvas.component.sdc.jarvis.video-background already bound to the media
-  # type (active_version e8e97fbf1b21add3); without the bundle the first
-  # `drush cr` re-derives it down to the file fallback. Core ships NO media
-  # types by default — not from `media`, not from the standard profile; they
-  # come from core recipes like `local_video_media_type` — so "the site has
-  # media enabled" is no guarantee the bundle exists.
+  # `video` is not optional, and without it this recipe does not merely degrade
+  # — it ABORTS. canvas.component.sdc.jarvis.video-background declares a hard
+  # config dependency on media.type.video, so on a site with no `video_file`
+  # bundle the apply fails, exit 1:
+  #
+  #   Missing bundle entity, entity type media_type, entity id video.
+  #
+  # by which point it has already installed 7 modules and the theme, leaving
+  # the site half-configured: formats, image styles and media.type.document
+  # land, the video-background component config never does. A later `drush cr`
+  # then creates that component from scratch, and Canvas derives its `video`
+  # prop by looking for a media type whose source plugin is VideoFile
+  # (ShapeMatchingHooks::SCHEMA_TO_MEDIA_SOURCE). Finding none, it falls back
+  # to a bare `file`/`file_generic` field capped at mp4 — a widget with no
+  # working upload path inside the Canvas tray. The component then renders
+  # fine and cannot be given a video, and is never disabled, so it does not
+  # show up in canvas:component:reasons either. Reproduced on a scratch
+  # install 2026-08-26: active_version 2ce6521465d858f5, matching the state
+  # observed live on jarvis.drupalhelps.com.
+  #
+  # Core ships NO media types by default — not from `media`, not from the
+  # standard profile (a fresh D11.4 standard site does not even install the
+  # media module). They come from core recipes like `local_video_media_type`,
+  # so "the site has media enabled" is no guarantee the bundle exists.
   #
   # `document` is not referenced by any shipped component. It ships because
   # Jarvis sites use it for file listings, and because a site that has media
