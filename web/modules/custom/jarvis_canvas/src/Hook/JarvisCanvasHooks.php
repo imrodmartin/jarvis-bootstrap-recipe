@@ -8,6 +8,7 @@ use Drupal\Core\Entity\Display\EntityDisplayInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Hook\Order\Order;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
@@ -182,6 +183,31 @@ final class JarvisCanvasHooks {
     ));
     if ($formats) {
       $storable_prop_shape->fieldInstanceSettings['allowed_formats'] = $formats;
+    }
+  }
+
+  /**
+   * Implements hook_field_widget_info_alter().
+   *
+   * Keep the chosen text format when a rich-text prop offers more than one.
+   *
+   * Canvas registers the client-side `mainProperty` transform for the
+   * text_textarea widget, which collapses the widget's `{value, format}` item
+   * to just the `value` string before it reaches the component model. The
+   * server then re-fills `format` with the FIRST allowed format
+   * (CoreBugFixTextItemBaseDefaultValueTrait::setValue), so the picker
+   * snaps back to Basic HTML on every change — the switch can never stick.
+   * Invisible for Canvas's own props (one allowed format), fatal for the
+   * WYSIWYG prop that canvasStorablePropShapeAlter() opens up to two.
+   *
+   * Canvas's own `firstRecord` transform passes the whole item through, which
+   * is exactly the `{value, format}` shape StaticPropSource stores for
+   * text_long anyway (see StaticPropSource::denormalizeValue()).
+   */
+  #[Hook('field_widget_info_alter', order: Order::Last)]
+  public function fieldWidgetInfoAlter(array &$info): void {
+    if (isset($info['text_textarea']['canvas']['transforms'])) {
+      $info['text_textarea']['canvas']['transforms'] = ['firstRecord' => []];
     }
   }
 
