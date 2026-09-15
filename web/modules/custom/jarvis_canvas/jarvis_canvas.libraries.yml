@@ -1,0 +1,11 @@
+# Client-side transform for the text_textarea widget; Canvas auto-attaches any
+# library named canvas.transform.* to the editor.
+# @see \Drupal\jarvis_canvas\Hook\JarvisCanvasHooks::fieldWidgetInfoAlter()
+canvas.transform.jarvisTextItem:
+  # The Canvas app shell prints header scripts only; footer JS never renders.
+  header: true
+  js:
+    js/canvas-transform-text-item.js: {}
+  dependencies:
+    - core/drupal
+    - canvas/canvas-ui

@@ -200,14 +200,18 @@ final class JarvisCanvasHooks {
    * Invisible for Canvas's own props (one allowed format), fatal for the
    * WYSIWYG prop that canvasStorablePropShapeAlter() opens up to two.
    *
-   * Canvas's own `firstRecord` transform passes the whole item through, which
-   * is exactly the `{value, format}` shape StaticPropSource stores for
-   * text_long anyway (see StaticPropSource::denormalizeValue()).
+   * `jarvisTextItem` (js/canvas-transform-text-item.js) passes the whole item
+   * through — the `{value, format}` shape StaticPropSource stores for
+   * text_long anyway — but, unlike Canvas's own `firstRecord`, bails to NULL
+   * when the item carries no `value`. The format <select> can emit a change
+   * on its own, and a `{format}`-only item makes the server drop the prop
+   * entirely, after which the component's Twig render crashes on the raw
+   * default. Seen on a Canvas 1.11 site.
    */
   #[Hook('field_widget_info_alter', order: Order::Last)]
   public function fieldWidgetInfoAlter(array &$info): void {
     if (isset($info['text_textarea']['canvas']['transforms'])) {
-      $info['text_textarea']['canvas']['transforms'] = ['firstRecord' => []];
+      $info['text_textarea']['canvas']['transforms'] = ['jarvisTextItem' => []];
     }
   }
 
