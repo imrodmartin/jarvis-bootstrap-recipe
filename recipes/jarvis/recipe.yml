@@ -82,6 +82,9 @@ install:
   - webform_node
   - webform_ui
   - webform_submission_export_import
+  # Math CAPTCHA on the contact webform (config action below). Antibot stops
+  # most bots silently; this catches the ones that run JavaScript.
+  - captcha
   # UX/editor helpers.
   - antibot
   - extlink
@@ -239,3 +242,38 @@ config:
         # Canvas content templates (basic/blog full) surface on
         # each type's Manage display page.
         status: true
+    # Webform's stock contact form (imported above) plus a CAPTCHA element
+    # before the submit button. Webform keeps its elements as one YAML string,
+    # so the whole list is restated; the only addition is `captcha`. The
+    # theme's webform.css styles the group.
+    webform.webform.contact:
+      set:
+        property_name: elements
+        value: |
+          name:
+            '#title': 'Your Name'
+            '#type': textfield
+            '#required': true
+            '#default_value': '[current-user:display-name]'
+          email:
+            '#title': 'Your Email'
+            '#type': email
+            '#required': true
+            '#default_value': '[current-user:mail]'
+          subject:
+            '#title': Subject
+            '#type': textfield
+            '#required': true
+            '#test': 'Testing contact webform from [site:name]'
+          message:
+            '#title': Message
+            '#type': textarea
+            '#required': true
+            '#test': 'Please ignore this email.'
+          captcha:
+            '#type': captcha
+            '#captcha_type': captcha/Math
+          actions:
+            '#type': webform_actions
+            '#title': 'Submit button(s)'
+            '#submit__label': 'Send message'
