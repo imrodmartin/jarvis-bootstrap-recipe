@@ -375,8 +375,8 @@ final class JarvisCanvasHooks {
         // disabled in the recipe; do not fold them into a content folder.
       ]],
       'Sections' => ['component', 1, [
-        'sdc.jarvis.custom-columns', 'sdc.jarvis.one-column', 'sdc.jarvis.section',
-        'sdc.jarvis.three-column', 'sdc.jarvis.two-column',
+        'sdc.jarvis.custom-columns', 'sdc.jarvis.four-column', 'sdc.jarvis.one-column',
+        'sdc.jarvis.section', 'sdc.jarvis.three-column', 'sdc.jarvis.two-column',
       ]],
       'Content Type' => ['component', 2, ['field_display.field_display']],
       'Forms' => ['component', 3, ['block.user_login_block']],
