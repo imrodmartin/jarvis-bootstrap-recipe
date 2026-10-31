@@ -32,15 +32,69 @@ Article + Basic page, an Image media type and 20 placed blocks, a full
 Your default theme, admin theme, front page, block layout, content types,
 media types, field storages and view displays came through byte-identical.
 96 new config objects were added, nearly all named `jarvis*`. (That count is
-from the test run above; the recipe has since gained the `remote_video` Remote
-video media type and its field + displays, 7 objects more.)
+from the test run above; the recipe has since gained the `remote_video`,
+`video` and `document` media types with their fields + displays, 21 objects
+more.)
 
-The Video and Video with Sidebar components take their source from a Remote
-video media item, so `media.type.remote_video` ships here even though this
-recipe is otherwise sparing with media config — their component config declares
-a hard dependency on it. It is core's own bundle name, not a namespaced copy,
-so a site already running `remote_video` keeps exactly what it has: `strict`
-is false, the existing type is left alone, and no second type is created.
+### The four media types, and why they ship
+
+This recipe is otherwise sparing with media config, but it ships four of core's
+own bundle names — `image`, `remote_video`, `video`, `document`. They are core's
+names, not namespaced copies, so a site already running them keeps exactly what
+it has: `strict` is false, the existing type is left alone, and no second type
+is created.
+
+- **`remote_video`** — Video and Video with Sidebar take their source from a
+  Remote video media item, and their component config declares a hard
+  dependency on it.
+- **`video`** — Video Background needs it, and without it this recipe **aborts**.
+  `canvas.component.sdc.jarvis.video-background` declares a hard config
+  dependency on `media.type.video`, so applying to a site with no `video_file`
+  bundle fails with exit 1:
+
+  ```
+  Missing bundle entity, entity type media_type, entity id video.
+  ```
+
+  It fails *late* — 7 modules and the theme are already installed, and the
+  formats, image styles and `media.type.document` have landed. Only the
+  video-background component config is missing. A later `drush cr` then creates
+  that component from scratch, and Canvas derives its `video` prop by looking
+  for a media type whose source plugin is `VideoFile`. Finding none, it falls
+  back to a bare `file` field with the `file_generic` widget, capped at mp4 —
+  a widget with no working upload path inside the Canvas tray. Editors get an
+  upload control that does nothing, the component is never disabled, and it
+  does not appear in `canvas:component:reasons`. End state:
+  `active_version: 2ce6521465d858f5` instead of `e8e97fbf1b21add3`.
+- **`document`** — no shipped component references it; it ships because Jarvis
+  sites use it for file listings and because adding it later is the same trap.
+
+Do not assume an existing site already has these. **Core ships no media types
+at all** — not from the `media` module, not from the standard profile. They come
+from core recipes (`image_media_type`, `local_video_media_type`,
+`document_media_type`, `remote_video_media_type`, `audio_media_type`), so
+"the site has media enabled" says nothing about which bundles exist.
+
+If you hit the dead upload on a site installed before this fix: create the
+`video` media type (source `video_file`, source field
+`field_media_video_file`), run `drush cr`, and confirm `active_version` is
+`e8e97fbf1b21add3`. Video Background blocks already placed on pages stay pinned
+to the old version — `file` to `entity_reference` is not a backward-compatible
+change, so Canvas's instance updater will not migrate them and they must be
+deleted and re-added.
+
+### Verified
+
+Scratch install, 2026-08-26, Drupal 11.4 + theme 3.0.0 + modules 2.1.0, on a
+site seeded with core's `image_media_type` and `remote_video_media_type` only —
+the same starting shape as a real existing site:
+
+| Recipe | Result |
+|---|---|
+| this one | applies clean; `active_version` stays `e8e97fbf1b21add3` across two `drush cr` runs, one stored version, prop bound to `media_library_widget` |
+| same recipe, 7 `video` files removed | aborts exit 1; after `drush cr` the component is recreated as `2ce6521465d858f5`, `field_type: file`, `file_generic` |
+
+One variable between the two runs, so the media type is the cause.
 
 Specifically **not** done, unlike `recipes/jarvis`:
 
