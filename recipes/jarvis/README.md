@@ -66,6 +66,79 @@ downloads them; the recipe enables + configures.
 
 Designed for a **fresh / empty site** (validated on the `standard` profile).
 
+### With composer (the normal way)
+
+This recipe is published as a composer package — `imrodmartin/jarvis-recipe`,
+`"type": "drupal-recipe"`. It pulls the theme and the glue module with it, so
+there is nothing to clone. None of the Jarvis packages are on Packagist or
+drupal.org, so register their repositories first:
+
+```bash
+composer create-project drupal/recommended-project:^11 mysite && cd mysite
+```
+
+```bash
+composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
+```
+
+```bash
+composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
+```
+
+```bash
+composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
+```
+
+```bash
+composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush
+```
+
+Those extras are spelled out because nothing else pulls them in, and the
+`@beta`/`@alpha` stability flags only work in the root `composer.json`.
+
+Composer prints `imrodmartin/jarvis-recipe unpacked.` — `drupal/core-recipe-unpack`
+moves the recipe's own requirements into your root `composer.json` and drops the
+recipe from `require`, while leaving the recipe files in place. On a stock
+`drupal/recommended-project` the pieces land here:
+
+| Piece | Path |
+|---|---|
+| Recipe | `recipes/jarvis-recipe/` |
+| Theme | `web/themes/contrib/jarvis` |
+| `jarvis_canvas` | `web/modules/custom/jarvis-modules/jarvis_canvas` |
+| Contrib deps | `web/modules/contrib/` |
+
+`themes/contrib` is correct, not a mistake: the theme declares
+`"type": "drupal-theme"`, and stock installer-paths route that to contrib.
+Drupal finds it either way. To keep it under `themes/custom` instead, add
+`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry in your
+`extra.installer-paths` **and move that entry above** `web/themes/contrib/{$name}`
+— composer/installers takes the first matching entry in file order, so a later
+package-name match loses to an earlier `type:drupal-theme`.
+
+Then install the site and apply the recipe with an **absolute** path:
+
+```bash
+drush site:install standard --account-name=admin -y
+```
+
+```bash
+drush recipe "$(pwd)/recipes/jarvis-recipe"
+```
+
+```bash
+drush cache:rebuild
+```
+
+Under ddev, prefix each command with `ddev` and pass the in-container path
+(`ddev drush recipe /var/www/html/recipes/jarvis-recipe`): drush's working
+directory is the docroot, while `recipes/` sits at the project root.
+
+Full walkthrough, including the existing-site recipe and upgrades:
+[docs/INSTALL.md](https://github.com/imrodmartin/jarvis-bootstrap-recipe/blob/jarvis-bootstrap-recipe/docs/INSTALL.md).
+
+### From a clone of the bootstrap repository (development)
+
 The Jarvis theme lives in its own repository, wired in as a git submodule at
 `web/themes/custom/jarvis` — clone with `--recurse-submodules` or the theme
 directory arrives empty and the recipe fails:
