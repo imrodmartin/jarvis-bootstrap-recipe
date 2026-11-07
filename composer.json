@@ -16,6 +16,7 @@
     ],
     "require": {
         "composer/installers": "^2.3",
+        "cweagans/composer-patches": "^1.7",
         "drupal/ai": "^1.4",
         "drupal/ai_image_alt_text": "^1.0",
         "drupal/ai_media_image": "^1.0@alpha",
@@ -47,14 +48,14 @@
         "drupal/linkit": "^7.0",
         "drupal/metatag": "^2.2",
         "drupal/pathauto": "^1.15",
+        "drupal/redirect": "^1.13",
         "drupal/save_edit": "^2.1",
         "drupal/simple_gmap": "^4.0",
         "drupal/token_filter": "^2.2",
         "drupal/twig_tweak": "^3.4",
         "drupal/webform": "^6.3",
         "drupal/webform_ui": "^6.3",
-        "drush/drush": "^13.7",
-        "cweagans/composer-patches": "^1.7"
+        "drush/drush": "^13.7"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -104,6 +105,10 @@
             "web/profiles/contrib/{$name}": [
                 "type:drupal-profile"
             ],
+            "web/themes/custom/{$name}": [
+                "drupal/jarvis",
+                "type:drupal-custom-theme"
+            ],
             "web/themes/contrib/{$name}": [
                 "type:drupal-theme"
             ],
@@ -115,9 +120,6 @@
             ],
             "web/profiles/custom/{$name}": [
                 "type:drupal-custom-profile"
-            ],
-            "web/themes/custom/{$name}": [
-                "type:drupal-custom-theme"
             ],
             "recipes/{$name}": [
                 "type:drupal-recipe"
