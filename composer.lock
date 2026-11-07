@@ -3927,12 +3927,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/imrodmartin/jarvis",
-                "reference": "08a7a6688c04114c01b37d9b72fd00dfb14a45f5"
+                "reference": "3c5714e57cb4f8e9daad2690b34e71b95d315b8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imrodmartin/jarvis/zipball/08a7a6688c04114c01b37d9b72fd00dfb14a45f5",
-                "reference": "08a7a6688c04114c01b37d9b72fd00dfb14a45f5",
+                "url": "https://api.github.com/repos/imrodmartin/jarvis/zipball/3c5714e57cb4f8e9daad2690b34e71b95d315b8a",
+                "reference": "3c5714e57cb4f8e9daad2690b34e71b95d315b8a",
                 "shasum": ""
             },
             "require": {
@@ -3953,7 +3953,7 @@
                 "issues": "https://www.drupal.org/project/issues/jarvis",
                 "source": "https://git.drupalcode.org/project/jarvis"
             },
-            "time": "2026-11-04T15:29:21+00:00"
+            "time": "2026-11-04T16:00:28+00:00"
         },
         {
             "name": "drupal/key",
