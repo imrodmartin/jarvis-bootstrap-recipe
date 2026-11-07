@@ -10,6 +10,18 @@
     },
     "repositories": [
         {
+            "name": "jarvis-modules",
+            "type": "vcs",
+            "url": "https://github.com/imrodmartin/jarvis-modules",
+            "no-api": true
+        },
+        {
+            "name": "jarvis",
+            "type": "vcs",
+            "url": "https://github.com/imrodmartin/jarvis",
+            "no-api": true
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         }
@@ -45,6 +57,7 @@
         "drupal/focal_point": "^2.1",
         "drupal/gemini_provider": "^1.0",
         "drupal/google_analytics": "^4.0",
+        "drupal/jarvis": "^3.4",
         "drupal/linkit": "^7.0",
         "drupal/metatag": "^2.2",
         "drupal/pathauto": "^1.15",

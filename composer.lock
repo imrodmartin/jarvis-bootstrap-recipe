@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3276b52d0945a116b4bc2f32b39b0e7a",
+    "content-hash": "a3910973a07830ed62ceaf633b678d5a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3922,6 +3922,40 @@
             }
         },
         {
+            "name": "drupal/jarvis",
+            "version": "v3.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imrodmartin/jarvis",
+                "reference": "08a7a6688c04114c01b37d9b72fd00dfb14a45f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imrodmartin/jarvis/zipball/08a7a6688c04114c01b37d9b72fd00dfb14a45f5",
+                "reference": "08a7a6688c04114c01b37d9b72fd00dfb14a45f5",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/canvas": "^1.8",
+                "drupal/canvas_field_component": "^1.0",
+                "drupal/focal_point": "^2.1",
+                "drupal/twig_tweak": "^3.4",
+                "imrodmartin/jarvis-modules": "^2.1",
+                "php": ">=8.3"
+            },
+            "type": "drupal-theme",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "DXPR-style SDC theme with Bootstrap 5, built for Drupal Canvas and Layout Builder.",
+            "homepage": "https://www.drupal.org/project/jarvis",
+            "support": {
+                "issues": "https://www.drupal.org/project/issues/jarvis",
+                "source": "https://git.drupalcode.org/project/jarvis"
+            },
+            "time": "2026-11-04T15:29:21+00:00"
+        },
+        {
             "name": "drupal/key",
             "version": "1.23.0",
             "source": {
@@ -5575,6 +5609,31 @@
                 }
             ],
             "time": "2026-10-17T23:49:46+00:00"
+        },
+        {
+            "name": "imrodmartin/jarvis-modules",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imrodmartin/jarvis-modules",
+                "reference": "5ba2dbabca3bb4f0159be26c2e78eb219d564918"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imrodmartin/jarvis-modules/zipball/5ba2dbabca3bb4f0159be26c2e78eb219d564918",
+                "reference": "5ba2dbabca3bb4f0159be26c2e78eb219d564918",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "type": "drupal-custom-module",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Canvas glue module for the Jarvis Drupal theme: text formats on rich-text props, the Remote video media picker, template CTA, component folder organiser, and the jarvis_image_style / jarvis_overlay_alpha Twig filters the theme templates require.",
+            "homepage": "https://github.com/imrodmartin/jarvis-bootstrap-recipe",
+            "time": "2026-10-31T01:14:02+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
