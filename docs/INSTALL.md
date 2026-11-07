@@ -43,6 +43,33 @@ with `curl error 92 … HTTP/2`, and composer then prompts for a GitHub token �
 none is needed. With `no-api` it clones over plain HTTPS and the prompt never
 appears.
 
+## Where the files land
+
+Requiring a recipe prints `imrodmartin/jarvis-… unpacked.`:
+`drupal/core-recipe-unpack` moves the recipe's own requirements into your root
+`composer.json` and drops the recipe package from `require`, while leaving the
+recipe files on disk — so `drush recipe recipes/<name>` still works afterwards.
+Verified on a stock `drupal/recommended-project` 11.4 (composer 2.9.8):
+
+| Piece | Path |
+|---|---|
+| Recipe | `recipes/jarvis-recipe/` or `recipes/jarvis-install-recipe/` |
+| Theme | `web/themes/contrib/jarvis` |
+| `jarvis_canvas` | `web/modules/custom/jarvis-modules/jarvis_canvas` (nested under the package name — Drupal discovers it there) |
+| Contrib deps | `web/modules/contrib/` |
+
+The theme declares `"type": "drupal-theme"`, so stock installer-paths put it in
+`themes/contrib`. That works. To keep it under `themes/custom`, add
+`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry of
+`extra.installer-paths` **and move that entry above**
+`web/themes/contrib/{$name}` — composer/installers returns the first matching
+entry in file order, so a later package-name match loses to an earlier
+`type:drupal-theme`.
+
+Canvas resolves to its newest `^1.8` release (1.12.0 as of 2026-11-07). If you
+need it pinned — the 1.9+ releases changed the autocomplete bundle this project
+patches — require the exact version before applying the recipe.
+
 ---
 
 ## A. A new site, from scratch
@@ -248,7 +275,7 @@ release adds config, re-apply the recipe.
 
 They are coupled and released together: the theme's video components need the
 module's prop-shape hook, and its renamed image style needs the recipes' config.
-Both recipes pin `drupal/jarvis ^3.0` and `imrodmartin/jarvis-modules ^2.1`,
+Both recipes pin `drupal/jarvis ^3.4` and `imrodmartin/jarvis-modules ^2.1`,
 and the theme itself pins `imrodmartin/jarvis-modules ^2.1`, so composer cannot
 resolve a mismatched set. The theme's floor is `^2.1` rather than `^2.0`
 because `jarvis_overlay_alpha` — which four templates call — only exists from

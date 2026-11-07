@@ -8,6 +8,82 @@ takeover.
 This recipe is the other half. It adds the Jarvis theme and its Canvas
 component library and **changes nothing you already had**.
 
+## Install with composer (the normal way)
+
+This recipe is published as a composer package —
+`imrodmartin/jarvis-install-recipe`, `"type": "drupal-recipe"`. It pulls the
+theme and the `jarvis_canvas` glue module with it, so there is nothing to clone.
+None of the Jarvis packages are on Packagist or drupal.org, so register their
+repositories first, in your project root:
+
+```bash
+composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
+```
+
+```bash
+composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
+```
+
+```bash
+composer config repositories.jarvis-install-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-install-recipe","no-api":true}'
+```
+
+`"no-api": true` makes composer clone over plain HTTPS instead of calling
+`api.github.com`; without it hosts that cannot reach the API fail with
+`curl error 92` and composer prompts for a token that is not needed.
+
+Back up first — this creates config on a live site — then require it:
+
+```bash
+drush sql:dump --result-file=../backup-before-jarvis.sql
+```
+
+```bash
+composer require imrodmartin/jarvis-install-recipe drush/drush
+```
+
+Composer prints `imrodmartin/jarvis-install-recipe unpacked.` —
+`drupal/core-recipe-unpack` moves the recipe's own requirements into your root
+`composer.json` and drops the recipe from `require`, while leaving the recipe
+files in place. On a stock `drupal/recommended-project` the pieces land here:
+
+| Piece | Path |
+|---|---|
+| Recipe | `recipes/jarvis-install-recipe/` |
+| Theme | `web/themes/contrib/jarvis` |
+| `jarvis_canvas` | `web/modules/custom/jarvis-modules/jarvis_canvas` |
+| Contrib deps (canvas, crop, focal_point, linkit, twig_tweak) | `web/modules/contrib/` |
+
+`themes/contrib` is correct, not a mistake: the theme declares
+`"type": "drupal-theme"`, and stock installer-paths route that to contrib.
+Drupal finds it either way. To keep it under `themes/custom` instead, add
+`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry in your
+`extra.installer-paths` **and move that entry above** `web/themes/contrib/{$name}`
+— composer/installers takes the first matching entry in file order, so a later
+package-name match loses to an earlier `type:drupal-theme`.
+
+Then apply it, and rebuild:
+
+```bash
+drush recipe "$(pwd)/recipes/jarvis-install-recipe"
+drush cache:rebuild
+```
+
+Jarvis is installed but **not enabled** — your own theme is still serving. Look
+around, then switch when you are ready:
+
+```bash
+drush config:set system.theme default jarvis
+```
+
+Full walkthrough, including updates and the blank-site recipe:
+[docs/INSTALL.md](https://github.com/imrodmartin/jarvis-bootstrap-recipe/blob/jarvis-bootstrap-recipe/docs/INSTALL.md).
+
+## Apply from a checkout
+
+If you already have the recipe on disk (a clone of the bootstrap repository, or
+the composer install above), apply it directly:
+
 ```bash
 drush recipe /full/path/to/recipes/jarvis-existing
 drush cache:rebuild
