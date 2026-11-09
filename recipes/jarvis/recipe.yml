@@ -89,7 +89,6 @@ install:
   - coffee
   - save_edit
   - better_exposed_filters
-  - better_social_sharing_buttons
   # Custom module shipped in this codebase
   - jarvis_canvas
   # The theme itself. Recipes install themes from this same list, before config

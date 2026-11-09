@@ -44,7 +44,8 @@ repository-root README for the quick start.
   content_moderation (Editorial workflow ships unassigned), metatag
   (+ Open Graph/Twitter Cards) with module defaults, editoria11y, antibot,
   extlink, back_to_top, coffee, save_edit, better_exposed_filters,
-  better_social_sharing_buttons, field_ui/views_ui, big_pipe, automated_cron.
+  field_ui/views_ui, big_pipe, automated_cron. Share buttons come from the
+  theme's Share component, not a module.
 - **Installs and configures the AI stack**: ai, ai_agents, ai_automators,
   ai_ckeditor, ai_assistant_api, ai_chatbot, ai_image_alt_text,
   ai_media_image, the Anthropic/OpenAI/Gemini/ElevenLabs providers, and
