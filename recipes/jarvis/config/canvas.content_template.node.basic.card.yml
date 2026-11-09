@@ -23,7 +23,7 @@ component_tree:
   f4da1aea-2e22-4441-b0b6-03a67f4650a5:
     uuid: f4da1aea-2e22-4441-b0b6-03a67f4650a5
     component_id: sdc.jarvis.card
-    component_version: 33cfd74ea3e8f625
+    component_version: e0c10f59cc7e1df8
     inputs:
       variant: image-top
       image:
@@ -32,6 +32,7 @@ component_tree:
       title:
         sourceType: entity-field
         expression: 'ℹ︎␜entity:node:basic␝title␞␟value'
+      title_link: true
       heading_level: h2
       body:
         sourceType: entity-field
