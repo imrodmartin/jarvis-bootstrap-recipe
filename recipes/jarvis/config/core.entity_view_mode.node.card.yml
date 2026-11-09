@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.card
+label: Card
+description: 'Image, title, date and abstract as a Jarvis card. Used by grid listings such as the Blog View.'
+targetEntityType: node
+cache: true

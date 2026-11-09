@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_abstract
+    - node.type.blog
+  module:
+    - text
+id: node.blog.field_abstract
+field_name: field_abstract
+entity_type: node
+bundle: blog
+label: Abstract
+description: 'Two or three sentences summing up this content. Shown on cards and teasers in listings, and a good source for search and social descriptions.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

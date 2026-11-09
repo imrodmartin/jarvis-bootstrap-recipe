@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.blog.field_abstract
+    - field.field.node.blog.field_body
+    - field.field.node.blog.field_hero_banner
+    - field.field.node.blog.field_meta_tags
+    - field.field.node.blog.field_publication_date
+    - field.field.node.blog.field_video
+    - node.type.blog
+id: node.blog.teaser
+targetEntityType: node
+bundle: blog
+mode: teaser
+content: {  }
+hidden:
+  field_abstract: true
+  field_body: true
+  field_hero_banner: true
+  field_meta_tags: true
+  field_publication_date: true
+  field_video: true
+  links: true

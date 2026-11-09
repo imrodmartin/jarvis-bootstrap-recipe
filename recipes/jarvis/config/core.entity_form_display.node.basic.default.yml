@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.basic.field_abstract
     - field.field.node.basic.field_body
     - field.field.node.basic.field_hero_banner
     - field.field.node.basic.field_meta_tags
@@ -18,9 +19,17 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_abstract:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
     third_party_settings: {  }
   field_body:
     type: text_textarea_with_summary
@@ -34,14 +43,14 @@ content:
     third_party_settings: {  }
   field_hero_banner:
     type: media_library_widget
-    weight: 2
+    weight: 3
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_meta_tags:
     type: metatag_firehose
-    weight: 20
+    weight: 21
     region: content
     settings:
       sidebar: true
@@ -49,13 +58,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 31
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 120
+    weight: 121
     region: content
     settings:
       display_label: true
@@ -70,7 +79,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 5
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS

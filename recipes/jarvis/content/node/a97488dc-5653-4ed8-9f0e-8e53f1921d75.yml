@@ -35,3 +35,7 @@ default:
       value: '<p>hi there</p>'
       format: jarvis_html
       summary: ''
+  field_abstract:
+    -
+      value: 'Jarvis is a Drupal 11 theme built on Single Directory Components and Drupal Canvas, with accessibility checks built into every component.'
+      format: plain_text

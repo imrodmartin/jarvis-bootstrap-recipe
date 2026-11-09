@@ -47,7 +47,7 @@ install:
   #   The AI stack (key, ai, ai_agents, ai_ckeditor, providers, canvas_ai...).
   #   webform, metatag, workflows, content_moderation, editoria11y, antibot,
   #     extlink, back_to_top, coffee, save_edit, better_exposed_filters,
-  #     better_social_sharing_buttons, backup_migrate, asset_injector,
+  #     backup_migrate, asset_injector,
   #     simple_gmap, navigation, shortcut, claro, field_ui, views_ui.
   #   Add any of them yourself if you want them; none is needed to render a
   #   Jarvis component.

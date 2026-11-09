@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.basic.field_abstract
+    - field.field.node.basic.field_body
+    - field.field.node.basic.field_hero_banner
+    - field.field.node.basic.field_meta_tags
+    - node.type.basic
+id: node.basic.teaser
+targetEntityType: node
+bundle: basic
+mode: teaser
+content: {  }
+hidden:
+  field_abstract: true
+  field_body: true
+  field_hero_banner: true
+  field_meta_tags: true
+  links: true
