@@ -193,6 +193,32 @@ drush cache:rebuild
 (3.0.0 needs `11001`, which backfills a Canvas template for content types
 that predate the module).
 
+Contrib carries the same requirement, and the AI module is the one that bites.
+Moving `drupal/ai` from 1.4.x to 1.5.x relocates the AI CKEditor prompts into
+`ai.ai_prompt_type.*` config entities, which are created by
+`ai_ckeditor_post_update_convert_ai_prompt()` — a post update, not something
+the module files provide on their own. Skip `updatedb` and every text format
+that enables the AI CKEditor plugins (Jarvis HTML, Jarvis Full HTML) white-
+screens on its edit form:
+
+```
+TypeError: Drupal\ai\Form\AiPromptSubform::buildForm(): Argument #4
+($ai_prompt_type) must be of type Drupal\ai\Entity\AiPromptTypeInterface,
+null given
+```
+
+`ai/src/Element/AiPrompt.php` loads the prompt type without a null check, so
+the absent entity surfaces as a fatal rather than a warning. Confirm the
+update landed:
+
+```bash
+drush ev 'print_r(\Drupal::configFactory()->listAll("ai.ai_prompt_type."));'
+```
+
+Seven entries expected. An empty array means the post update has not run.
+Checking *after* `updatedb` proves nothing about what caused a crash before
+it — use `drush updbst` to see what is still pending.
+
 ### Coming from modules 1.x: uninstall jarvis_blocks first
 
 The 1.x package shipped **two** modules, `jarvis_blocks` and `jarvis_canvas`.
