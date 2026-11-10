@@ -159,19 +159,20 @@ default:
         vertical_padding: true
     -
       uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      component_id: sdc.jarvis.section
+      component_id: sdc.jarvis.one-column
       inputs:
-        width: normal
-        bg: none
+        width: boxed
+        background: none
+        gap: normal
+        vertical_padding: true
         padding: all
         padding_size: large
         margin: none
         margin_size: medium
-        vertical_padding: true
         no_padding: false
     -
       parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      slot: content
+      slot: first
       uuid: aa0e7a0e-5ace-4c3e-b365-f074d6324427
       component_id: sdc.jarvis.text
       inputs:
@@ -190,7 +191,7 @@ default:
         vertical_padding: true
     -
       parent_uuid: 3d8db76b-0bf1-440f-8ce1-60071242f77a
-      slot: content
+      slot: first
       uuid: cfb0d026-c9ba-40a8-90c2-2f1480931a5f
       component_id: sdc.jarvis.three-column
       inputs:
@@ -209,7 +210,7 @@ default:
       uuid: 0a3d1ef5-cfae-4eb0-a7d5-e05eb46296fc
       component_id: sdc.jarvis.card
       inputs:
-        variant: image-top
+        layout: image-top
         overlay: 40
         text_color: black
         title: 'SDC-based by design'
@@ -235,7 +236,7 @@ default:
       uuid: 7908fbcc-f6d2-4c39-843c-cde634e57fa6
       component_id: sdc.jarvis.card
       inputs:
-        variant: image-top
+        layout: image-top
         overlay: 40
         text_color: black
         title: 'SDC-based by design'
@@ -262,7 +263,7 @@ default:
       uuid: 3c0c382b-3cd0-4ea1-a407-2be8219c95e6
       component_id: sdc.jarvis.card
       inputs:
-        variant: image-top
+        layout: image-top
         overlay: 40
         text_color: black
         title: 'Layout freedom'
@@ -282,30 +283,31 @@ default:
             target_type: media
         heading_level: h2
         link_href:
-          uri: 'internal:/test-page'
+          uri: 'internal:/component-examples'
           options: {  }
     -
       uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      component_id: sdc.jarvis.section
+      component_id: sdc.jarvis.one-column
       inputs:
         width: full
-        bg: body-tertiary
+        background: light
+        gap: normal
+        vertical_padding: true
         padding: all
         padding_size: large
         margin: none
         margin_size: medium
-        vertical_padding: true
         no_padding: false
     -
       parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      slot: content
+      slot: first
       uuid: f06db30d-57e8-4e55-a7cc-16b9798c94ac
       component_id: sdc.jarvis.text
       inputs:
         body:
           value: |
             <h2>Component showcase</h2>
-            <p>Jarvis ships with a focused set of <strong>20 components</strong> that cover the most common marketing and editorial patterns — so you can assemble pages quickly and keep designs consistent.</p>
+            <p>Jarvis ships with a focused set of <strong>23 components</strong> that cover the most common marketing and editorial patterns — so you can assemble pages quickly and keep designs consistent.</p>
           format: canvas_html_block
         width: wide
         align: center
@@ -317,7 +319,7 @@ default:
         vertical_padding: true
     -
       parent_uuid: ecfbd82f-c03c-4664-b3b0-6f19017377b5
-      slot: content
+      slot: first
       uuid: 90c80756-e9be-4be1-8905-28c724eebf45
       component_id: sdc.jarvis.three-column
       inputs:
@@ -336,7 +338,7 @@ default:
       uuid: debc4430-5a30-4201-b599-9bd56bd3a365
       component_id: sdc.jarvis.card
       inputs:
-        variant: background
+        layout: background
         overlay: 0
         text_color: black
         title: 'Hero + CTA'
@@ -362,7 +364,7 @@ default:
       uuid: 432a98c5-c8c0-40ff-b058-54494592bcdb
       component_id: sdc.jarvis.card
       inputs:
-        variant: background
+        layout: background
         overlay: 0
         text_color: black
         title: 'Cards + grids'
@@ -388,7 +390,7 @@ default:
       uuid: f342623e-d462-4c72-8233-004b7e03fe12
       component_id: sdc.jarvis.card
       inputs:
-        variant: background
+        layout: background
         overlay: 55
         title: 'Media + story'
         body:
@@ -426,7 +428,7 @@ default:
       uuid: 3b8b59d1-e1c0-40aa-8e81-8f58c1adf815
       component_id: sdc.jarvis.card
       inputs:
-        variant: image-top
+        layout: image-top
         overlay: 40
         text_color: light
         title: 'Drupal AI for Beginners'
@@ -454,19 +456,20 @@ default:
         vertical_padding: true
     -
       uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      component_id: sdc.jarvis.section
+      component_id: sdc.jarvis.one-column
       inputs:
-        width: normal
-        bg: none
+        width: boxed
+        background: none
+        gap: normal
+        vertical_padding: true
         padding: all
         padding_size: large
         margin: none
         margin_size: medium
-        vertical_padding: true
         no_padding: false
     -
       parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      slot: content
+      slot: first
       uuid: 12a0aa06-8f45-41e8-8b4c-4248fc482538
       component_id: sdc.jarvis.text
       inputs:
@@ -485,7 +488,7 @@ default:
         vertical_padding: true
     -
       parent_uuid: 532964a3-ca6f-4d81-b73f-30e81640a4ed
-      slot: content
+      slot: first
       uuid: e42bc573-0b31-4681-acb3-5c669ced2b60
       component_id: sdc.jarvis.three-column
       inputs:
@@ -504,7 +507,7 @@ default:
       uuid: 2ab8a76c-58fe-4746-8c1c-982bbdfd0061
       component_id: sdc.jarvis.stat
       inputs:
-        title: '20'
+        title: '23'
         number_color: primary
         count_up: true
         body:
@@ -554,19 +557,20 @@ default:
         vertical_padding: true
     -
       uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
-      component_id: sdc.jarvis.section
+      component_id: sdc.jarvis.one-column
       inputs:
         width: full
-        bg: dark
+        background: dark
+        gap: normal
+        vertical_padding: false
         padding: none
         padding_size: medium
         margin: none
         margin_size: medium
-        vertical_padding: true
         no_padding: true
     -
       parent_uuid: 243c8c56-a566-4128-a75b-390b45aaa3c8
-      slot: content
+      slot: first
       uuid: a960c829-f0e7-4c29-9395-8a02e05aaf82
       component_id: sdc.jarvis.card-full-image
       inputs:
@@ -580,7 +584,6 @@ default:
       component_id: sdc.jarvis.image
       inputs:
         image_style: wide
-        caption: 'Photo caption goes here.'
         full_width: true
         priority: true
         padding: none
@@ -610,19 +613,20 @@ default:
         vertical_padding: true
     -
       uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
-      component_id: sdc.jarvis.section
+      component_id: sdc.jarvis.one-column
       inputs:
-        width: normal
-        bg: none
+        width: boxed
+        background: none
+        gap: normal
+        vertical_padding: true
         padding: all
         padding_size: large
         margin: none
         margin_size: medium
-        vertical_padding: true
         no_padding: false
     -
       parent_uuid: b243a9f0-431f-4535-9b97-bb57f8340d78
-      slot: content
+      slot: first
       uuid: 77b906fe-c991-4a42-aba3-080b87e632eb
       component_id: sdc.jarvis.text
       inputs:
@@ -644,7 +648,7 @@ default:
         subtitle: 'Get Jarvis'
         heading: 'Build your next Drupal site with Jarvis'
         heading_level: h2
-        text: 'Start with a flexible SDC foundation, leverage 20 included components, and ship pages that look consistent across every breakpoint.'
+        text: 'Start with a flexible SDC foundation, use the 23 included components, and ship pages that look consistent across every breakpoint.'
         button_text: 'Get Jarvis'
         bg: primary
         padding: all
@@ -657,7 +661,7 @@ default:
           options: {  }
   path:
     -
-      alias: /jarvis-drupal-theme-flexible-sdc-based-design-with-20-components
+      alias: /jarvis-drupal-theme-flexible-sdc-based-design
       langcode: en
   revision_translation_affected:
     -

@@ -15,9 +15,9 @@ jarvis_color_title_text: '#ffffff'
 jarvis_color_footer_bg: '#000000'
 jarvis_color_footer_text: '#ffffff'
 jarvis_color_heading: '#2d6cdf'
-jarvis_color_header_bg: '#fa0000'
+jarvis_color_header_bg: '#1b2a4a'
 jarvis_color_header_text: '#ffffff'
-jarvis_color_header_link: '#eeff00'
+jarvis_color_header_link: '#a9c7ff'
 jarvis_font_base_family: 'Open Sans'
 jarvis_font_base_weight: '300'
 jarvis_font_base_selector: body
@@ -48,5 +48,5 @@ jarvis_fs_mobile_h4: 1.25
 jarvis_fs_mobile_h5: 1.125
 jarvis_fs_mobile_h6: 1.0
 preview: ''
-jarvis_color_bg_1: '#fa6400'
-jarvis_color_bg_2: '#00bd42'
+jarvis_color_bg_1: '#e8f0fd'
+jarvis_color_bg_2: '#0f5c63'

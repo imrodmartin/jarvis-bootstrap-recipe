@@ -78,9 +78,15 @@ composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github
 composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown \
   drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
 
+drush cache:rebuild
 drush recipe recipes/jarvis-recipe
 drush cache:rebuild
 ```
+
+Run the first `drush cache:rebuild` whenever the site was installed before the
+`composer require`. Drupal caches its list of modules and themes, and without
+the rebuild the recipe fails validation with *"jarvis" is not a known module
+or theme*.
 
 `"no-api": true` matters: all three repositories are public, but without it
 composer calls `api.github.com` to read them, and on a host that cannot reach
@@ -247,7 +253,8 @@ composer require drupal/canvas drupal/canvas_field_component \
   drupal/extlink drupal/back_to_top drupal/coffee drupal/save_edit \
   drupal/better_exposed_filters drupal/better_social_sharing_buttons
 
-# 4. Apply to a fresh/blank site
+# 4. Apply to a fresh/blank site (rebuild first so Drupal sees the new code)
+drush cache:rebuild
 drush recipe recipes/jarvis
 drush cache:rebuild
 ```

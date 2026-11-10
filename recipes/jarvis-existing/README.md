@@ -62,12 +62,17 @@ Drupal finds it either way. To keep it under `themes/custom` instead, add
 — composer/installers takes the first matching entry in file order, so a later
 package-name match loses to an earlier `type:drupal-theme`.
 
-Then apply it, and rebuild:
+Then rebuild caches, apply it, and rebuild again:
 
 ```bash
+drush cache:rebuild
 drush recipe "$(pwd)/recipes/jarvis-install-recipe"
 drush cache:rebuild
 ```
+
+The first rebuild is not optional. Your site cached its list of modules and
+themes before composer added the new ones, so without it the recipe stops at
+validation with *"jarvis" is not a known module or theme*.
 
 Jarvis is installed but **not enabled** — your own theme is still serving. Look
 around, then switch when you are ready:
@@ -85,6 +90,7 @@ If you already have the recipe on disk (a clone of the bootstrap repository, or
 the composer install above), apply it directly:
 
 ```bash
+drush cache:rebuild
 drush recipe /full/path/to/recipes/jarvis-existing
 drush cache:rebuild
 ```

@@ -5,7 +5,6 @@ dependencies:
     - canvas.component.field_display.field_display
     - canvas.component.sdc.jarvis.image
     - canvas.component.sdc.jarvis.one-column
-    - canvas.component.sdc.jarvis.section
     - canvas.component.sdc.jarvis.text
     - core.entity_view_mode.node.full
     - field.field.media.image.field_media_image
@@ -37,14 +36,17 @@ component_tree:
       vertical_padding: true
   5e69aa5e-2b38-4d02-a8b3-a35af922909f:
     uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
-    component_id: sdc.jarvis.section
-    component_version: 561f60bab22c5940
+    component_id: sdc.jarvis.one-column
+    component_version: df104e18ba7b4ec4
     inputs:
-      width: normal
-      bg: none
+      width: boxed
+      background: none
+      gap: normal
+      vertical_padding: false
+      no_padding: false
   c3d9e532-8dac-4393-96d9-c1514c67d591:
     parent_uuid: 5e69aa5e-2b38-4d02-a8b3-a35af922909f
-    slot: content
+    slot: first
     uuid: c3d9e532-8dac-4393-96d9-c1514c67d591
     component_id: field_display.field_display
     component_version: d51828e603b0f85c

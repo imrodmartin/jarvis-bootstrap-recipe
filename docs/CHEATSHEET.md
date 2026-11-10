@@ -38,9 +38,14 @@ ddev composer config repositories.jarvis-theme '{"type":"vcs","url":"https://git
 ddev composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
 ddev composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
 ddev composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
+ddev drush cr
 ddev drush recipe /var/www/html/recipes/jarvis-recipe
 ddev drush cr && ddev launch
 ```
+
+- The `drush cr` before the recipe is required on a site that is already
+  installed. Drupal caches its list of modules and themes, so without it the
+  recipe fails validation with *"jarvis" is not a known module or theme*.
 
 - Recipe path is `recipes/jarvis-recipe` here — composer installs by **package**
   name, so it differs from A.

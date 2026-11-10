@@ -31,9 +31,9 @@ component_tree:
     slot: first
     uuid: 1d5521f1-2977-4c11-9c4e-6e5d639fc8a0
     component_id: sdc.jarvis.card
-    component_version: dd1d2c7cdd1581eb
+    component_version: 873eeba215391e07
     inputs:
-      variant: image-top
+      layout: image-top
       image:
         target_id: '6'
       title: 'Card title'
@@ -61,9 +61,9 @@ component_tree:
     slot: second
     uuid: 76030381-db39-4222-9c64-15999c763fa4
     component_id: sdc.jarvis.card
-    component_version: dd1d2c7cdd1581eb
+    component_version: 873eeba215391e07
     inputs:
-      variant: image-top
+      layout: image-top
       overlay: 40
       text_color: light
       image:
