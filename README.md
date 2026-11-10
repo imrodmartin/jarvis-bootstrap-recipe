@@ -24,7 +24,7 @@ and a configured AI stack. One apply, working site.
   field & views UIs.
 - **Site features** — Webform (contact form included), editorial workflow
   (ships unassigned; opt content types in), Metatag with sane defaults,
-  Editoria11y accessibility checker, antibot, social sharing, and more.
+  Editoria11y accessibility checker, antibot, CAPTCHA, social sharing, and more.
 - **The AI stack, configured** — providers (OpenAI/Anthropic/Gemini/
   ElevenLabs), nine Canvas AI agents, CKEditor AI, automatic image alt text.
   **No API keys ship in this repo** — see [AI keys](#ai-keys-optional).
@@ -243,7 +243,7 @@ composer require drupal/canvas drupal/canvas_field_component \
   drupal/ai_agents drupal/ai_image_alt_text drupal/ai_media_image \
   drupal/ai_provider_anthropic drupal/ai_provider_openai \
   drupal/gemini_provider drupal/canvas_ai drupal/elevenlabs \
-  drupal/webform drupal/webform_ui drupal/metatag drupal/antibot \
+  drupal/webform drupal/webform_ui drupal/metatag drupal/antibot drupal/captcha \
   drupal/extlink drupal/back_to_top drupal/coffee drupal/save_edit \
   drupal/better_exposed_filters drupal/better_social_sharing_buttons
 
