@@ -32,7 +32,7 @@ default:
       langcode: en
   field_body:
     -
-      value: '<p>hi there</p>'
+      value: '<p>Jarvis is a Drupal 11 theme built on Single Directory Components and Drupal Canvas. It gives site builders 23 ready-made components and gives editors a visual way to arrange them.</p><h2>Why it exists</h2><p>Most themes drift. Markup gets copied into templates, styles pile up, and nobody is sure which version is the real one. Jarvis keeps each component in one folder: its markup, its styles, and its settings. Change it there and it changes everywhere.</p><h2>What you get</h2><ul><li>23 components, from heroes and cards to timelines and video.</li><li>Column layouts from one to four columns, plus custom widths.</li><li>Contrast checks built into the components and the theme settings.</li><li>Theme settings for colors, fonts, and type sizes. No code required.</li></ul><h2>Who it is for</h2><p>Site builders who want pages that look right without writing templates, and developers who want a clean place to add their own components.</p><p>Read <a href="/blog/building-jarvis-one-source-truth-your-markup">how Jarvis was built</a>, or start with <a href="/blog/jarvis-components-flexible-design-accessible-default">the components</a>.</p>'
       format: jarvis_html
       summary: ''
   field_abstract:

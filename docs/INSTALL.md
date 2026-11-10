@@ -143,6 +143,15 @@ config your site already owns — yours wins and the recipe's copy is skipped
 for n in field.storage.media.field_media_image image.style.portrait image.style.wide core.entity_view_mode.media.hero; do drush config:get "$n" >/dev/null 2>&1 && echo "EXISTS: $n"; done
 ```
 
+Rebuild caches **before** applying. A running site caches its list of modules
+and themes, and composer has just added eight it has never seen. Skip this and
+the recipe stops at validation with *"jarvis" is not a known module or theme*,
+once for each new extension:
+
+```bash
+drush cache:rebuild
+```
+
 ```bash
 drush recipe "$(pwd)/recipes/jarvis-install-recipe"
 ```
@@ -283,6 +292,50 @@ drush ev 'foreach (\Drupal::service("keyvalue")->get("canvas:component:reasons")
 Empty output means everything survived. Anything listed names the component and
 the prop that could not be shaped.
 
+### Upgrading to 4.0: Section became 1 Column
+
+Jarvis 4.0 removes the **Section** component. It did nothing 1 Column could not
+do, so 1 Column replaces it. You do not have to rebuild anything: the first
+`drush cache:rebuild` after the update converts every Section on the site
+(Canvas pages, all their revisions, content templates, page regions and
+patterns) to a 1 Column with the same width, background and spacing, and logs
+`Converted N Section component(s) to 1 Column`.
+
+The same rebuild renames one prop on three components, and logs
+`Renamed the variant prop on N Button, Card and Person component(s)`:
+
+| Component | Was | Now |
+|---|---|---|
+| Button | `variant` | `style` |
+| Card | `variant` | `layout` |
+| Person | `variant` | `layout` |
+
+Drupal core reserves the name `variant` for its own component variants, and
+from 11.2 it passes an empty `variant` to every component rendered from PHP.
+That failed these components' own list of allowed values. Everything placed in
+Canvas is converted for you. Two things are yours to check:
+
+- **Your own Twig templates.** An `include('jarvis:card', {variant: 'image-left'})`
+  still works, because the components read the old name as a fallback. Switch
+  to the new name when you next touch the template.
+- **Unpublished Canvas drafts.** Changes that were auto-saved but not published
+  before the update are not converted. Publish or discard drafts first.
+
+What changes on screen:
+
+- A Section set to Bootstrap's "tertiary" grey becomes the theme's Light grey
+  (`#f8f9fa` to `#f5f5f5`).
+- Colored column sections now obey their Padding and Vertical padding settings.
+  They used to get 2rem top and bottom no matter what was chosen.
+- The Base font from the theme settings now applies to body text. It was
+  being overridden by Bootstrap.
+
+Check the log afterwards:
+
+```bash
+drush watchdog:show --type=jarvis_canvas
+```
+
 **Config does not arrive by composer update.** New media types, fields and image
 styles reach a site only when a recipe is applied. A `composer update` ships
 files — theme templates, components, module code — and nothing else. When a
@@ -301,8 +354,9 @@ release adds config, re-apply the recipe.
 
 They are coupled and released together: the theme's video components need the
 module's prop-shape hook, and its renamed image style needs the recipes' config.
-Both recipes pin `drupal/jarvis ^3.4` and `imrodmartin/jarvis-modules ^2.1`,
-and the theme itself pins `imrodmartin/jarvis-modules ^2.1`, so composer cannot
-resolve a mismatched set. The theme's floor is `^2.1` rather than `^2.0`
+Both recipes pin `drupal/jarvis ^4.0` and `imrodmartin/jarvis-modules ^2.2`,
+and the theme itself pins `imrodmartin/jarvis-modules ^2.2`, so composer cannot
+resolve a mismatched set. Theme 4.0 needs modules 2.2 because that release
+carries the Section to 1 Column conversion (below). The earlier floor was `^2.1` rather than `^2.0`
 because `jarvis_overlay_alpha` — which four templates call — only exists from
 modules 2.1.0.

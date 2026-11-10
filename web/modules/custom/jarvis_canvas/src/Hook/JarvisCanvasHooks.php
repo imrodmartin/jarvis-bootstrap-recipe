@@ -17,6 +17,7 @@ use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpressio
 use Drupal\canvas\PropExpressions\StructuredData\ReferencedBundleSpecificBranches;
 use Drupal\canvas\PropShape\CandidateStorablePropShape;
 use Drupal\canvas\TypedData\BetterEntityDataDefinition;
+use Drupal\jarvis_canvas\ComponentMigrations;
 use Drupal\node\NodeTypeInterface;
 
 /**
@@ -332,6 +333,45 @@ final class JarvisCanvasHooks {
   }
 
   /**
+   * Downloads the theme's configured fonts once after a recipe install.
+   *
+   * Font settings reach a recipe-installed site as config, but the font files
+   * were only ever written by the theme settings form's submit handler, so a
+   * fresh site rendered in the fallback font until someone saved that form.
+   *
+   * One attempt only, tracked in state: a host with no outbound access must
+   * not pay the download timeout on every cache rebuild.
+   */
+  private function buildFontsOnce(): void {
+    $state = \Drupal::state();
+    if ($state->get('jarvis_canvas.fonts_tried') || file_exists('public://jarvis-fonts/jarvis-fonts.css')) {
+      return;
+    }
+    $themes = \Drupal::service('theme_handler');
+    if (!$themes->themeExists('jarvis')) {
+      return;
+    }
+    $state->set('jarvis_canvas.fonts_tried', TRUE);
+    $path = DRUPAL_ROOT . '/' . $themes->getTheme('jarvis')->getPath();
+    include_once "$path/jarvis.theme";
+    include_once "$path/theme-settings.php";
+    // Themes older than the one that split this function out have no builder.
+    if (!function_exists('_jarvis_build_fonts')) {
+      return;
+    }
+    $settings = \Drupal::config('jarvis.settings');
+    $slots = [];
+    foreach (array_keys(_jarvis_fonts()) as $key) {
+      foreach (['family', 'weight', 'selector'] as $part) {
+        $slots[$key][$part] = (string) $settings->get("jarvis_font_{$key}_{$part}");
+      }
+    }
+    if (array_filter(array_column($slots, 'family')) && ($error = _jarvis_build_fonts($slots))) {
+      \Drupal::logger('jarvis_canvas')->warning('@error Save the Jarvis theme settings to retry.', ['@error' => $error]);
+    }
+  }
+
+  /**
    * Implements hook_rebuild().
    *
    * Organize Canvas components and patterns into the Jarvis folder structure.
@@ -354,6 +394,8 @@ final class JarvisCanvasHooks {
     if (\Drupal::isConfigSyncing()) {
       return;
     }
+    $this->buildFontsOnce();
+    ComponentMigrations::run();
     $etm = \Drupal::entityTypeManager();
     if (!$etm->hasDefinition('folder')) {
       return;
@@ -376,7 +418,7 @@ final class JarvisCanvasHooks {
       ]],
       'Sections' => ['component', 1, [
         'sdc.jarvis.custom-columns', 'sdc.jarvis.four-column', 'sdc.jarvis.one-column',
-        'sdc.jarvis.section', 'sdc.jarvis.three-column', 'sdc.jarvis.two-column',
+        'sdc.jarvis.three-column', 'sdc.jarvis.two-column',
       ]],
       'Content Type' => ['component', 2, ['field_display.field_display']],
       'Forms' => ['component', 3, ['block.user_login_block']],

@@ -38,7 +38,7 @@ default:
       langcode: en
   field_body:
     -
-      value: '<p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p><p>this is a basic page body field</p>'
+      value: '<p>Welcome to your new Jarvis site. This is a Basic page, the content type for simple pages such as About, Contact, or a policy.</p><h2>What you are looking at</h2><p>The title and the text come from the fields on this page. A Canvas content template arranges them, so every Basic page gets the same layout with no extra work from the editor.</p><h2>Make it yours</h2><ul><li>Edit this page to change the title, the banner, and the text.</li><li>Open the Basic page template in Canvas to change the layout every Basic page shares.</li><li>Go to Appearance, then Settings, to set your colors and fonts.</li></ul><p>The front page of this site is a Canvas page that shows the components working together. <a href="/">See the showcase</a>.</p>'
       format: jarvis_html
       summary: ''
   field_hero_banner:

@@ -230,7 +230,7 @@ config:
     system.site:
       simpleConfigUpdate:
         # Canvas home page ("Jarvis Drupal Theme…", uuid c59c9f00…) — imported
-        # after Test Page, so it gets canvas_page ID 2, matching the reference site.
+        # after Component Examples, so it gets canvas_page ID 2, matching the reference site.
         page.front: /page/2
     core.entity_view_mode.node.full:
       simpleConfigUpdate:

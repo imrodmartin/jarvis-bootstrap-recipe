@@ -29,9 +29,9 @@ component_tree:
     slot: first
     uuid: bfb8fe96-cdc5-4a9a-a1d5-8c8db54e915d
     component_id: sdc.jarvis.person
-    component_version: b24b59350722bdfe
+    component_version: 0e0725d0d2098942
     inputs:
-      variant: card
+      layout: card
       image:
         target_id: '5'
       name: 'Jane Doe'
@@ -53,9 +53,9 @@ component_tree:
     slot: second
     uuid: 4f4433f4-b040-446f-bc14-ff55268e8e71
     component_id: sdc.jarvis.person
-    component_version: b24b59350722bdfe
+    component_version: 0e0725d0d2098942
     inputs:
-      variant: card
+      layout: card
       image:
         target_id: '5'
       name: 'Jane Doe'
