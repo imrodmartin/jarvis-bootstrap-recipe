@@ -43,8 +43,10 @@ final class ComponentMigrations {
     if (!$etm->hasDefinition('component')) {
       return;
     }
-    // Both conversions are finished on this site: nothing more to do, ever.
-    if (\Drupal::state()->get('jarvis_canvas.variant_renamed') && !$etm->getStorage('component')->load('sdc.jarvis.section')) {
+    // Both conversions are finished on this site: only unsaved editor drafts
+    // can still be on the old shapes, and that pass records when it is done.
+    if (self::storedTreesConverted()) {
+      self::convertAutoSaves();
       return;
     }
     // Make sure Canvas has registered the components that are on disk now, in
@@ -53,6 +55,102 @@ final class ComponentMigrations {
     $etm->getStorage('component')->resetCache();
     self::sectionToOneColumn();
     self::renameVariantProp();
+    if (self::storedTreesConverted()) {
+      self::convertAutoSaves();
+    }
+  }
+
+  /**
+   * Whether both conversions have finished on every saved tree.
+   */
+  private static function storedTreesConverted(): bool {
+    return \Drupal::state()->get('jarvis_canvas.variant_renamed')
+      && !\Drupal::entityTypeManager()->getStorage('component')->load('sdc.jarvis.section');
+  }
+
+  /**
+   * Converts Canvas editor drafts (auto-saves) the same way, once.
+   *
+   * Canvas keeps unpublished editor changes in the `canvas.auto_save`
+   * key-value collection, outside every field table and config entity that
+   * rewrite() visits. A draft left on Section made the editor answer 500
+   * ("Call to a member function requiresExplicitInput() on null") on load,
+   * because the Section component entity is deleted after conversion. Drafts
+   * are converted in place rather than discarded: they hold an editor's
+   * unpublished work.
+   *
+   * Runs only after the saved trees are converted, so Canvas's active versions
+   * already carry the 4.0 shapes, and also reaches sites that converted under
+   * jarvis_canvas 2.2.0, which skipped drafts.
+   */
+  private static function convertAutoSaves(): void {
+    $state = \Drupal::state();
+    if ($state->get('jarvis_canvas.autosaves_converted')) {
+      return;
+    }
+    $components = \Drupal::entityTypeManager()->getStorage('component');
+    $one_column = $components->load('sdc.jarvis.one-column');
+    if (!$one_column) {
+      return;
+    }
+    $section_version = $one_column->getActiveVersion();
+    $has_no_padding = isset($one_column->getSettings()['prop_field_definitions']['no_padding']);
+    $versions = [];
+    foreach (array_keys(self::RENAMED_VARIANT) as $id) {
+      if ($component = $components->load($id)) {
+        $versions[$id] = $component->getActiveVersion();
+      }
+    }
+
+    $store = \Drupal::keyValue('canvas.auto_save');
+    $count = 0;
+    foreach ($store->getAll() as $key => $entry) {
+      $changed = FALSE;
+      foreach ($entry['data'] ?? [] as $field => $items) {
+        // A component tree: a list of items that each carry a component_id.
+        if (!is_array($items) || !$items || !is_array(reset($items)) || !array_key_exists('component_id', reset($items))) {
+          continue;
+        }
+        $converted = [];
+        foreach ($items as $delta => $item) {
+          $id = $item['component_id'] ?? '';
+          $raw = $item['inputs'] ?? [];
+          $inputs = is_string($raw) ? (json_decode($raw, TRUE) ?: []) : $raw;
+          if ($id === 'sdc.jarvis.section') {
+            $item['component_id'] = 'sdc.jarvis.one-column';
+            $item['component_version'] = $section_version;
+            $inputs = self::mapSectionInputs($inputs, $has_no_padding);
+            $converted[$item['uuid']] = TRUE;
+          }
+          elseif (isset($versions[$id]) && ($renamed = self::renameVariantInputs($id, $inputs)) !== NULL) {
+            $item['component_version'] = $versions[$id];
+            $inputs = $renamed;
+          }
+          else {
+            continue;
+          }
+          // Keep the storage form the draft used: JSON string or array.
+          $item['inputs'] = is_string($raw) ? json_encode($inputs) : $inputs;
+          $items[$delta] = $item;
+          $count++;
+          $changed = TRUE;
+        }
+        // Section's one slot was "content"; 1 Column's is "first".
+        foreach ($items as $delta => $item) {
+          if (isset($converted[$item['parent_uuid'] ?? '']) && ($item['slot'] ?? '') === 'content') {
+            $items[$delta]['slot'] = 'first';
+          }
+        }
+        $entry['data'][$field] = $items;
+      }
+      if ($changed) {
+        $store->set($key, $entry);
+      }
+    }
+    $state->set('jarvis_canvas.autosaves_converted', TRUE);
+    if ($count) {
+      \Drupal::logger('jarvis_canvas')->notice('Converted @count component(s) in unsaved Canvas drafts to the Jarvis 4.0 shapes.', ['@count' => $count]);
+    }
   }
 
   /**
@@ -129,22 +227,8 @@ final class ComponentMigrations {
     $count = self::rewrite(
       array_keys($versions),
       function (string $id, array $inputs) use ($versions): ?array {
-        if (!array_key_exists('variant', $inputs)) {
-          return NULL;
-        }
-        $prop = self::RENAMED_VARIANT[$id];
-        $renamed = [];
-        // Rebuilt key by key so the input keeps its place in the order.
-        foreach ($inputs as $key => $value) {
-          if ($key === 'variant') {
-            // A value already saved under the new name wins.
-            $renamed += [$prop => $inputs[$prop] ?? $value];
-          }
-          else {
-            $renamed[$key] = $value;
-          }
-        }
-        return ['component_id' => $id, 'component_version' => $versions[$id], 'inputs' => $renamed];
+        $renamed = self::renameVariantInputs($id, $inputs);
+        return $renamed === NULL ? NULL : ['component_id' => $id, 'component_version' => $versions[$id], 'inputs' => $renamed];
       },
     );
     if ($count === NULL) {
@@ -154,6 +238,31 @@ final class ComponentMigrations {
     if ($count) {
       \Drupal::logger('jarvis_canvas')->notice('Renamed the variant prop on @count Button, Card and Person component(s).', ['@count' => $count]);
     }
+  }
+
+  /**
+   * Renames a `variant` input to the component's 4.0 prop name.
+   *
+   * @return array|null
+   *   The renamed inputs, or NULL when there is no `variant` input.
+   */
+  private static function renameVariantInputs(string $id, array $inputs): ?array {
+    if (!array_key_exists('variant', $inputs)) {
+      return NULL;
+    }
+    $prop = self::RENAMED_VARIANT[$id];
+    $renamed = [];
+    // Rebuilt key by key so the input keeps its place in the order.
+    foreach ($inputs as $key => $value) {
+      if ($key === 'variant') {
+        // A value already saved under the new name wins.
+        $renamed += [$prop => $inputs[$prop] ?? $value];
+      }
+      else {
+        $renamed[$key] = $value;
+      }
+    }
+    return $renamed;
   }
 
   /**
