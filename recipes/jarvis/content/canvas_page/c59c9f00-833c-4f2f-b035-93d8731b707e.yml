@@ -35,7 +35,7 @@ default:
       value: 'Jarvis Drupal Theme: Flexible SDC-Based Design with ADA Compliance Built In'
   description:
     -
-      value: 'Discover Jarvis, a flexible SDC-based Drupal theme with 20 reusable components, versatile layouts, and easy customization to match your brand and build faster.'
+      value: 'Discover Jarvis, a flexible SDC-based Drupal theme with 23 reusable components, versatile layouts, and easy customization to match your brand and build faster.'
   components:
     -
       uuid: 958a0ea7-b744-43a9-9599-9d46a33ead03

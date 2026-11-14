@@ -183,6 +183,8 @@ needs. Expect to reconcile those by hand.
 
 ## Updating
 
+For a release in the same major version (a 4.x site moving to a later 4.x):
+
 ```bash
 composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
 ```
@@ -195,8 +197,19 @@ drush updatedb
 drush cache:rebuild
 ```
 
-`update`, not `require` — `require` rewrites the version constraint in your
-`composer.json`; `update` moves within the one you already have.
+`update`, not `require`, for these releases. `require` rewrites the version
+constraint in your `composer.json`; `update` moves within the one you already
+have.
+
+That is also why `update` cannot take a 3.x site to 4.0. A new major version
+is the one time you do want the constraint rewritten. See
+[Upgrading from 3.x to 4.0](#upgrading-from-3x-to-40-use-require-not-update)
+below.
+
+Composer may print `Package "imrodmartin/jarvis-recipe" listed for update is
+not locked.` That is expected. Unpacking removed the recipe package from your
+`composer.json` and moved its requirements there directly, so there is nothing
+of the recipe's left to update.
 
 `drush updatedb` is not optional either: `jarvis_canvas` ships update hooks
 (3.0.0 needs `11001`, which backfills a Canvas template for content types
@@ -292,11 +305,56 @@ drush ev 'foreach (\Drupal::service("keyvalue")->get("canvas:component:reasons")
 Empty output means everything survived. Anything listed names the component and
 the prop that could not be shaped.
 
+### Upgrading from 3.x to 4.0: use `require`, not `update`
+
+A site installed from a 3.x recipe cannot reach 4.0 with `composer update`.
+When you required the recipe, `drupal/core-recipe-unpack` copied its
+requirements into your root `composer.json`. That file now holds
+`"drupal/jarvis": "^3.5.2"` (or an earlier 3.x floor) and
+`"imrodmartin/jarvis-modules": "^2.1"`. `^3.5.2` stops short of 4.0, and
+`update` never moves past the constraint.
+
+It also fails quietly. The command finishes without an error, moves
+`imrodmartin/jarvis-modules` to 2.2.0 (which `^2.1` allows) and leaves the
+theme on 3.5.2. Nothing breaks, and nothing is converted either. Check which
+version you have:
+
+```bash
+composer show drupal/jarvis | grep versions
+```
+
+To cross to 4.0, raise both constraints with `require`:
+
+```bash
+composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+```
+
+```bash
+drush updatedb
+```
+
+```bash
+drush cache:rebuild
+```
+
+Name both packages, because theme 4.0 needs modules 2.2. If composer reports a
+conflict with something else on your site, add `-W` so it can update the
+packages those two depend on as well.
+
+Your `composer.json` now holds `^4.0`, so later 4.x releases arrive with the
+plain `composer update` in [Updating](#updating).
+
+Tested 2026-11-14 on a site installed from `jarvis-recipe` v3.2.3 (theme
+3.5.2, modules 2.1.3, Drupal 11.4.12, composer 2.9.7). `composer update` left
+the theme on 3.5.2. `composer require` moved it to 4.0.0, and the cache
+rebuild that followed logged `Converted 11 Section component(s) to 1 Column`
+and `Renamed the variant prop on 47 Button, Card and Person component(s)`.
+
 ### Upgrading to 4.0: Section became 1 Column
 
 Jarvis 4.0 removes the **Section** component. It did nothing 1 Column could not
 do, so 1 Column replaces it. You do not have to rebuild anything: the first
-`drush cache:rebuild` after the update converts every Section on the site
+`drush cache:rebuild` after the upgrade converts every Section on the site
 (Canvas pages, all their revisions, content templates, page regions and
 patterns) to a 1 Column with the same width, background and spacing, and logs
 `Converted N Section component(s) to 1 Column`.
@@ -357,6 +415,6 @@ module's prop-shape hook, and its renamed image style needs the recipes' config.
 Both recipes pin `drupal/jarvis ^4.0` and `imrodmartin/jarvis-modules ^2.2`,
 and the theme itself pins `imrodmartin/jarvis-modules ^2.2`, so composer cannot
 resolve a mismatched set. Theme 4.0 needs modules 2.2 because that release
-carries the Section to 1 Column conversion (below). The earlier floor was `^2.1` rather than `^2.0`
+carries the Section to 1 Column conversion (above). The earlier floor was `^2.1` rather than `^2.0`
 because `jarvis_overlay_alpha` — which four templates call — only exists from
 modules 2.1.0.

@@ -14,7 +14,7 @@ repository-root README for the quick start.
   settings (colours, fonts, sizes, logo). Claro becomes the admin theme and
   content is edited in it, like the standard profile.
 - **Canvas, fully wired**: canvas + canvas_field_component, component config
-  for the theme's 21 SDCs and the block/views components the library folders
+  for the theme's 23 SDCs and the block/views components the library folders
   use, content templates for the two content types, page regions, 5
   reusable patterns, and the custom `jarvis_canvas` glue
   module. Component folders are organised by `jarvis_canvas` on every cache
@@ -54,8 +54,8 @@ repository-root README for the quick start.
   the providers idle.
 - **Imports demo content** (core Default Content format, shipped in
   `content/`): 7 nodes (Home, About, Accessibility Statement, 4 blog posts),
-  **2 Canvas pages** (the component showcase and a Test
-  Page), 3 block_content entities, the referenced media + files, and the
+  **2 Canvas pages** (the component showcase and Component
+  Examples), 3 block_content entities, the referenced media + files, and the
   main-menu links. Node URL aliases are carried inline, so they attach
   regardless of imported node IDs. The front page is the Canvas component
   showcase (`/page/2`).

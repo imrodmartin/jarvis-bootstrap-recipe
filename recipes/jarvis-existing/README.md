@@ -260,7 +260,7 @@ want them.
 
 1. `drush cache:rebuild` — this is the SDC registration step, not a formality.
    Components 404 until it runs.
-2. Confirm the library: `drush sqlq "SELECT COUNT(*) FROM config WHERE name LIKE 'canvas.component.sdc.jarvis%'"` — expect 21.
+2. Confirm the library: `drush sqlq "SELECT COUNT(*) FROM config WHERE name LIKE 'canvas.component.sdc.jarvis%'"` — expect 23.
 3. Preview Jarvis on a throwaway page before switching the default theme.
 4. Re-applying is not supported. Snapshot the database first:
    `drush sql:dump --result-file=../pre-jarvis.sql`
