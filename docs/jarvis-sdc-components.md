@@ -36,7 +36,7 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 ### Cards and feature bands
 
-**Card** is the flexible content card, with the image placed at the top, left, right, or as a full background. In background mode it joins the contrast engine so overlaid text stays readable; it also exposes a `heading_level` prop so its title lands at the correct place in your document outline rather than a fixed heading level.
+**Card** is the flexible content card, with the image placed at the top, left, right, or as a full background. In background mode it joins the contrast engine so overlaid text stays readable; it also exposes a `heading_level` prop so its title lands at the correct place in your document outline rather than a fixed heading level. Without an image, a card can sit on any theme colour instead, and its text, links and button switch to black or white, whichever passes WCAG AA on that colour.
 
 **Card Full Image** is a full-width, two-column band where an image fills its half edge-to-edge beside a rich-text column. It's the alternating image/text "story band" you scroll past on marketing pages — bigger and more immersive than a standard card, without the boxed margins.
 
