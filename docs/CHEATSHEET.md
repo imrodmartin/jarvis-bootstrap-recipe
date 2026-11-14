@@ -80,12 +80,26 @@ ddev drush uli
 
 ## Updating later
 
+Same major version (4.x to a later 4.x):
+
 ```bash
 ddev composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
+ddev drush updatedb -y
 ddev drush cr
 ```
 
-`update`, not `require` — `require` rewrites your version constraint.
+`update`, not `require`, here. `require` rewrites your version constraint.
+
+From 3.x to 4.0 the constraint has to change, so this is the one time to use
+`require`. `update` finishes without an error and leaves the theme on 3.x:
+
+```bash
+ddev composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+ddev drush updatedb -y
+ddev drush cr
+```
+
+Why, and what the rebuild converts: INSTALL.md, "Upgrading from 3.x to 4.0".
 
 **Composer ships files, never config.** New media types, fields and image styles
 arrive only when a recipe is applied. Re-apply the recipe when a release adds
@@ -102,6 +116,7 @@ config.
 | Media reference field accepts nothing | its `target_bundles` was emptied by a media type deletion — see below |
 | AI features do nothing | no API keys ship in the repo; by design |
 | composer prompts for a GitHub token | `"no-api": true` missing from a repositories entry |
+| `composer update` ran clean but the theme is still 3.x | your root `composer.json` holds `drupal/jarvis ^3.x`, which stops short of 4.0. Use `composer require`, see "Updating later" |
 | `drush updb` refuses: `jarvis_blocks` is missing | upgraded from modules 1.x, which shipped it; 2.x dropped it. Uninstall it — see INSTALL.md "Coming from modules 1.x" |
 | Video component renders nothing | since theme 3.0 `video_url` is files-only; hosted players come from the media library's Remote video field |
 

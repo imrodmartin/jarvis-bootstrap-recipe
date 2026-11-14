@@ -1,6 +1,6 @@
 # Inside the Jarvis Theme: Every Component, and How It Stays Accessible
 
-Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all twenty-one components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
+Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all twenty-three components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
 
 ## How Jarvis Handles ADA Compliance
 
@@ -14,13 +14,15 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 ### Layout and structure
 
-**Section** is the container that holds everything else. It's a wrapper component with a slot, giving you a full-width or boxed band you can drop other components into. Sections carry the background and spacing context that the color and contrast rules key off of, so they're the frame the rest of the page hangs on.
-
-**1 Column** is the simplest row: a single column whose content spans the full width. Reach for it when you want one block of content — text, an image, an embedded component — to run the full measure without competing for horizontal space.
+**1 Column** is the simplest row and the wrapper for everything else: a full-width or boxed band you drop other components into. It carries the background, spacing, and text color that the contrast rules key off, so it is the frame the rest of the page hangs on. Reach for it when one block of content (text, an image, an embedded component) should run the full measure.
 
 **2 Columns** places two columns side by side on desktop and stacks them full-width on mobile. It's the workhorse for the classic content-beside-content pattern, and because it participates in the shared contrast engine, a background image behind the pair is auto-tuned for readable text.
 
 **3 Columns** gives you three columns on desktop, two on tablet, and a full-width stack on mobile. Use it for feature triplets, service grids, or any set of three parallel items that should collapse gracefully as the screen narrows — again with automatic overlay contrast when a background image is involved.
+
+**4 Columns** gives you four columns on desktop, two on tablet, and a full-width stack on mobile. Use it for logo rows, icon grids, or a set of four short features.
+
+**3 Columns (custom widths)** lets you set the width of each column as a percentage. Give the middle column 60% for a main area with two sidebars, or set a column to 0% and it collapses, so the same component also covers two uneven columns.
 
 ### Heroes and calls to action
 
@@ -48,9 +50,9 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 **Video** is a responsive video that accepts either an embed URL (YouTube or Vimeo) or a direct video file. It supports a captions track and language through `<track>`, so a video placed here can meet caption requirements rather than shipping as an inaccessible embed.
 
-**Video Background** is a full-width band with an uploaded video playing behind a text card, positioned left, centre or right. The video carries its own dimming slider and the text card its own colour and opacity, so the copy stays readable over footage that changes brightness as it plays.
-
 **Video with Sidebar** puts a video on one side — from the media library or a plain URL — with an eyebrow, title, description, and call-to-action buttons alongside it. It can be placed directly in Canvas or driven by a View, making it useful both for one-off feature sections and for templated, content-driven video rows.
+
+**Video Background** plays an uploaded video behind a text card across a full-width band. You choose where the card sits, how much the video is dimmed, and how solid the card is. A pause button is always there, so a visitor who does not want motion can stop it.
 
 **Map** embeds a Google Map from a one-line address, keyless in the `simple_gmap` style, with zoom control and a link out to the full map. It's the low-friction "here's where we are" block — type an address, get a map, no API key wrangling.
 
@@ -62,8 +64,12 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 **Person** is a profile block: portrait, name, position, phone, email, and a link. It's built for team and staff listings, and its name text runs through the same color-inheritance guard as the stat number so it stays readable against any section background.
 
-**Timeline** is a set of up to six steps, each with an icon, a name, and rich-text content, rendered three ways from the same props: as tabs (the default), as an accordion, or as an always-open vertical rail. It ships no JavaScript of its own — tabs reuse the Bootstrap bundle the theme already loads, and the accordion is a native `<details>` group that is exclusive without script. A step whose icon is set to None shows its position number in a circle instead, so a partly-iconned set keeps one rhythm. On a phone the tab strip stays on one line and scrolls rather than wrapping into a block that would push the panel below the fold, tab targets hold a 44px floor, and panel content is contained so a pasted wide table scrolls inside its own box instead of taking the page with it.
+### Steps and sharing
+
+**Timeline** presents up to six steps, each with an icon, a name, and rich text. Show them as tabs, an accordion, or a vertical rail. It suits a process, an application path, or a project schedule.
+
+**Share** adds share buttons for the current page: Facebook, X, LinkedIn, Bluesky, Reddit, email, and copy link. Turn each one on or off, and pick the color, shape, and size to match the page.
 
 ## The Takeaway
 
-Twenty-one components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.
+Twenty-three components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.

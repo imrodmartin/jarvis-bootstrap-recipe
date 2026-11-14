@@ -8,14 +8,15 @@ and a configured AI stack. One apply, working site.
 
 ## What you get
 
-- **The Jarvis theme** — 21 SDC components (hero, cards, CTA, stats, people,
-  video, maps, 1/2/3-column layouts, rich text …) with automatic WCAG
+- **The Jarvis theme** — 23 SDC components (hero, cards, CTA, stats, people,
+  video, maps, 1/2/3/4-column layouts, rich text …) with automatic WCAG
   contrast enforcement: image overlays darken until text passes AA, unsafe
   colour picks fall back to safe ones, and the theme settings form shows live
   contrast badges with one-click fixes.
 - **Drupal Canvas**, wired: components organised into folders, 5 reusable
   patterns, content templates for the Blog/Basic content types, and
-  two editable demo Canvas pages (a component showcase and a test page).
+  two editable demo Canvas pages (a component showcase and a Component
+  Examples page).
 - **Demo content** — home page, about page, accessibility statement, four
   blog posts, media, menus. The front page is the Canvas component
   showcase (`/page/2`).
@@ -473,6 +474,18 @@ drush updatedb && drush cr
 
 `update`, not `require`: `require` rewrites the version constraint in your
 `composer.json`; `update` moves within the one you already have.
+
+That holds inside one major version. A site installed from a 3.x recipe holds
+`drupal/jarvis ^3.5.2` in its root `composer.json` (recipe unpacking put it
+there), so `update` finishes without an error and leaves the theme on 3.x. To
+cross to 4.0, raise the constraints:
+
+```bash
+composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+drush updatedb && drush cr
+```
+
+See [docs/INSTALL.md](docs/INSTALL.md), "Upgrading from 3.x to 4.0".
 
 `drush cr` is not optional — `hook_rebuild` is what makes Canvas re-read the
 SDCs and regenerate component config. Afterwards check nothing was switched
