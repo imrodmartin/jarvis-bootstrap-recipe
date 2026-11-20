@@ -34,8 +34,6 @@ component_tree:
     component_version: 873eeba215391e07
     inputs:
       layout: image-top
-      image:
-        target_id: '6'
       title: 'Card title'
       body:
         value: '<p>Short supporting copy for this card.</p>'
@@ -66,8 +64,6 @@ component_tree:
       layout: image-top
       overlay: 40
       text_color: light
-      image:
-        target_id: '5'
       title: 'Card title'
       body:
         value: '<p>Short supporting copy for this card.</p>'

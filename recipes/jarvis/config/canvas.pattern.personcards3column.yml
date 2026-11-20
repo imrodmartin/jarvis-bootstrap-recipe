@@ -29,8 +29,6 @@ component_tree:
     component_version: 0e0725d0d2098942
     inputs:
       layout: card
-      image:
-        target_id: '5'
       name: 'Jane Doe'
       position: 'Chief Executive Officer'
       phone: '+1 555 123 4567'
@@ -53,8 +51,6 @@ component_tree:
     component_version: 0e0725d0d2098942
     inputs:
       layout: card
-      image:
-        target_id: '5'
       name: 'Jane Doe'
       position: 'Chief Executive Officer'
       phone: '+1 555 123 4567'
@@ -77,8 +73,6 @@ component_tree:
     component_version: 0e0725d0d2098942
     inputs:
       layout: card
-      image:
-        target_id: '5'
       name: 'Jane Doe'
       position: 'Chief Executive Officer'
       phone: '+1 555 123 4567'

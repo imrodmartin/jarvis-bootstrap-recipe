@@ -43,8 +43,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       full_width: true
       priority: true
       vertical_padding: false
@@ -55,8 +53,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '19'
       image_style: medium
       full_width: true
       priority: true
@@ -68,8 +64,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       image_style: medium
       full_width: true
       priority: true
@@ -81,8 +75,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '19'
       image_style: medium
       full_width: true
       priority: true
@@ -94,8 +86,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       full_width: false
       priority: true
       vertical_padding: true

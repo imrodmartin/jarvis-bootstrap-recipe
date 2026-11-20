@@ -35,8 +35,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '6'
       full_width: true
       priority: true
       vertical_padding: false
