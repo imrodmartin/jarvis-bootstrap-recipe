@@ -53,6 +53,8 @@ function jarvis_canvas_install(): void {
   // config, so its node types (and their shipped, enabled templates) do not
   // exist yet at this point — nothing here can collide with them.
   _jarvis_canvas_backfill_templates();
+  // Blocks that predate this module: make them placeable in Canvas.
+  _jarvis_canvas_enable_placeable_block_components();
 }
 
 /**
@@ -60,4 +62,43 @@ function jarvis_canvas_install(): void {
  */
 function jarvis_canvas_update_11001(): void {
   _jarvis_canvas_backfill_templates();
+}
+
+/**
+ * Enables the Canvas components of content blocks and views blocks.
+ *
+ * Mirrors JarvisCanvasHooks::componentPresave(), which only fires for blocks
+ * whose Component config entity is created AFTER this runs. Blocks that
+ * predate it already have one, created with status: FALSE by Canvas, and
+ * Canvas never revisits the status of a Component it has already created — so
+ * without this they stay unplaceable forever.
+ *
+ * A component the site owner disabled by hand in /admin/appearance/component
+ * is left alone: Canvas records that choice as a "Manually disabled" reason.
+ */
+function _jarvis_canvas_enable_placeable_block_components(): void {
+  $storage = \Drupal::entityTypeManager()->getStorage('component');
+  $repository = \Drupal::service(\Drupal\canvas\ComponentIncompatibilityReasonRepository::class);
+  $reasons = $repository->getReasons()['block'] ?? [];
+  $manual = \Drupal\canvas\ComponentIncompatibilityReasonRepository::MANUALLY_DISABLED_REASON;
+  foreach ($storage->loadMultiple() as $id => $component) {
+    if ($component->status() || $component->get('source') !== 'block') {
+      continue;
+    }
+    if (!\Drupal\jarvis_canvas\Hook\JarvisCanvasHooks::isPlaceableBlock((string) $component->get('source_local_id'))) {
+      continue;
+    }
+    $reason = $reasons[$id] ?? [];
+    if (\in_array($manual, \is_string($reason) ? [$reason] : $reason, TRUE)) {
+      continue;
+    }
+    $component->setStatus(TRUE)->save();
+  }
+}
+
+/**
+ * Enable Canvas components for content blocks and views blocks.
+ */
+function jarvis_canvas_update_11002(): void {
+  _jarvis_canvas_enable_placeable_block_components();
 }
