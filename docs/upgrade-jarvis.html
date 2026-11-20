@@ -90,7 +90,12 @@
 ddev snapshot --name pre-jarvis-4.3.3
 
 # anywhere else
-drush sql:dump --gzip --result-file=~/backups/pre-jarvis-4.3.3.sql.gz</code></pre>
+mkdir -p ~/backups
+drush sql:dump --gzip --extra-dump='--no-tablespaces' \
+  --result-file=~/backups/pre-jarvis-4.3.3.sql</code></pre>
+  <p>Two things bite on shared hosting, both seen on <em>dev.littlemiamistatepark.org</em> (cPanel) on 2026-11-20. Drush will not create <code>~/backups</code> for you &mdash; without the <code>mkdir</code> you get <code>mysqldump: Got errno 11 on write</code>. And the database user there lacks the <code>PROCESS</code> privilege, so mysqldump aborts with <em>"you need (at least one of) the PROCESS privilege(s)"</em> before writing a byte; <code>--extra-dump='--no-tablespaces'</code> is the fix. Note the filename has no <code>.gz</code> &mdash; <code>--gzip</code> appends it, and passing it yourself produces <code>.sql.gz.gz</code>.</p>
+  <p><strong>Prove the dump is complete before you touch anything.</strong> A truncated dump is not a rollback:</p>
+<pre><code>gunzip -c ~/backups/pre-jarvis-4.3.3.sql.gz | tail -2   # must end: -- Dump completed on ...</code></pre>
 </div>
 
 <div class="warn">
@@ -101,6 +106,7 @@ drush sql:dump --gzip --result-file=~/backups/pre-jarvis-4.3.3.sql.gz</code></pr
   <p><strong>Pin Canvas before touching the theme, on every route.</strong> The recipe's constraint is <code>^1.8</code>, which happily resolves to 1.9+ &mdash; and 1.9.0 breaks the link-autocomplete patch mid-install. Nail it down first, so nothing drags it along:</p>
 <pre><code>composer require 'drupal/canvas:1.8.0' 'drupal/canvas_ai:1.8.0' --no-update</code></pre>
   <p>That writes the pin into <code>composer.json</code> without resolving anything yet. Skip this on a folder-copy site, which has no composer-managed Canvas.</p>
+  <p><strong>A Canvas already above 1.8 is not a reason to downgrade it.</strong> Jarvis 4.3.3 declares <code>drupal/canvas: ^1.8</code> and was verified rendering correctly on <strong>Canvas 1.13.0</strong> (dev.littlemiamistatepark.org, 2026-11-20 &mdash; hero, stat row, cards, views block, nav, no console errors). Pin whatever is installed so nothing moves underneath you; do not drag it back to 1.8.</p>
 </div>
 
 <h2>Which route is this site on?</h2>
@@ -191,12 +197,20 @@ git -C web/modules/custom fetch --tags && git -C web/modules/custom checkout v2.
 <div class="route">
   <h3><span class="tag">C</span>Plain files on the server</h3>
   <p>No composer package, no git &mdash; the theme is a directory someone copied up, by rsync, scp, or a <code>deploy.sh</code>. <em>battle.drtr.site</em> is this: <code>ssh drtr</code>, root <code>~/battle.drtr.site</code>, docroot <code>web</code>, theme at <code>web/themes/custom/jarvis</code>, module at <code>web/modules/custom/jarvis_canvas</code>.</p>
+  <p>So is <em>dev.littlemiamistatepark.org</em>: cPanel host, ssh entry <code>nti-littlemiamistate</code>, docroot <code>public_html</code> (so drush is <code>vendor/bin/drush --root=public_html</code>), same two directories. Unlike battle it carries <strong>no local patches at all</strong> &mdash; which is the point of the next block. Do not assume a folder-copy site is patched, and do not assume it is clean. Measure.</p>
 
   <div class="danger">
     <p><strong>Check for local patches before you overwrite anything.</strong> battle carries four changes that are deliberately not upstream &mdash; a two-column <code>phone_order</code> prop used by five live pages, <code>jarvis_logo_width</code>, the branding block lifted out of the drawer, and a phone gutter rule. A plain swap deletes the prop that published content depends on, and those pages break.</p>
 <pre><code># on the server: what is actually different from the tag it came from?
 cd ~/battle.drtr.site/web/themes/custom/jarvis
 diff -ru /tmp/jarvis-v4.1.0 . | head -100</code></pre>
+    <p>That assumes you already know which tag it came from. Usually you do not &mdash; there is no composer entry and no git metadata to read, and <code>jarvis.info.yml</code> is only a label. <strong>Sweep every tag and let the diff counts tell you.</strong> Lowest count is the baseline; a count of <code>0</code> means an untouched copy and a safe swap:</p>
+<pre><code>git clone --quiet https://github.com/imrodmartin/jarvis /tmp/jarvis-ref
+for t in $(git -C /tmp/jarvis-ref tag); do
+  git -C /tmp/jarvis-ref checkout --quiet $t
+  echo "$t: $(diff -rq --exclude=.git /tmp/jarvis-ref web/themes/custom/jarvis 2>/dev/null | wc -l) differing"
+done</code></pre>
+    <p>Run the same sweep against <code>imrodmartin/jarvis-modules</code> for <code>web/modules/custom/jarvis_canvas</code>, which has no version key in its info.yml at all on a folder-copy site. On littlemiami this returned theme <code>v3.4.0: 0 differing</code> and module <code>v2.1.3: 0 differing</code> &mdash; both pristine, so the upgrade became a plain rsync with no patch to re-merge. Once you have the baseline, <code>diff -ru</code> against it is the local patch.</p>
   </div>
 
   <h4>1. Back up both directories on the server</h4>
@@ -204,7 +218,8 @@ diff -ru /tmp/jarvis-v4.1.0 . | head -100</code></pre>
 mkdir -p ~/backups/jarvis-4.3.3-$(date +%F)
 tar czf ~/backups/jarvis-4.3.3-$(date +%F)/theme-before.tgz web/themes/custom/jarvis
 tar czf ~/backups/jarvis-4.3.3-$(date +%F)/module-before.tgz web/modules/custom/jarvis_canvas
-vendor/bin/drush sql:dump --gzip --result-file=~/backups/jarvis-4.3.3-$(date +%F)/db.sql.gz</code></pre>
+vendor/bin/drush sql:dump --gzip --extra-dump='--no-tablespaces' \
+  --result-file=~/backups/jarvis-4.3.3-$(date +%F)/db.sql</code></pre>
 
   <h4>2. Build the new theme locally, patches re-merged</h4>
   <p>Do not hand-edit the server copy. Produce the exact tree you want, then ship it:</p>
@@ -336,12 +351,13 @@ drush cr</code></pre>
     <tr><td>reference checkout</td><td><code>~/code/drupaltheme</code></td><td>B &mdash; submodule at <code>web/themes/custom/jarvis</code></td></tr>
     <tr><td>jarvis-verify</td><td><code>~/code/jarvis-verify</code> (DDEV)</td><td>A &mdash; composer, <code>themes/contrib/jarvis</code></td></tr>
     <tr><td>ihpsei</td><td><code>~/Drupal/ihpsei</code></td><td>A &mdash; migrated off submodule 2026-11-07</td></tr>
+    <tr><td>dev.littlemiamistatepark.org</td><td><code>ssh nti-littlemiamistate</code>, docroot <code>public_html</code></td><td>C &mdash; folder copy, <strong>no local patches</strong>; on 4.3.3 / modules 2.3.2 / Canvas 1.13 since 2026-11-20</td></tr>
     <tr><td>thewordforme</td><td><code>ssh appthewordforme</code> (user <code>wordapp</code>)</td><td><em>unconfirmed &mdash; run the detection block above</em></td></tr>
   </tbody>
 </table>
 
 <div class="note">
-  <p><strong>Three routes is two too many.</strong> Route A is the one worth standardising on: it carries the module dependency for you, it pins, and it is the only one where <code>composer show</code> tells you the truth about what is installed. Route C exists on battle only because of local patches &mdash; those could ship as a tiny sub-theme instead, at which point battle becomes a composer site too.</p>
+  <p><strong>Three routes is two too many.</strong> Route A is the one worth standardising on: it carries the module dependency for you, it pins, and it is the only one where <code>composer show</code> tells you the truth about what is installed. Route C exists on battle only because of local patches &mdash; those could ship as a tiny sub-theme instead, at which point battle becomes a composer site too. littlemiami has no such excuse: it is a clean copy, so it is the cheapest site to convert. The one catch is that the composer package installs to <code>themes/contrib/jarvis</code>, so <code>themes/custom/jarvis</code> has to be deleted in the same step &mdash; two directories claiming the <code>jarvis</code> machine name is its own kind of afternoon.</p>
 </div>
 
 <footer>
