@@ -445,9 +445,8 @@ final class JarvisCanvasHooks {
    * template) is not dragged down with it. Those existing placements are
    * already broken by the block's deletion; this only stops new ones.
    *
-   * Views blocks have the same gap when a View is deleted. Not covered here —
-   * deleting a View is rare enough that it has not bitten us, and this hook is
-   * deliberately about the case that has.
+   * Views blocks reach the same orphan by a different door — see ::viewDelete()
+   * and ::viewUpdate(), which share ::retireBlockComponents() with this.
    *
    * @see \Drupal\canvas\ComponentSource\ComponentSourceManager::generateComponentsForSource()
    * @see self::componentPresave()
@@ -458,19 +457,96 @@ final class JarvisCanvasHooks {
     if (\Drupal::isConfigSyncing()) {
       return;
     }
-    $id = BlockComponentDiscovery::getComponentConfigEntityId('block_content:' . $block->uuid());
-    $component = \Drupal::entityTypeManager()->getStorage('component')->load($id);
-    if ($component === NULL) {
+    self::retireBlockComponents(['block_content:' . $block->uuid()]);
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete() for views.
+   *
+   * Same orphan as ::blockContentDelete(), reached by deleting the View that
+   * provided the block rather than the block itself.
+   */
+  #[Hook('view_delete')]
+  public function viewDelete(EntityInterface $view): void {
+    if (\Drupal::isConfigSyncing()) {
       return;
     }
-    // hasUsages() checks config entities first, then content revisions.
-    if (\Drupal::service(ComponentAudit::class)->hasUsages($component)) {
-      if ($component->status()) {
-        $component->disable()->save();
+    self::retireBlockComponents(self::viewBlockPluginIds($view));
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_update() for views.
+   *
+   * The commoner half of the same gap: an editor rarely deletes a whole View,
+   * but deletes a block display from one, or switches a display's plugin away
+   * from block. Either way that `views_block:` plugin stops existing while the
+   * View itself lives on, and the Component is orphaned exactly as before.
+   */
+  #[Hook('view_update')]
+  public function viewUpdate(EntityInterface $view): void {
+    if (\Drupal::isConfigSyncing()) {
+      return;
+    }
+    $original = $view->getOriginal();
+    if ($original === NULL) {
+      return;
+    }
+    $surviving = self::viewBlockPluginIds($view);
+    self::retireBlockComponents(array_diff(self::viewBlockPluginIds($original), $surviving));
+  }
+
+  /**
+   * The `views_block:` plugin IDs a View config entity provides.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $view
+   *   A View config entity.
+   *
+   * @return string[]
+   *   Block plugin IDs, e.g. `views_block:promos-block_1`.
+   */
+  private static function viewBlockPluginIds(EntityInterface $view): array {
+    $ids = [];
+    foreach ((array) $view->get('display') as $display_id => $display) {
+      if (($display['display_plugin'] ?? NULL) === 'block') {
+        $ids[] = 'views_block:' . $view->id() . '-' . $display_id;
       }
+    }
+    return $ids;
+  }
+
+  /**
+   * Deletes the Canvas Components for block plugins that no longer exist.
+   *
+   * Deleted when nothing uses one, which is the normal case. When something
+   * still does, it is disabled and left in place: Canvas's own policy for a
+   * component that can no longer be created is to disable rather than delete,
+   * precisely so config that depends on it (a page region, a content template)
+   * is not dragged down with it. Those placements are already broken by the
+   * underlying block going away; this only stops new ones being made.
+   *
+   * @param string[] $block_plugin_ids
+   *   Block plugin IDs whose provider has just been deleted.
+   */
+  private static function retireBlockComponents(array $block_plugin_ids): void {
+    if (!$block_plugin_ids) {
       return;
     }
-    $component->delete();
+    $storage = \Drupal::entityTypeManager()->getStorage('component');
+    $audit = \Drupal::service(ComponentAudit::class);
+    foreach ($block_plugin_ids as $plugin_id) {
+      $component = $storage->load(BlockComponentDiscovery::getComponentConfigEntityId($plugin_id));
+      if ($component === NULL) {
+        continue;
+      }
+      // hasUsages() checks config entities first, then content revisions.
+      if ($audit->hasUsages($component)) {
+        if ($component->status()) {
+          $component->disable()->save();
+        }
+        continue;
+      }
+      $component->delete();
+    }
   }
 
   /**
