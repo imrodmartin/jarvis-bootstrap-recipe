@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+  theme:
+    - jarvis
+active_version: 1d140e3b27622faa
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        region:
+          required: true
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: block_region_1
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'Block region'
+id: sdc.jarvis.block-region
+provider: jarvis
+source: sdc
+source_local_id: 'jarvis:block-region'
