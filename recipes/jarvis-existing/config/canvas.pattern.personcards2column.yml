@@ -4,13 +4,8 @@ dependencies:
   config:
     - canvas.component.sdc.jarvis.person
     - canvas.component.sdc.jarvis.two-column
-    - field.field.media.image.field_media_image
-    - image.style.canvas_parametrized_width
-    - media.type.image
   module:
-    - file
     - link
-    - media
     - options
 id: personcards2column
 label: 'Person Cards - 2 Column'
