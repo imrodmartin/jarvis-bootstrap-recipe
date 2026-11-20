@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upgrading Jarvis on a live site</title>
+<style>
+  :root {
+    --bg: #fbfbfa; --fg: #1a1a1a; --muted: #5d5d5d; --rule: #e2e0dc;
+    --card: #fff; --code-bg: #f4f3f0; --accent: #0b5fff; --warn-bg: #fff8e5;
+    --warn-br: #e0b43a; --danger-bg: #fdf0ee; --danger-br: #d1503c;
+    --ok-bg: #eef7ef; --ok-br: #3c8d4f; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c; --fg: #e8e6e3; --muted: #9b9892; --rule: #2d3138;
+      --card: #1c1f24; --code-bg: #101216; --accent: #6fa8ff;
+      --warn-bg: #2a2410; --warn-br: #8a6d1f; --danger-bg: #2b1512; --danger-br: #a24334;
+      --ok-bg: #13251a; --ok-br: #3f7a4f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg); line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 6rem; }
+  header.page { border-bottom: 1px solid var(--rule); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .09em; font-size: .72rem; font-weight: 700; color: var(--muted); margin: 0 0 .5rem; }
+  h1 { font-size: 2.1rem; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 .75rem; }
+  .lede { font-size: 1.08rem; color: var(--muted); margin: 0 0 1.25rem; }
+  .vers { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .pill { font-family: var(--mono); font-size: .78rem; background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .7rem; }
+  .pill b { color: var(--accent); }
+  h2 { font-size: 1.45rem; letter-spacing: -.015em; margin: 3rem 0 .4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+  h2:first-of-type { border-top: 0; padding-top: 0; }
+  h3 { font-size: 1.08rem; margin: 2rem 0 .4rem; }
+  h4 { font-size: .95rem; margin: 1.5rem 0 .3rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  p, li { font-size: .97rem; }
+  code { font-family: var(--mono); font-size: .86em; background: var(--code-bg); padding: .12em .38em; border-radius: 4px; }
+  pre { position: relative; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 8px; padding: .9rem 1rem; overflow-x: auto; margin: .7rem 0 1rem; }
+  pre code { background: none; padding: 0; font-size: .85rem; line-height: 1.55; display: block; white-space: pre; }
+  .copy { position: absolute; top: .45rem; right: .45rem; font: 600 .7rem/1 var(--mono); color: var(--muted);
+          background: var(--card); border: 1px solid var(--rule); border-radius: 5px; padding: .35rem .5rem; cursor: pointer; opacity: 0; transition: opacity .15s; }
+  pre:hover .copy, .copy:focus { opacity: 1; }
+  .copy.done { color: var(--ok-br); border-color: var(--ok-br); }
+  .note, .warn, .danger, .ok { border-left: 3px solid; border-radius: 0 7px 7px 0; padding: .85rem 1rem; margin: 1.1rem 0; font-size: .93rem; }
+  .note { background: var(--card); border-color: var(--rule); }
+  .warn { background: var(--warn-bg); border-color: var(--warn-br); }
+  .danger { background: var(--danger-bg); border-color: var(--danger-br); }
+  .ok { background: var(--ok-bg); border-color: var(--ok-br); }
+  .note p:last-child, .warn p:last-child, .danger p:last-child, .ok p:last-child { margin-bottom: 0; }
+  .note p:first-child, .warn p:first-child, .danger p:first-child, .ok p:first-child { margin-top: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: .9rem; }
+  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  td code { font-size: .82em; }
+  .route { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem 1.4rem; margin: 1.25rem 0; }
+  .route > h3 { margin-top: 0; }
+  .tag { display: inline-block; font: 700 .7rem/1 var(--mono); padding: .3rem .5rem; border-radius: 5px; background: var(--accent); color: #fff; margin-right: .5rem; vertical-align: .1em; }
+  ol.steps { padding-left: 1.3rem; } ol.steps > li { margin-bottom: .5rem; }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .85rem; }
+  a { color: var(--accent); }
+  @media print {
+    .copy { display: none; } body { background: #fff; } .route, pre { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <p class="eyebrow">Jarvis theme &middot; operations runbook</p>
+  <h1>Upgrading Jarvis on a live site</h1>
+  <p class="lede">Three install methods are in use across these servers, and the commands differ for each. Work out which route a site is on, run that route, then run the shared steps at the bottom. Every route ends the same way.</p>
+  <div class="vers">
+    <span class="pill">theme <b>v4.3.3</b></span>
+    <span class="pill">jarvis-modules <b>v2.3.0</b></span>
+    <span class="pill">Canvas <b>pin 1.8.0</b></span>
+    <span class="pill">released <b>2026-11-20</b></span>
+  </div>
+</header>
+
+<h2>Before anything</h2>
+
+<div class="danger">
+  <p><strong>Back the database up first.</strong> <code>drush cr</code> on a 3.x &rarr; 4.x jump runs one-way content migrations &mdash; Sections become 1&nbsp;Column, <code>variant</code> props get renamed, saved component trees are rewritten in place. There is no down path except a restore.</p>
+<pre><code># DDEV
+ddev snapshot --name pre-jarvis-4.3.3
+
+# anywhere else
+drush sql:dump --gzip --result-file=~/backups/pre-jarvis-4.3.3.sql.gz</code></pre>
+</div>
+
+<div class="warn">
+  <p><strong>Never re-run the recipe to upgrade.</strong> <code>recipes/jarvis</code> and <code>jarvis-install-recipe</code> are install-only. Re-applying one on a live site fails on config that already exists, and in the worst case overwrites configuration you have since changed by hand.</p>
+</div>
+
+<div class="warn">
+  <p><strong>Pin Canvas before touching the theme, on every route.</strong> The recipe's constraint is <code>^1.8</code>, which happily resolves to 1.9+ &mdash; and 1.9.0 breaks the link-autocomplete patch mid-install. Nail it down first, so nothing drags it along:</p>
+<pre><code>composer require 'drupal/canvas:1.8.0' 'drupal/canvas_ai:1.8.0' --no-update</code></pre>
+  <p>That writes the pin into <code>composer.json</code> without resolving anything yet. Skip this on a folder-copy site, which has no composer-managed Canvas.</p>
+</div>
+
+<h2>Which route is this site on?</h2>
+
+<p>Ask the site, not your memory &mdash; one of these has been wrong before. Run these in the composer root:</p>
+
+<pre><code>composer show drupal/jarvis 2>/dev/null | grep -E '^(name|versions|path)' \
+  || echo 'not a composer package'
+
+ls -d web/themes/*/jarvis themes/*/jarvis 2>/dev/null
+
+git -C web/themes/custom/jarvis rev-parse --short HEAD 2>/dev/null \
+  || echo 'theme dir is not a git repo'</code></pre>
+
+<table>
+  <thead><tr><th>What you see</th><th>Route</th></tr></thead>
+  <tbody>
+    <tr><td><code>composer show</code> prints a version and a path</td><td><a href="#route-a">A &mdash; Composer</a></td></tr>
+    <tr><td>Not a composer package, but the theme dir <em>is</em> a git repo, and <code>.gitmodules</code> lists it</td><td><a href="#route-b">B &mdash; Git submodule</a></td></tr>
+    <tr><td>Not a composer package, theme dir is not a git repo &mdash; just files</td><td><a href="#route-c">C &mdash; Folder copy / deploy script</a></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <p><strong>Check the version string too, and do not trust it alone.</strong> A site can report <code>version: '1.1'</code> in <code>jarvis.info.yml</code> while actually running a feature branch from months later &mdash; that exact case cost a full debugging cycle on 2026-11-20. The <code>composer show</code> / <code>git rev-parse</code> output above is the truth; the info.yml version is a label someone forgot to bump.</p>
+</div>
+
+<h2 id="route-a">Route A &mdash; Composer</h2>
+
+<div class="route">
+  <h3><span class="tag">A</span>Composer-managed theme</h3>
+  <p>The normal case. <em>drupalhelps.com</em> is one of these: project root <code>/home/dh</code>, docroot <code>public_html</code>, theme at <code>themes/contrib/jarvis</code>, so drush needs <code>--root</code>.</p>
+
+  <h4>1. Make sure the two VCS repos are present</h4>
+  <p>Jarvis is not on drupal.org. A site that has never installed it by composer needs these in <code>composer.json</code> before the require will resolve:</p>
+<pre><code>composer config repositories.jarvis vcs https://github.com/imrodmartin/jarvis
+composer config repositories.jarvis-modules vcs https://github.com/imrodmartin/jarvis-modules</code></pre>
+
+  <h4>2. Pin Canvas, then upgrade the theme and module</h4>
+<pre><code>composer require 'drupal/canvas:1.8.0' 'drupal/canvas_ai:1.8.0' --no-update
+composer require 'drupal/jarvis:^4.3' 'imrodmartin/jarvis-modules:^2.3'</code></pre>
+  <p>Theme 4.3.3 requires <code>jarvis-modules ^2.3</code> itself, so naming the module is belt-and-braces &mdash; but it guarantees you do not end up with a new theme against an old module.</p>
+
+  <div class="warn">
+    <p><strong>Never pass <code>-W</code> / <code>--with-dependencies</code>.</strong> It churns Canvas and undoes the <code>scripts/fix-canvas-autocomplete.php</code> patch. Name the packages you mean, every time.</p>
+  </div>
+
+  <h4>3. Shared steps</h4>
+  <p>Continue at <a href="#after">After every route</a>.</p>
+
+  <div class="note">
+    <p><strong>On drupalhelps specifically:</strong> drush is <code>vendor/bin/drush --root=public_html</code>, and the host runs with <code>shell_exec</code> disabled and no <code>fileinfo</code>, which makes <code>ai_automators</code> throw 500s on file/image field config forms. That is a pre-existing host condition, not something the upgrade caused.</p>
+  </div>
+</div>
+
+<h2 id="route-b">Route B &mdash; Git submodule</h2>
+
+<div class="route">
+  <h3><span class="tag">B</span>Theme as a git submodule</h3>
+  <p>The reference checkout works this way: the theme lives at <code>web/themes/custom/jarvis</code> as a submodule, and <code>jarvis_canvas</code> is a tracked directory or a second clone under <code>web/modules/custom</code>.</p>
+
+  <div class="danger">
+    <p><code>composer update drupal/jarvis</code> does <strong>nothing</strong> here. It prints <code>Package "drupal/jarvis" listed for update is not locked</code> and moves on &mdash; while still churning Canvas. Use git.</p>
+  </div>
+
+  <h4>1. Pin Canvas (same as route A)</h4>
+<pre><code>composer require 'drupal/canvas:1.8.0' 'drupal/canvas_ai:1.8.0' --no-update
+composer update drupal/canvas drupal/canvas_ai</code></pre>
+
+  <h4>2. Move the submodule to the release tag</h4>
+<pre><code>git -C web/themes/custom/jarvis fetch --tags
+git -C web/themes/custom/jarvis checkout v4.3.3
+git add web/themes/custom/jarvis
+git commit -m 'Pin the theme submodule to the released v4.3.3'</code></pre>
+  <p>Checking out the tag is better than <code>git submodule update --remote</code>, which follows the branch tip and can land you on unreleased work &mdash; which is how a site ended up on a four-month-old feature branch.</p>
+
+  <h4>3. Update the module alongside it</h4>
+<pre><code># if web/modules/custom is a clone of jarvis-modules
+git -C web/modules/custom fetch --tags && git -C web/modules/custom checkout v2.3.0</code></pre>
+
+  <div class="warn">
+    <p><strong>If this is the repo that ships the recipe,</strong> a submodule bump also needs the recipe's Canvas component config re-exported in the same commit, or fresh installs break at recipe step 5/7 while every existing site keeps working. Use <code>scripts/reexport-components.php</code>; <code>recipes/jarvis/export.sh</code> does not cover it (that exports demo content only).</p>
+  </div>
+</div>
+
+<h2 id="route-c">Route C &mdash; Folder copy / deploy script</h2>
+
+<div class="route">
+  <h3><span class="tag">C</span>Plain files on the server</h3>
+  <p>No composer package, no git &mdash; the theme is a directory someone copied up, by rsync, scp, or a <code>deploy.sh</code>. <em>battle.drtr.site</em> is this: <code>ssh drtr</code>, root <code>~/battle.drtr.site</code>, docroot <code>web</code>, theme at <code>web/themes/custom/jarvis</code>, module at <code>web/modules/custom/jarvis_canvas</code>.</p>
+
+  <div class="danger">
+    <p><strong>Check for local patches before you overwrite anything.</strong> battle carries four changes that are deliberately not upstream &mdash; a two-column <code>phone_order</code> prop used by five live pages, <code>jarvis_logo_width</code>, the branding block lifted out of the drawer, and a phone gutter rule. A plain swap deletes the prop that published content depends on, and those pages break.</p>
+<pre><code># on the server: what is actually different from the tag it came from?
+cd ~/battle.drtr.site/web/themes/custom/jarvis
+diff -ru /tmp/jarvis-v4.1.0 . | head -100</code></pre>
+  </div>
+
+  <h4>1. Back up both directories on the server</h4>
+<pre><code>cd ~/battle.drtr.site
+mkdir -p ~/backups/jarvis-4.3.3-$(date +%F)
+tar czf ~/backups/jarvis-4.3.3-$(date +%F)/theme-before.tgz web/themes/custom/jarvis
+tar czf ~/backups/jarvis-4.3.3-$(date +%F)/module-before.tgz web/modules/custom/jarvis_canvas
+vendor/bin/drush sql:dump --gzip --result-file=~/backups/jarvis-4.3.3-$(date +%F)/db.sql.gz</code></pre>
+
+  <h4>2. Build the new theme locally, patches re-merged</h4>
+  <p>Do not hand-edit the server copy. Produce the exact tree you want, then ship it:</p>
+<pre><code># laptop, in a clone of imrodmartin/jarvis
+git fetch --tags
+git checkout -b battle-4.3.3 v4.3.3
+git apply ~/backups/jarvis-4.1-2026-11-14/battle.patch   # expect conflicts in jarvis.theme
+# resolve, then regenerate the patch for next time
+git diff v4.3.3 > ~/backups/battle-4.3.3.patch</code></pre>
+
+  <h4>3. Ship the directories</h4>
+<pre><code>rsync -av --delete ./ drtr:~/battle.drtr.site/web/themes/custom/jarvis/
+rsync -av --delete ~/src/jarvis-modules/jarvis_canvas/ \
+  drtr:~/battle.drtr.site/web/modules/custom/jarvis_canvas/</code></pre>
+  <p><code>--delete</code> matters: files removed upstream must go, or a stale template keeps winning over the new one.</p>
+
+  <div class="warn">
+    <p><strong>Then check Canvas's auto-save drafts.</strong> The module's migrations rewrite saved component trees but not unsaved editor drafts, and a draft still holding <code>sdc.jarvis.section</code> makes the editor 500 with <em>"Call to a member function requiresExplicitInput() on null"</em>. After a 4.x upgrade:</p>
+<pre><code>vendor/bin/drush php:eval 'print_r(array_keys(\Drupal::keyValue("canvas.auto_save")->getAll()));'</code></pre>
+  </div>
+</div>
+
+<h2 id="after">After every route</h2>
+
+<pre><code>drush cr          # THIS is the registration step — it discovers and enables new components
+drush updb -y     # module update hooks, including the content-block backfill
+drush cr</code></pre>
+
+<p>On a 3.x &rarr; 4.x jump the first <code>cr</code> prints the migrations as it runs them, e.g.:</p>
+<pre><code>[notice] Converted 16 Section component(s) to 1 Column.
+[notice] Renamed the variant prop on 50 Button, Card and Person component(s).
+[notice] Converted 12 component(s) in unsaved Canvas drafts to the Jarvis 4.0 shapes.</code></pre>
+
+<div class="ok">
+  <p><strong>There is no manual enabling step for components.</strong> <code>drush cr</code> auto-enables newly discovered SDCs. If routes 404 right after an upgrade, it is the stale router cache &mdash; that <code>cr</code> is the fix.</p>
+</div>
+
+<h3>Verify</h3>
+
+<pre><code># 24 SDC components, all enabled
+drush php:eval '$c = \Drupal::entityTypeManager()->getStorage("component")->loadMultiple();
+$s = array_filter($c, fn($x) => str_starts_with($x->id(), "sdc.jarvis."));
+printf("sdc.jarvis: %d (enabled %d)\n", count($s), count(array_filter($s, fn($x) => $x->status())));'
+
+# content blocks and views blocks should now be enabled (4.3.3 / modules 2.3.0)
+drush php:eval '$c = \Drupal::entityTypeManager()->getStorage("component")->loadMultiple();
+foreach ($c as $id => $x) { $l = (string) $x->get("source_local_id");
+  if (str_starts_with($l, "block_content:") || str_starts_with($l, "views_block:"))
+    printf("%-9s %s\n", $x->status() ? "ENABLED" : "disabled", $id); }'
+
+drush core:status --fields=drupal-version,theme
+drush watchdog:show --count=20 --severity=Error</code></pre>
+
+<p>Then open the site and look at it. Component admin lives under <strong>Appearance</strong>, not Configuration: <code>/admin/appearance/component</code> and <code>/admin/appearance/component/status</code>. The status page lists anything Canvas refused, with reasons.</p>
+
+<h2>Known breakages, and what to do</h2>
+
+<h3>"Missing or invalid module: jarvis_blocks"</h3>
+
+<p>Hits any site coming from jarvis-modules 1.x. <code>jarvis_blocks</code> was retired in 2.x, so its files vanish while <code>core.extension</code> still lists it.</p>
+
+<div class="danger">
+  <p><strong>Do not <code>drush pm:uninstall jarvis_blocks</code>.</strong> Five in-use block types &mdash; card, hero, image, text, video &mdash; carry <code>dependencies.enforced.module: [jarvis_blocks]</code>, so a real uninstall deletes those block types <em>and the blocks your editors built with them</em>.</p>
+</div>
+
+<p>Repair it instead: drop the enforced dependency first, then remove the module from the installed list.</p>
+
+<pre><code>drush php:eval 'foreach (["card","hero","image","text","video"] as $t) {
+  $c = \Drupal::configFactory()->getEditable("block_content.type.$t");
+  $d = $c->get("dependencies") ?: []; unset($d["enforced"]);
+  $c->set("dependencies", $d)->save(); echo "cleared $t\n"; }
+$e = \Drupal::configFactory()->getEditable("core.extension");
+$m = $e->get("module"); unset($m["jarvis_blocks"]); $e->set("module", $m)->save();
+\Drupal::keyValue("system.schema")->delete("jarvis_blocks");
+echo "jarvis_blocks removed\n";'
+drush cr</code></pre>
+
+<h3>New props do not appear on sections already on the page</h3>
+
+<p>Expected, not a bug. Canvas pins each placed component to the schema version it was saved with, so an existing section keeps rendering its old shape until you re-place it. New components show up immediately; new props on old placements do not. Leave them &mdash; they render fine pinned.</p>
+
+<h3>A hand-deployed module fix gets wiped</h3>
+
+<p>Composer replaces <code>web/modules/custom/jarvis-modules/jarvis_canvas</code> wholesale. Any unreleased patch you copied in by hand is gone after an upgrade; re-apply it, or get it released.</p>
+
+<h2>What 4.3.3 changes for editors</h2>
+
+<table>
+  <thead><tr><th>Change</th><th>What they will notice</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Content blocks and views blocks are placeable</strong><br><span style="color:var(--muted)">modules 2.3.0</span></td>
+      <td>Every reusable content block appears in the Canvas library under its own name, as do views blocks. <code>drush updb</code> enables the ones the site already had. This is the answer to "the same panel on five pages" &mdash; build it once, place it, or put it in a region tree for site-wide.</td>
+    </tr>
+    <tr>
+      <td><strong>The vertical padding toggle works on coloured sections</strong><br><span style="color:var(--muted)">theme 4.3.3</span></td>
+      <td>Unticking it used to do nothing on a section with a background &mdash; and on a site with a base font above 15px, ticking it actually <em>reduced</em> the padding. Now off means 0 and on means 30px. <strong>A coloured section already saved with the toggle off loses 2rem of padding</strong>, so look at pages that use one before telling anyone you are done.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Rollback</h2>
+
+<pre><code># database
+ddev snapshot restore pre-jarvis-4.3.3           # DDEV
+drush sql:drop -y && gunzip -c ~/backups/pre-jarvis-4.3.3.sql.gz | drush sql:cli
+
+# files
+composer require 'drupal/jarvis:4.1.0' 'imrodmartin/jarvis-modules:2.2.1'   # route A
+git -C web/themes/custom/jarvis checkout v4.1.0                             # route B
+tar xzf ~/backups/.../theme-before.tgz -C ~/battle.drtr.site                # route C
+drush cr</code></pre>
+
+<div class="warn">
+  <p>Files roll back cleanly. <strong>The database does not</strong> &mdash; the 4.x migrations rewrote component trees in place, so an old theme against a migrated database is not a state that was ever tested. Restore both together or neither.</p>
+</div>
+
+<h2>Sites and their routes</h2>
+
+<table>
+  <thead><tr><th>Site</th><th>Where</th><th>Route</th></tr></thead>
+  <tbody>
+    <tr><td>drupalhelps.com</td><td><code>/home/dh</code>, docroot <code>public_html</code></td><td>A &mdash; composer, <code>themes/contrib/jarvis</code></td></tr>
+    <tr><td>battle.drtr.site</td><td><code>ssh drtr</code>, <code>~/battle.drtr.site</code></td><td>C &mdash; folder copy, <strong>4 local patches</strong></td></tr>
+    <tr><td>reference checkout</td><td><code>~/code/drupaltheme</code></td><td>B &mdash; submodule at <code>web/themes/custom/jarvis</code></td></tr>
+    <tr><td>jarvis-verify</td><td><code>~/code/jarvis-verify</code> (DDEV)</td><td>A &mdash; composer, <code>themes/contrib/jarvis</code></td></tr>
+    <tr><td>ihpsei</td><td><code>~/Drupal/ihpsei</code></td><td>A &mdash; migrated off submodule 2026-11-07</td></tr>
+    <tr><td>thewordforme</td><td><code>ssh appthewordforme</code> (user <code>wordapp</code>)</td><td><em>unconfirmed &mdash; run the detection block above</em></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <p><strong>Three routes is two too many.</strong> Route A is the one worth standardising on: it carries the module dependency for you, it pins, and it is the only one where <code>composer show</code> tells you the truth about what is installed. Route C exists on battle only because of local patches &mdash; those could ship as a tiny sub-theme instead, at which point battle becomes a composer site too.</p>
+</div>
+
+<footer>
+  <p>Jarvis theme v4.3.3 &middot; jarvis-modules v2.3.0 &middot; written 2026-11-20.<br>
+  Component reference: <code>docs/components.html</code> in the theme repo. Regions and blocks: <code>docs/usage/regions.md</code>.</p>
+</footer>
+
+</div>
+<script>
+document.querySelectorAll('pre').forEach(function (pre) {
+  var b = document.createElement('button');
+  b.className = 'copy';
+  b.type = 'button';
+  b.textContent = 'copy';
+  b.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.querySelector('code').textContent).then(function () {
+      b.textContent = 'copied';
+      b.classList.add('done');
+      setTimeout(function () { b.textContent = 'copy'; b.classList.remove('done'); }, 1400);
+    });
+  });
+  pre.appendChild(b);
+});
+</script>
+</body>
+</html>
