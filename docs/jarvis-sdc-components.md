@@ -1,6 +1,6 @@
 # Inside the Jarvis Theme: Every Component, and How It Stays Accessible
 
-Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all twenty-three components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
+Jarvis is a Single Directory Component (SDC) theme for Drupal. Every visual building block on the page — a hero, a card, a column layout, a stat — is its own self-contained component: one folder holding its Twig template, its styles, its schema, and its behavior. Site builders drop these into Canvas or Layout Builder and compose a page without touching code. This post walks through all twenty-four components Jarvis ships, one paragraph each. But first, the part that runs underneath all of them: accessibility.
 
 ## How Jarvis Handles ADA Compliance
 
@@ -70,6 +70,12 @@ The rest of the suite covers the WCAG success criteria that themes usually miss.
 
 **Share** adds share buttons for the current page: Facebook, X, LinkedIn, Bluesky, Reddit, email, and copy link. Turn each one on or off, and pick the color, shape, and size to match the page.
 
+### Blocks on a Canvas page
+
+**Block region** prints whatever you placed in Block region 1, 2, or 3 on the Block layout page. Those three regions exist only for this: the page template never prints them, so this component is the only route from Block layout onto a Canvas page. It is there for the blocks Canvas refuses to place itself — anything whose settings are not strictly validatable, or that needs a context value, an AI chatbot being the usual case. Each block keeps its own visibility conditions and cache metadata on the way through.
+
+Content blocks and views blocks need none of that. Every reusable content block you build appears in the Canvas library under its own name, alongside the components above, and you drag it in the same way — which is the answer to wanting the same panel on five pages: build it once, place it, edit it in one place afterwards. Put it in a region tree such as Content bottom and it lands on every page of the site instead. Saving the block is enough; there is nothing to enable and no cache to clear. (Jarvis 4.3.3 with the Jarvis Canvas module 2.3.0 or newer — before those, Canvas created these as disabled components, because they come from Drupal core modules and Canvas disables core-provided blocks on discovery, so they never reached the library.)
+
 ## The Takeaway
 
-Twenty-three components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.
+Twenty-four components, one consistent idea: give site builders composable blocks that look right and *stay* accessible without extra effort. The contrast engine, the editor badges, the menu ARIA, the color guards — none of it asks the person building the page to be an accessibility expert. That's the point. Good defaults, enforced quietly, so the accessible version is also the easy version.
