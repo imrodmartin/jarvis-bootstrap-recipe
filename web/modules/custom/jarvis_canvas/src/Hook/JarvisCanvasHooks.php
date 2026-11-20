@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\jarvis_canvas\Hook;
 
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,6 +12,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\canvas\Plugin\Canvas\ComponentSource\BlockComponent;
 use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
 use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
 use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
@@ -369,6 +371,69 @@ final class JarvisCanvasHooks {
     if (array_filter(array_column($slots, 'family')) && ($error = _jarvis_build_fonts($slots))) {
       \Drupal::logger('jarvis_canvas')->warning('@error Save the Jarvis theme settings to retry.', ['@error' => $error]);
     }
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_presave() for Canvas Component config entities.
+   *
+   * Make every content block and views block placeable in Canvas, without a
+   * detour through /admin/appearance/component.
+   *
+   * Each reusable block_content entity is exposed as a `block_content:<uuid>`
+   * block plugin, each views block as `views_block:<view>-<display>`, and
+   * Canvas turns both into Component config entities. But
+   * BlockComponentDiscovery::computeInitialComponentStatus() disables, at
+   * creation, every block plugin whose provider is a core module unless it is
+   * one of six hard-coded exceptions. Content blocks come from core's
+   * block_content module, and views blocks whose view carries the `default` tag
+   * come from core's views module — so both arrive as Components with
+   * status: FALSE and never reach the component library. Authors could build
+   * the block and then not place it anywhere.
+   *
+   * That default earns its keep for the dozens of core blocks nobody wants in a
+   * page (Syndicate, Who's online, Clear cache). It is backwards for these two,
+   * which exist for no other reason than to be placed — the whole point of a
+   * content block being that five pages can share one copy. So flip just those
+   * back on at creation.
+   *
+   * Only the INITIAL status is touched: once the Component exists, Canvas
+   * respects whatever status the site owner set (ComponentSourceManager
+   * ::generateComponentsForSource(), step 1 vs 3), and so does this hook —
+   * disabling one of these in the UI sticks.
+   *
+   * @see \Drupal\canvas\Plugin\Canvas\ComponentSource\BlockComponentDiscovery::computeInitialComponentStatus()
+   * @see _jarvis_canvas_enable_placeable_block_components()
+   */
+  #[Hook('component_presave')]
+  public function componentPresave(ConfigEntityInterface $component): void {
+    // Config sync ships the status it exported; don't overrule it.
+    if (\Drupal::isConfigSyncing()) {
+      return;
+    }
+    if (!$component->isNew() || $component->status()) {
+      return;
+    }
+    if ($component->get('source') !== BlockComponent::SOURCE_PLUGIN_ID) {
+      return;
+    }
+    if (self::isPlaceableBlock((string) $component->get('source_local_id'))) {
+      $component->setStatus(TRUE);
+    }
+  }
+
+  /**
+   * Whether a block plugin ID is one Jarvis wants placeable by default.
+   *
+   * @see self::componentPresave()
+   * @see _jarvis_canvas_enable_placeable_block_components()
+   */
+  public static function isPlaceableBlock(string $block_plugin_id): bool {
+    foreach (['block_content:', 'views_block:'] as $prefix) {
+      if (str_starts_with($block_plugin_id, $prefix)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**
