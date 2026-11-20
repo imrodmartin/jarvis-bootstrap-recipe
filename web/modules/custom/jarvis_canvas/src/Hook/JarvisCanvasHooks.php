@@ -6,13 +6,16 @@ namespace Drupal\jarvis_canvas\Hook;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\canvas\Audit\ComponentAudit;
 use Drupal\canvas\Plugin\Canvas\ComponentSource\BlockComponent;
+use Drupal\canvas\Plugin\Canvas\ComponentSource\BlockComponentDiscovery;
 use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
 use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
 use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
@@ -419,6 +422,55 @@ final class JarvisCanvasHooks {
     if (self::isPlaceableBlock((string) $component->get('source_local_id'))) {
       $component->setStatus(TRUE);
     }
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_delete() for block_content entities.
+   *
+   * Clean up the Canvas Component left behind when a content block is deleted.
+   *
+   * Canvas creates a Component config entity per block plugin, but never
+   * removes one: ComponentSourceManager only disables components it finds
+   * INELIGIBLE, and a block whose plugin has vanished is not ineligible, it is
+   * simply absent from discovery, so nothing touches it. The Component's
+   * pointer at the block is a `content` dependency, which Drupal does not
+   * enforce the way it enforces config dependencies, so that does not collect
+   * it either. The leftover sits in the library, enabled, offering a block that
+   * no longer exists.
+   *
+   * Deleted when nothing uses it, which is the normal case. When something
+   * still does, it is disabled instead and left in place: Canvas's own policy
+   * for a component that can no longer be created is to disable rather than
+   * delete, precisely so config that depends on it (a page region, a content
+   * template) is not dragged down with it. Those existing placements are
+   * already broken by the block's deletion; this only stops new ones.
+   *
+   * Views blocks have the same gap when a View is deleted. Not covered here —
+   * deleting a View is rare enough that it has not bitten us, and this hook is
+   * deliberately about the case that has.
+   *
+   * @see \Drupal\canvas\ComponentSource\ComponentSourceManager::generateComponentsForSource()
+   * @see self::componentPresave()
+   */
+  #[Hook('block_content_delete')]
+  public function blockContentDelete(EntityInterface $block): void {
+    // Config sync manages its own config; don't delete out from under it.
+    if (\Drupal::isConfigSyncing()) {
+      return;
+    }
+    $id = BlockComponentDiscovery::getComponentConfigEntityId('block_content:' . $block->uuid());
+    $component = \Drupal::entityTypeManager()->getStorage('component')->load($id);
+    if ($component === NULL) {
+      return;
+    }
+    // hasUsages() checks config entities first, then content revisions.
+    if (\Drupal::service(ComponentAudit::class)->hasUsages($component)) {
+      if ($component->status()) {
+        $component->disable()->save();
+      }
+      return;
+    }
+    $component->delete();
   }
 
   /**
