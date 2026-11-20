@@ -76,7 +76,7 @@
   <p class="lede">Three install methods are in use across these servers, and the commands differ for each. Work out which route a site is on, run that route, then run the shared steps at the bottom. Every route ends the same way.</p>
   <div class="vers">
     <span class="pill">theme <b>v4.3.3</b></span>
-    <span class="pill">jarvis-modules <b>v2.3.1</b></span>
+    <span class="pill">jarvis-modules <b>v2.3.2</b></span>
     <span class="pill">Canvas <b>pin 1.8.0</b></span>
     <span class="pill">released <b>2026-11-20</b></span>
   </div>
@@ -179,7 +179,7 @@ git commit -m 'Pin the theme submodule to the released v4.3.3'</code></pre>
 
   <h4>3. Update the module alongside it</h4>
 <pre><code># if web/modules/custom is a clone of jarvis-modules
-git -C web/modules/custom fetch --tags && git -C web/modules/custom checkout v2.3.1</code></pre>
+git -C web/modules/custom fetch --tags && git -C web/modules/custom checkout v2.3.2</code></pre>
 
   <div class="warn">
     <p><strong>If this is the repo that ships the recipe,</strong> a submodule bump also needs the recipe's Canvas component config re-exported in the same commit, or fresh installs break at recipe step 5/7 while every existing site keeps working. Use <code>scripts/reexport-components.php</code>; <code>recipes/jarvis/export.sh</code> does not cover it (that exports demo content only).</p>
@@ -300,8 +300,8 @@ drush cr</code></pre>
       <td>Every reusable content block appears in the Canvas library under its own name, as do views blocks. <code>drush updb</code> enables the ones the site already had. This is the answer to "the same panel on five pages" &mdash; build it once, place it, or put it in a region tree for site-wide.</td>
     </tr>
     <tr>
-      <td><strong>Deleting a content block cleans up after itself</strong><br><span style="color:var(--muted)">modules 2.3.1</span></td>
-      <td>A deleted block used to leave a dead entry in the component library, which errored when placed. It is now removed &mdash; or disabled, if something still points at it, so a page region or content template is not dragged down with it.</td>
+      <td><strong>Deleting a block cleans up after itself</strong><br><span style="color:var(--muted)">modules 2.3.1 / 2.3.2</span></td>
+      <td>A deleted content block used to leave a dead entry in the component library, which errored when placed; so did deleting a View, or removing a block display from one. All three are now cleaned up &mdash; the component is removed, or disabled if something still points at it, so a page region or content template is not dragged down with it.</td>
     </tr>
     <tr>
       <td><strong>The vertical padding toggle works on coloured sections</strong><br><span style="color:var(--muted)">theme 4.3.3</span></td>
@@ -345,7 +345,7 @@ drush cr</code></pre>
 </div>
 
 <footer>
-  <p>Jarvis theme v4.3.3 &middot; jarvis-modules v2.3.1 &middot; written 2026-11-20.<br>
+  <p>Jarvis theme v4.3.3 &middot; jarvis-modules v2.3.2 &middot; written 2026-11-20.<br>
   Component reference: <code>docs/components.html</code> in the theme repo. Regions and blocks: <code>docs/usage/regions.md</code>.</p>
 </footer>
 
