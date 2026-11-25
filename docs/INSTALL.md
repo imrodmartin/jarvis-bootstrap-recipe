@@ -1,6 +1,10 @@
 # Installing Jarvis with composer
 
 > Just want the commands? [CHEATSHEET.md](CHEATSHEET.md).
+>
+> Converting a client site? Start with
+> [new-site-conversion.md](new-site-conversion.md), the checklist that wraps
+> these steps.
 
 Two situations, two packages. Pick the right one — they are not
 interchangeable.
