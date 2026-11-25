@@ -93,8 +93,9 @@ install:
   # registration; see config/captcha.captcha_point.*. Standard 11.4 leaves
   # registration admin_only, so that CAPTCHA only shows once you open it to
   # visitors. Core's contact module is not installed here (the webform is
-  # the contact form), so no point ships for contact_message_feedback_form. Antibot stops most bots
-  # silently; this catches the ones that run JavaScript.
+  # the contact form), so no point ships for contact_message_feedback_form.
+  # Antibot stops most bots silently; this catches the ones that run
+  # JavaScript.
   - captcha
   - extlink
   - back_to_top
