@@ -10,7 +10,9 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Hook\Attribute\ReorderHook;
 use Drupal\Core\Hook\Order\Order;
+use Drupal\Core\Hook\Order\OrderAfter;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\canvas\Audit\ComponentAudit;
@@ -218,6 +220,85 @@ final class JarvisCanvasHooks {
   public function fieldWidgetInfoAlter(array &$info): void {
     if (isset($info['text_textarea']['canvas']['transforms'])) {
       $info['text_textarea']['canvas']['transforms'] = ['jarvisTextItem' => []];
+    }
+  }
+
+  /**
+   * Implements hook_config_schema_info_alter().
+   *
+   * INTERIM FIX: remove once canvas_field_component ships the upstream fix.
+   *
+   * Canvas 1.13 rewrote the `source` Choice constraint on canvas.component.*
+   * from a plain list into named form:
+   *
+   * @code
+   * Choice:
+   *   choices: [sdc, js, block, marker, theme_page_template]
+   * @endcode
+   *
+   * canvas_field_component 1.0.2 (and 1.0.x-dev at the time of writing) still
+   * appends with `['Choice'][] = 'field_display'`, which puts field_display
+   * BESIDE `choices` under an integer key. ConstraintFactory unpacks those
+   * mixed keys as named + positional arguments and PHP throws "Cannot use
+   * positional argument after named argument during unpacking". Every
+   * canvas.component.* entity then fails validation: recipe apply, config
+   * import and the Canvas health check on cron all break.
+   *
+   * This runs after canvas_field_component's own (broken) alter and repairs
+   * the result. The ordering is a #[ReorderHook] rather than an `order:` on
+   * #[Hook]: canvas_field_component declares its alter Order::Last, and core
+   * applies #[Hook] order operations in module order, so a plain OrderAfter
+   * here can be overridden by that Order::Last (reproduced on Drupal 11.4).
+   * #[ReorderHook] operations are applied after every #[Hook] one, so ours
+   * reliably lands after canvas_field_component. The repair: any integer-keyed value sitting beside `choices` is moved
+   * inside `choices`, without duplicates. It only relocates what another
+   * module appended, so it never adds field_display on its own.
+   *
+   * - Canvas 1.12 and older (list form): nothing to repair; duplicates are
+   *   dropped, otherwise a no-op.
+   * - Choice removed (e.g. by canvas_dev_mode): no-op.
+   * - After canvas_field_component ships the fix: no-op, so it is safe to
+   *   leave in place until it is removed.
+   *
+   * Upstream issue (reported by Andrii, approach taken from it):
+   * "ConfigSchemaHooks appends 'field_display' as a positional element to the
+   * Choice constraint, causing 'Cannot use positional argument after named
+   * argument'", https://git.drupalcode.org/project/canvas_field_component/-/issues
+   *
+   * On every Canvas / canvas_field_component upgrade, check whether a
+   * canvas_field_component release contains that fix. If it does, delete this
+   * method (and the ReorderHook / OrderAfter imports). See
+   * docs/upgrade-jarvis.html.
+   */
+  #[Hook('config_schema_info_alter')]
+  #[ReorderHook('config_schema_info_alter', class: self::class, method: 'configSchemaInfoAlter', order: new OrderAfter(modules: ['canvas_field_component']))]
+  public function configSchemaInfoAlter(array &$definitions): void {
+    if (!isset($definitions['canvas.component.*']['mapping']['source']['constraints']['Choice'])
+      || !is_array($definitions['canvas.component.*']['mapping']['source']['constraints']['Choice'])) {
+      return;
+    }
+    $choice = &$definitions['canvas.component.*']['mapping']['source']['constraints']['Choice'];
+
+    if (array_is_list($choice)) {
+      // List form (Canvas 1.12 and older): valid as is; only drop duplicates.
+      $choice = array_values(array_unique($choice, SORT_REGULAR));
+      return;
+    }
+
+    if (!isset($choice['choices']) || !is_array($choice['choices'])) {
+      // Named form without `choices` (e.g. only `callback`): not ours to fix.
+      return;
+    }
+
+    // Named form (Canvas 1.13+): move positional strays inside `choices`.
+    foreach ($choice as $key => $value) {
+      if (!is_int($key)) {
+        continue;
+      }
+      unset($choice[$key]);
+      if (!in_array($value, $choice['choices'], TRUE)) {
+        $choice['choices'][] = $value;
+      }
     }
   }
 
