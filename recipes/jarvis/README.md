@@ -43,8 +43,8 @@ repository-root README for the quick start.
 - **Site features**: webform stack (contact form included), workflows +
   content_moderation (Editorial workflow ships unassigned), metatag
   (+ Open Graph/Twitter Cards) with module defaults, editoria11y, antibot,
-  captcha (math challenge on user registration, the site-wide contact form
-  and the contact webform), pathauto (`blog/[node:title]` for Blog,
+  captcha (math challenge on the contact webform at `/form/contact`, and on
+  user registration once you open registration to visitors), pathauto (`blog/[node:title]` for Blog,
   `[node:title]` for Basic) with redirect creating a 301 whenever an alias
   changes,
   extlink, back_to_top, coffee, save_edit, better_exposed_filters,
