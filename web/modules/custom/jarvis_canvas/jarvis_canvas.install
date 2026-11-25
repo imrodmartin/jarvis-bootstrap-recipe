@@ -85,7 +85,13 @@ function _jarvis_canvas_enable_placeable_block_components(): void {
     if ($component->status() || $component->get('source') !== 'block') {
       continue;
     }
-    if (!\Drupal\jarvis_canvas\Hook\JarvisCanvasHooks::isPlaceableBlock((string) $component->get('source_local_id'))) {
+    $plugin_id = (string) $component->get('source_local_id');
+    if (!\Drupal\jarvis_canvas\Hook\JarvisCanvasHooks::isPlaceableBlock($plugin_id)) {
+      continue;
+    }
+    // Orphan: its block or view is gone. Enabling it would put a "This block
+    // is broken or missing" entry in the Canvas library.
+    if (!\Drupal::service('plugin.manager.block')->hasDefinition($plugin_id)) {
       continue;
     }
     $reason = $reasons[$id] ?? [];
