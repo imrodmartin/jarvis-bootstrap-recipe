@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.basic
+  module:
+    - node
+id: jarvis_basic
+label: 'Basic pages'
+type: 'canonical_entities:node'
+pattern: '[node:title]'
+selection_criteria:
+  70af45a1-eee4-43b9-a6a1-66fe4408db5e:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 70af45a1-eee4-43b9-a6a1-66fe4408db5e
+    context_mapping:
+      node: node
+    bundles:
+      basic: basic
+selection_logic: and
+weight: -4
+relationships: {  }
