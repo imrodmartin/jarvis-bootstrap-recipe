@@ -73,9 +73,6 @@ root (any docroot name — `web`, `public_html`, whatever your installer-paths
 say):
 
 ```bash
-composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
-composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
-composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
 composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown \
   drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
 
@@ -112,8 +109,9 @@ the full site. Notes:
 - The two `@beta`/`@alpha` packages carry stability flags that only work in the
   root `composer.json` — that's why they're spelled out too.
 - No drush yet? Add `drush/drush` to the same require.
-- The three `repositories` lines disappear once the packages are on
-  Packagist.
+- Every Jarvis package is on Packagist, so there is no `repositories` setup.
+  A host that cannot reach Packagist can register them as VCS repositories
+  instead, see [docs/INSTALL.md](docs/INSTALL.md).
 
 ## Installing Drupal 11 with Jarvis on a Webserver Using `public_html` as the Docroot
 
@@ -141,15 +139,7 @@ sed -i 's|"web/|"public_html/|g; s|: "web"|: "public_html"|g' composer.json \
 
 ### 4. Install Drupal core and Jarvis
 
-Register the repositories:
-
-```bash
-composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
-composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
-composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
-```
-
-Then require the packages:
+Require the packages (all on Packagist, no `repositories` setup needed):
 
 ```bash
 composer require \
@@ -192,7 +182,7 @@ vendor/bin/drush --root=public_html recipe "$(pwd)/recipes/jarvis-recipe" \
 ```
 ## The theme is not standalone
 
-`drupal/jarvis` requires `imrodmartin/jarvis-modules` (the `jarvis_canvas`
+`imrodmartin/jarvis` requires `imrodmartin/jarvis-modules` (the `jarvis_canvas`
 module) and declares it in both `composer.json` and `jarvis.info.yml`. This is
 a hard dependency, not a nice-to-have: four templates call Twig filters that
 module provides, and Twig raises `Unknown "…" filter` at compile time when they
@@ -216,14 +206,16 @@ Because the theme now declares the dependency, Drupal refuses to install it
 without the module and names what is missing, instead of failing at render
 time. It also refuses to uninstall `jarvis_canvas` while Jarvis is installed.
 
-Installing the theme on its own still means adding the modules repository —
-the packages are VCS, not Packagist:
+Installing the theme on its own pulls the module with it, both from Packagist:
 
 ```bash
-composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
-composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
-composer require drupal/jarvis
+composer require imrodmartin/jarvis
 ```
+
+The theme was `drupal/jarvis` up to 4.4.1. Packagist does not accept the
+`drupal/` vendor, so 4.5.0 renamed it and added `"replace": {"drupal/jarvis":
+"self.version"}`. A site whose root `composer.json` still requires
+`drupal/jarvis` switches once — see docs/INSTALL.md, "Renamed in 4.5.0".
 
 ## Add Jarvis by hand (no composer package)
 
@@ -361,7 +353,7 @@ other repositories**, none of which update themselves:
 
 | Composer package | Mirror repo | Source of truth here |
 |---|---|---|
-| `drupal/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
+| `imrodmartin/jarvis` | [imrodmartin/jarvis](https://github.com/imrodmartin/jarvis) | `web/themes/custom/jarvis/` (a submodule — already the real repo) |
 | `imrodmartin/jarvis-modules` | [imrodmartin/jarvis-modules](https://github.com/imrodmartin/jarvis-modules) | `web/modules/custom/jarvis_canvas` |
 | `imrodmartin/jarvis-recipe` | [imrodmartin/jarvis-recipe](https://github.com/imrodmartin/jarvis-recipe) | `recipes/jarvis/` |
 | `imrodmartin/jarvis-install-recipe` | [imrodmartin/jarvis-install-recipe](https://github.com/imrodmartin/jarvis-install-recipe) | `recipes/jarvis-existing/` |
@@ -455,7 +447,7 @@ maintainer script that shells out to `ddev` — it has no business in a
 distributed recipe. And `rsync` will cheerfully carry `.DS_Store` into a mirror.
 
 Bump the version constraints in the recipe mirror's `composer.json` whenever the
-coupling tightens — it requires `drupal/jarvis` and `imrodmartin/jarvis-modules`,
+coupling tightens — it requires `imrodmartin/jarvis` and `imrodmartin/jarvis-modules`,
 and leaving those loose lets composer resolve a mismatched set. Recipe v3.0.0
 requires theme `^3.0` and modules `^2.1` for exactly that reason — the theme
 calls `jarvis_overlay_alpha`, which only exists from modules 2.1.0, so a looser
@@ -468,7 +460,7 @@ pasted player URL renders nothing afterwards, silently:
 
 ```bash
 drush php:script scripts/check-video-placements.php
-composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe
+composer update imrodmartin/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe
 drush updatedb && drush cr
 ```
 
@@ -481,7 +473,8 @@ there), so `update` finishes without an error and leaves the theme on 3.x. To
 cross to 4.0, raise the constraints:
 
 ```bash
-composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+composer remove drupal/jarvis --no-update
+composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'
 drush updatedb && drush cr
 ```
 

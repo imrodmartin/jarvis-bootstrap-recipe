@@ -10,14 +10,17 @@ interchangeable.
 | Nothing, or a blank Drupal | `imrodmartin/jarvis-recipe` | Builds a whole site: theme, Canvas, demo content, forms, workflow, SEO, AI stack. Sets the default theme, admin theme and front page. |
 | A working site with its own content and config | `imrodmartin/jarvis-install-recipe` | Adds Jarvis alongside what you have. Changes no theme, no front page, no content. |
 
-Both need the same repositories registered first, because none of these
-packages are on Packagist.
+All four packages (the theme `imrodmartin/jarvis`, `imrodmartin/jarvis-modules`
+and the two recipes) are on Packagist, so a stock `drupal/recommended-project`
+finds them with no extra setup. The theme was called `drupal/jarvis` up to
+4.4.1; a site that still requires that name switches once, see
+[Renamed in 4.5.0](#renamed-in-450-drupaljarvis-is-now-imrodmartinjarvis).
 
 ---
 
-## Common step: register the repositories
+## Only if your host cannot reach Packagist: register the repositories
 
-Run these once, in your project root:
+Skip this on a normal host. Otherwise run these once, in your project root:
 
 ```bash
 composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
@@ -60,7 +63,7 @@ Verified on a stock `drupal/recommended-project` 11.4 (composer 2.9.8):
 
 The theme declares `"type": "drupal-theme"`, so stock installer-paths put it in
 `themes/contrib`. That works. To keep it under `themes/custom`, add
-`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry of
+`"imrodmartin/jarvis"` to the `web/themes/custom/{$name}` entry of
 `extra.installer-paths` **and move that entry above**
 `web/themes/contrib/{$name}` — composer/installers returns the first matching
 entry in file order, so a later package-name match loses to an earlier
@@ -78,7 +81,7 @@ patches — require the exact version before applying the recipe.
 composer create-project drupal/recommended-project:^11 mysite && cd mysite
 ```
 
-Register the repositories (above), then:
+Then:
 
 ```bash
 composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush
@@ -129,7 +132,7 @@ Back up first — this creates config on a live site.
 drush sql:dump --result-file=../backup-before-jarvis.sql
 ```
 
-Register the repositories (above), then:
+Then:
 
 ```bash
 composer require imrodmartin/jarvis-install-recipe drush/drush
@@ -186,8 +189,11 @@ needs. Expect to reconcile those by hand.
 For a release in the same major version (a 4.x site moving to a later 4.x):
 
 ```bash
-composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
+composer update imrodmartin/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
 ```
+
+Still on `drupal/jarvis` (any site set up before theme 4.5.0)? Switch the name
+first: [Renamed in 4.5.0](#renamed-in-450-drupaljarvis-is-now-imrodmartinjarvis).
 
 ```bash
 drush updatedb
@@ -240,6 +246,48 @@ drush ev 'print_r(\Drupal::configFactory()->listAll("ai.ai_prompt_type."));'
 Seven entries expected. An empty array means the post update has not run.
 Checking *after* `updatedb` proves nothing about what caused a crash before
 it — use `drush updbst` to see what is still pending.
+
+### Renamed in 4.5.0: `drupal/jarvis` is now `imrodmartin/jarvis`
+
+Packagist does not accept the `drupal/` vendor (it belongs to drupal.org), so
+from theme 4.5.0 the package is `imrodmartin/jarvis`. It declares
+`"replace": {"drupal/jarvis": "self.version"}`, so recipes and other packages
+that still require `drupal/jarvis` are satisfied by it. Your **root**
+`composer.json` is different: recipe unpacking copied `"drupal/jarvis"` into
+it, and `replace` does not satisfy a root requirement. Switch it once:
+
+```bash
+composer remove drupal/jarvis --no-update
+```
+
+```bash
+composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'
+```
+
+```bash
+drush cache:rebuild
+```
+
+The theme keeps its directory and its `jarvis` machine name, so Drupal sees an
+ordinary theme update. Two things to know:
+
+- Until you switch, `composer install` keeps working from your lock file, but
+  any `composer update` that touches the theme stops with *found
+  drupal/jarvis[v4.4.1] in the lock file but not in remote repositories*.
+  Composer reads a GitHub repository's package name from its default branch,
+  so the old name no longer exists anywhere. That message means "switch now".
+- If you added `"drupal/jarvis"` to `extra.installer-paths` to keep the theme
+  under `themes/custom`, rename it to `"imrodmartin/jarvis"` first, or the
+  theme moves to `themes/contrib`.
+
+The `repositories` entries you registered for the VCS install can stay. They
+serve the same packages as Packagist.
+
+Tested 2026-11-25 in a throwaway composer project (composer 2.9, composer/installers,
+drupal/core-recipe-unpack): a site unpacked from `jarvis-install-recipe` v4.0.0 with
+`drupal/jarvis` 4.4.1 failed `composer update` as described, switched cleanly with
+the two commands above (theme stayed at `web/themes/contrib/jarvis`), and the
+next `composer update` had nothing to do.
 
 ### Coming from modules 1.x: uninstall jarvis_blocks first
 
@@ -323,10 +371,16 @@ version you have:
 composer show drupal/jarvis | grep versions
 ```
 
-To cross to 4.0, raise both constraints with `require`:
+To cross to 4.x, swap to the new package name and raise the modules
+constraint in one go (a 3.x site still has the old `drupal/jarvis` name, see
+[Renamed in 4.5.0](#renamed-in-450-drupaljarvis-is-now-imrodmartinjarvis)):
 
 ```bash
-composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+composer remove drupal/jarvis --no-update
+```
+
+```bash
+composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'
 ```
 
 ```bash
@@ -341,7 +395,7 @@ Name both packages, because theme 4.0 needs modules 2.2. If composer reports a
 conflict with something else on your site, add `-W` so it can update the
 packages those two depend on as well.
 
-Your `composer.json` now holds `^4.0`, so later 4.x releases arrive with the
+Your `composer.json` now holds `imrodmartin/jarvis ^4.5`, so later 4.x releases arrive with the
 plain `composer update` in [Updating](#updating).
 
 Tested 2026-11-14 on a site installed from `jarvis-recipe` v3.2.3 (theme
@@ -405,14 +459,14 @@ release adds config, re-apply the recipe.
 
 | Package | What it is |
 |---|---|
-| `drupal/jarvis` | The theme. Repo: `imrodmartin/jarvis`. |
+| `imrodmartin/jarvis` | The theme (called `drupal/jarvis` up to 4.4.1). Repo: `imrodmartin/jarvis`. |
 | `imrodmartin/jarvis-modules` | `jarvis_canvas` glue module. |
 | `imrodmartin/jarvis-recipe` | Full-site recipe (new sites). |
 | `imrodmartin/jarvis-install-recipe` | Existing-site recipe. |
 
 They are coupled and released together: the theme's video components need the
 module's prop-shape hook, and its renamed image style needs the recipes' config.
-Both recipes pin `drupal/jarvis ^4.0` and `imrodmartin/jarvis-modules ^2.2`,
+Both recipes pin `imrodmartin/jarvis ^4.5` and `imrodmartin/jarvis-modules ^2.3.3`,
 and the theme itself pins `imrodmartin/jarvis-modules ^2.2`, so composer cannot
 resolve a mismatched set. Theme 4.0 needs modules 2.2 because that release
 carries the Section to 1 Column conversion (above). The earlier floor was `^2.1` rather than `^2.0`

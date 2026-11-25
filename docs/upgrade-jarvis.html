@@ -126,8 +126,8 @@ drush sql:dump --gzip --extra-dump='--no-tablespaces' \
 
 <p>Ask the site, not your memory &mdash; one of these has been wrong before. Run these in the composer root:</p>
 
-<pre><code>composer show drupal/jarvis 2>/dev/null | grep -E '^(name|versions|path)' \
-  || echo 'not a composer package'
+<pre><code>{ composer show imrodmartin/jarvis 2>/dev/null || composer show drupal/jarvis 2>/dev/null; } \
+  | grep -E '^(name|versions|path)' || echo 'not a composer package'
 
 ls -d web/themes/*/jarvis themes/*/jarvis 2>/dev/null
 
@@ -137,7 +137,7 @@ git -C web/themes/custom/jarvis rev-parse --short HEAD 2>/dev/null \
 <table>
   <thead><tr><th>What you see</th><th>Route</th></tr></thead>
   <tbody>
-    <tr><td><code>composer show</code> prints a version and a path</td><td><a href="#route-a">A &mdash; Composer</a></td></tr>
+    <tr><td><code>composer show</code> prints a version and a path</td><td><a href="#route-a">A &mdash; Composer</a>. If <code>name</code> reads <code>drupal/jarvis</code>, do the <a href="#rename">one-time rename</a> in step 2.</td></tr>
     <tr><td>Not a composer package, but the theme dir <em>is</em> a git repo, and <code>.gitmodules</code> lists it</td><td><a href="#route-b">B &mdash; Git submodule</a></td></tr>
     <tr><td>Not a composer package, theme dir is not a git repo &mdash; just files</td><td><a href="#route-c">C &mdash; Folder copy / deploy script</a></td></tr>
   </tbody>
@@ -153,15 +153,21 @@ git -C web/themes/custom/jarvis rev-parse --short HEAD 2>/dev/null \
   <h3><span class="tag">A</span>Composer-managed theme</h3>
   <p>The normal case. <em>drupalhelps.com</em> is one of these: project root <code>/home/dh</code>, docroot <code>public_html</code>, theme at <code>themes/contrib/jarvis</code>, so drush needs <code>--root</code>.</p>
 
-  <h4>1. Make sure the two VCS repos are present</h4>
-  <p>Jarvis is not on drupal.org. A site that has never installed it by composer needs these in <code>composer.json</code> before the require will resolve:</p>
+  <h4>1. Repositories: Packagist, or the two VCS repos</h4>
+  <p>Jarvis is not on drupal.org, but from theme 4.5.0 the theme (<code>imrodmartin/jarvis</code>) and <code>imrodmartin/jarvis-modules</code> are on Packagist, which every composer project already searches. Nothing to add on a normal host. Sites set up earlier have these two VCS entries, and they can stay; a host that cannot reach Packagist needs them:</p>
 <pre><code>composer config repositories.jarvis vcs https://github.com/imrodmartin/jarvis
 composer config repositories.jarvis-modules vcs https://github.com/imrodmartin/jarvis-modules</code></pre>
 
   <h4>2. Pin Canvas, then upgrade the theme and module</h4>
 <pre><code>composer require 'drupal/canvas:1.8.0' 'drupal/canvas_ai:1.8.0' --no-update
-composer require 'drupal/jarvis:^4.4' 'imrodmartin/jarvis-modules:^2.3'</code></pre>
-  <p>Theme 4.4.1 requires <code>jarvis-modules ^2.3</code> itself, so naming the module is belt-and-braces &mdash; but it guarantees you do not end up with a new theme against an old module.</p>
+composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'</code></pre>
+  <p>The theme requires <code>jarvis-modules ^2.3</code> itself, so naming the module is belt-and-braces &mdash; but it guarantees you do not end up with a new theme against an old module.</p>
+
+  <div class="warn" id="rename">
+    <p><strong>One time per site: the package was renamed in 4.5.0.</strong> Up to 4.4.1 the theme was <code>drupal/jarvis</code>. Packagist does not accept the <code>drupal/</code> vendor, so it is now <code>imrodmartin/jarvis</code>, with <code>"replace": {"drupal/jarvis": "self.version"}</code>. That keeps old recipe tags working, but not your own root <code>composer.json</code>, which still names <code>drupal/jarvis</code> because recipe unpacking copied it there. Drop the old name before the require above:</p>
+<pre><code>composer remove drupal/jarvis --no-update</code></pre>
+    <p>Skip it and the require stops with <em>found drupal/jarvis[v4.4.1] in the lock file but not in remote repositories</em>. Composer takes a GitHub repository's package name from its default branch, so once that branch says <code>imrodmartin/jarvis</code> the old name is gone everywhere. The theme stays in <code>themes/contrib/jarvis</code> with the same machine name; Drupal only sees a normal update. If the site's <code>extra.installer-paths</code> names <code>"drupal/jarvis"</code>, change it to <code>"imrodmartin/jarvis"</code> first or the theme moves directories.</p>
+  </div>
 
   <div class="warn">
     <p><strong>Never pass <code>-W</code> / <code>--with-dependencies</code>.</strong> It churns Canvas and undoes the <code>scripts/fix-canvas-autocomplete.php</code> patch. Name the packages you mean, every time.</p>
@@ -379,10 +385,14 @@ ddev snapshot restore pre-jarvis-4.4.1           # DDEV
 drush sql:drop -y && gunzip -c ~/backups/pre-jarvis-4.4.1.sql.gz | drush sql:cli
 
 # files
-composer require 'drupal/jarvis:4.4.0' 'imrodmartin/jarvis-modules:2.3.2'   # route A
+composer require 'imrodmartin/jarvis:4.4.1' 'imrodmartin/jarvis-modules:2.3.2'   # route A (needs the jarvis VCS repo)
 git -C web/themes/custom/jarvis checkout v4.4.0                             # route B
 tar xzf ~/backups/.../theme-before.tgz -C ~/battle.drtr.site                # route C
 drush cr</code></pre>
+
+<div class="note">
+  <p><strong>Route A rollback past the rename.</strong> Releases before 4.5.0 are not on Packagist (it skips tags whose <code>composer.json</code> still says <code>drupal/jarvis</code>). Through the VCS repo every tag is listed under the new name, so <code>imrodmartin/jarvis:4.4.1</code> resolves only on a site that kept the <code>repositories.jarvis</code> entry. Add it back first if it is gone (step 1).</p>
+</div>
 
 <div class="warn">
   <p>Files roll back cleanly. <strong>The database does not</strong> &mdash; the 4.x migrations rewrote component trees in place, so an old theme against a migrated database is not a state that was ever tested. Restore both together or neither.</p>
@@ -393,11 +403,12 @@ drush cr</code></pre>
 <table>
   <thead><tr><th>Site</th><th>Where</th><th>Route</th></tr></thead>
   <tbody>
-    <tr><td>drupalhelps.com</td><td><code>/home/dh</code>, docroot <code>public_html</code></td><td>A &mdash; composer, <code>themes/contrib/jarvis</code></td></tr>
+    <tr><td>drupalhelps.com</td><td><code>/home/dh</code>, docroot <code>public_html</code></td><td>A &mdash; composer, <code>themes/contrib/jarvis</code>; needs the <a href="#rename">one-time rename</a> on its next upgrade</td></tr>
     <tr><td>battle.drtr.site</td><td><code>ssh drtr</code>, <code>~/battle.drtr.site</code></td><td>C &mdash; folder copy, <strong>4 local patches</strong></td></tr>
-    <tr><td>reference checkout</td><td><code>~/code/drupaltheme</code></td><td>B &mdash; submodule at <code>web/themes/custom/jarvis</code>; on 4.4.1 / Canvas 1.12 since 2026-11-24</td></tr>
-    <tr><td>jarvis-verify</td><td><code>~/code/jarvis-verify</code> (DDEV)</td><td>A &mdash; composer, <code>themes/contrib/jarvis</code></td></tr>
-    <tr><td>ihpsei</td><td><code>~/Drupal/ihpsei</code></td><td>A &mdash; migrated off submodule 2026-11-07</td></tr>
+    <tr><td>reference checkout</td><td><code>~/code/drupaltheme</code></td><td>B &mdash; submodule at <code>web/themes/custom/jarvis</code>; on 4.4.1 / Canvas 1.12 since 2026-11-24. The rename does not touch it unless its root <code>composer.json</code> also names <code>drupal/jarvis</code> (check with <code>grep drupal/jarvis composer.json</code>); if it does, <code>composer remove drupal/jarvis --no-update</code> and keep using git</td></tr>
+    <tr><td>jarvis-verify</td><td><code>~/code/jarvis-verify</code> (DDEV)</td><td>A &mdash; composer, <code>themes/contrib/jarvis</code>; needs the <a href="#rename">one-time rename</a></td></tr>
+    <tr><td>ihpsei</td><td><code>~/Drupal/ihpsei</code></td><td>A &mdash; migrated off submodule 2026-11-07; needs the <a href="#rename">one-time rename</a></td></tr>
+    <tr><td>fbcaurora.in</td><td><em>unrecorded</em></td><td><em>unconfirmed &mdash; run the detection block above; if route A, do the <a href="#rename">one-time rename</a></em></td></tr>
     <tr><td>dev.littlemiamistatepark.org</td><td><code>ssh nti-littlemiamistate</code>, docroot <code>public_html</code></td><td>C &mdash; folder copy, <strong>no local patches</strong>; on 4.3.3 / modules 2.3.2 / Canvas 1.13 since 2026-11-20</td></tr>
     <tr><td>thewordforme</td><td><code>ssh appthewordforme</code> (user <code>wordapp</code>)</td><td><em>unconfirmed &mdash; run the detection block above</em></td></tr>
   </tbody>

@@ -34,9 +34,6 @@ Log in **admin / admin**. Front page is the Canvas component showcase.
 
 ```bash
 ddev snapshot
-ddev composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
-ddev composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-modules","no-api":true}'
-ddev composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
 ddev composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha
 ddev drush cr
 ddev drush recipe /var/www/html/recipes/jarvis-recipe
@@ -49,8 +46,8 @@ ddev drush cr && ddev launch
 
 - Recipe path is `recipes/jarvis-recipe` here — composer installs by **package**
   name, so it differs from A.
-- `"no-api": true` avoids a pointless GitHub token prompt on hosts that cannot
-  reach `api.github.com`.
+- Everything comes from Packagist, so no `repositories` setup. Host cannot
+  reach Packagist? Register the VCS repositories first, see INSTALL.md.
 - The three extras have no other dependent. Without `ckeditor5_markdown` the
   apply aborts: *"The provided toolbar item markdownPaste is not valid."*
 - Absolute path required — drush runs from the docroot, `recipes/` is at the
@@ -83,18 +80,28 @@ ddev drush uli
 Same major version (4.x to a later 4.x):
 
 ```bash
-ddev composer update drupal/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
+ddev composer update imrodmartin/jarvis imrodmartin/jarvis-modules imrodmartin/jarvis-recipe imrodmartin/jarvis-install-recipe
 ddev drush updatedb -y
 ddev drush cr
 ```
 
 `update`, not `require`, here. `require` rewrites your version constraint.
 
+Site set up before theme 4.5.0? Its `composer.json` still says `drupal/jarvis`.
+Switch the name once (the theme stays where it is):
+
+```bash
+ddev composer remove drupal/jarvis --no-update
+ddev composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'
+ddev drush cr
+```
+
 From 3.x to 4.0 the constraint has to change, so this is the one time to use
 `require`. `update` finishes without an error and leaves the theme on 3.x:
 
 ```bash
-ddev composer require drupal/jarvis:^4.0 imrodmartin/jarvis-modules:^2.2
+ddev composer remove drupal/jarvis --no-update
+ddev composer require 'imrodmartin/jarvis:^4.5' 'imrodmartin/jarvis-modules:^2.3'
 ddev drush updatedb -y
 ddev drush cr
 ```
@@ -116,6 +123,7 @@ config.
 | Media reference field accepts nothing | its `target_bundles` was emptied by a media type deletion — see below |
 | AI features do nothing | no API keys ship in the repo; by design |
 | composer prompts for a GitHub token | `"no-api": true` missing from a repositories entry |
+| `composer update` stops: *found drupal/jarvis[v4.4.1] in the lock file but not in remote repositories* | the theme was renamed to `imrodmartin/jarvis` in 4.5.0. Switch once, see "Updating later" |
 | `composer update` ran clean but the theme is still 3.x | your root `composer.json` holds `drupal/jarvis ^3.x`, which stops short of 4.0. Use `composer require`, see "Updating later" |
 | `drush updb` refuses: `jarvis_blocks` is missing | upgraded from modules 1.x, which shipped it; 2.x dropped it. Uninstall it — see INSTALL.md "Coming from modules 1.x" |
 | Video component renders nothing | since theme 3.0 `video_url` is files-only; hosted players come from the media library's Remote video field |

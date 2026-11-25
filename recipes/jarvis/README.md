@@ -71,12 +71,22 @@ Designed for a **fresh / empty site** (validated on the `standard` profile).
 
 This recipe is published as a composer package — `imrodmartin/jarvis-recipe`,
 `"type": "drupal-recipe"`. It pulls the theme and the glue module with it, so
-there is nothing to clone. None of the Jarvis packages are on Packagist or
-drupal.org, so register their repositories first:
+there is nothing to clone. All the Jarvis packages are on Packagist, so a stock
+`drupal/recommended-project` needs no extra repositories:
 
 ```bash
 composer create-project drupal/recommended-project:^11 mysite && cd mysite
 ```
+
+```bash
+composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush
+```
+
+Those extras are spelled out because nothing else pulls them in, and the
+`@beta`/`@alpha` stability flags only work in the root `composer.json`.
+
+If your host cannot reach Packagist, register the three repositories as VCS
+sources before the require:
 
 ```bash
 composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
@@ -89,13 +99,6 @@ composer config repositories.jarvis-modules '{"type":"vcs","url":"https://github
 ```bash
 composer config repositories.jarvis-recipe '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis-recipe","no-api":true}'
 ```
-
-```bash
-composer require imrodmartin/jarvis-recipe drupal/ckeditor5_markdown drupal/default_content:^2.0@beta drupal/ai_media_image:^1.0@alpha drush/drush
-```
-
-Those extras are spelled out because nothing else pulls them in, and the
-`@beta`/`@alpha` stability flags only work in the root `composer.json`.
 
 Composer prints `imrodmartin/jarvis-recipe unpacked.` — `drupal/core-recipe-unpack`
 moves the recipe's own requirements into your root `composer.json` and drops the
@@ -112,7 +115,7 @@ recipe from `require`, while leaving the recipe files in place. On a stock
 `themes/contrib` is correct, not a mistake: the theme declares
 `"type": "drupal-theme"`, and stock installer-paths route that to contrib.
 Drupal finds it either way. To keep it under `themes/custom` instead, add
-`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry in your
+`"imrodmartin/jarvis"` to the `web/themes/custom/{$name}` entry in your
 `extra.installer-paths` **and move that entry above** `web/themes/contrib/{$name}`
 — composer/installers takes the first matching entry in file order, so a later
 package-name match loses to an earlier `type:drupal-theme`.
