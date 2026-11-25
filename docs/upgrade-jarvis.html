@@ -109,6 +109,19 @@ drush sql:dump --gzip --extra-dump='--no-tablespaces' \
   <p><strong>A Canvas already above 1.8 is not a reason to downgrade it.</strong> Jarvis 4.4.1 still declares <code>drupal/canvas: ^1.8</code>, and the theme has been seen rendering correctly well above that floor: 4.3.3 on <strong>Canvas 1.13.0</strong> (dev.littlemiamistatepark.org, 2026-11-20 &mdash; hero, stat row, cards, views block, nav, no console errors), and 4.4.1 on <strong>Canvas 1.12.0</strong> (reference checkout, 2026-11-24). Pin whatever is installed so nothing moves underneath you; do not drag it back to 1.8.</p>
 </div>
 
+<div class="note" id="field-display-check">
+  <p><strong>Every upgrade: can the <code>field_display</code> workaround come out yet?</strong> <code>jarvis_canvas</code> carries an interim fix, <code>JarvisCanvasHooks::configSchemaInfoAlter()</code>, for a <code>canvas_field_component</code> bug that crashes on Canvas 1.13+ (see <a href="#field-display">Known breakages</a>). It is meant to be removed as soon as <code>canvas_field_component</code> ships its own fix. Check on every Jarvis, Canvas or <code>canvas_field_component</code> upgrade:</p>
+  <ol>
+    <li>Look at the upstream issue in the <a href="https://git.drupalcode.org/project/canvas_field_component/-/issues">canvas_field_component issue queue</a> (<em>"ConfigSchemaHooks appends 'field_display' as a positional element to the Choice constraint"</em>, reported by Andrii) and the module's release notes. Is it closed and in a tagged release?</li>
+    <li>Confirm it in the code you are about to install. A fixed release mentions <code>choices</code> in its alter; the broken 1.0.2 does not:
+<pre><code>grep -n "choices" web/modules/contrib/canvas_field_component/src/Hook/ConfigSchemaHooks.php
+# no output  = still broken, keep the Jarvis hook
+# any output = fixed upstream, the Jarvis hook can go</code></pre></li>
+    <li>If it is fixed: raise the <code>drupal/canvas_field_component</code> constraint to that release, delete <code>configSchemaInfoAlter()</code> and its <code>ReorderHook</code> / <code>OrderAfter</code> imports from <code>jarvis_canvas/src/Hook/JarvisCanvasHooks.php</code>, run the validation check under <a href="#field-display">Known breakages</a>, and delete this box.</li>
+  </ol>
+  <p>Leaving the hook in after upstream is fixed is harmless (it does nothing then), so there is no rush, but do not let it linger.</p>
+</div>
+
 <h2>Which route is this site on?</h2>
 
 <p>Ask the site, not your memory &mdash; one of these has been wrong before. Run these in the composer root:</p>
@@ -300,6 +313,22 @@ $m = $e->get("module"); unset($m["jarvis_blocks"]); $e->set("module", $m)->save(
 \Drupal::keyValue("system.schema")->delete("jarvis_blocks");
 echo "jarvis_blocks removed\n";'
 drush cr</code></pre>
+
+<h3 id="field-display">"Cannot use positional argument after named argument during unpacking"</h3>
+
+<p>Hits any site on <strong>Canvas 1.13+</strong> with <code>canvas_field_component</code> 1.0.2 (or 1.0.x-dev before the upstream fix). Every <code>canvas.component.*</code> config entity fails validation, so a recipe apply or <code>drush cim</code> stops with this error, and Canvas's health check logs it to <code>/admin/reports/dblog</code> on every cron run. The trace ends in <code>ConstraintFactory-&gt;createInstance()</code>.</p>
+
+<p>Cause: Canvas 1.13 changed the <code>source</code> Choice constraint to the named form <code>Choice: {choices: [...]}</code>, and <code>canvas_field_component</code> still appends <code>field_display</code> beside <code>choices</code> instead of inside it. Reported upstream by Andrii in the canvas_field_component issue queue.</p>
+
+<p><strong>Fix:</strong> update <code>jarvis_canvas</code> to the jarvis-modules release after 2.3.2. Its <code>configSchemaInfoAlter()</code> runs after <code>canvas_field_component</code> and moves <code>field_display</code> inside <code>choices</code>. It does nothing on Canvas 1.12 and older. Then <code>drush cr</code> and check that nothing fails:</p>
+
+<pre><code>drush php:eval '$f = \Drupal::configFactory(); $t = \Drupal::service("config.typed"); $bad = 0;
+foreach ($f->listAll("canvas.component.") as $n) {
+  try { $t->createFromNameAndData($n, $f->get($n)->getRawData())->validate(); }
+  catch (\Throwable $e) { $bad++; echo "$n: {$e->getMessage()}\n"; } }
+echo $bad ? "$bad failing\n" : "all canvas.component.* config validates\n";'</code></pre>
+
+<p>This is a stopgap. See <a href="#field-display-check">the check at the top</a>: remove the hook once <code>canvas_field_component</code> releases its own fix.</p>
 
 <h3 id="pinned">New props do not appear on sections already on the page</h3>
 
