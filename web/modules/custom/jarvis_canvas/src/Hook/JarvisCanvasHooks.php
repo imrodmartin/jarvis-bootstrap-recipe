@@ -100,6 +100,44 @@ final class JarvisCanvasHooks {
   }
 
   /**
+   * Implements hook_library_info_alter().
+   *
+   * Re-attaches the Jarvis tooling the Canvas editor needs: the overlay-opacity
+   * slider with its live WCAG pass/fail badge (js/canvas-overlay.js) and the
+   * settings-tray auto-expand.
+   *
+   * The theme used to do this with `libraries-extend: canvas/canvas-ui`, and
+   * that quietly stopped working. Canvas routes the editor and its prop forms
+   * through its own `canvas_stark` theme — see CanvasThemeNegotiator, routes
+   * `canvas.boot.*` and `canvas.api.form.*` — deliberately, so that the
+   * front-end theme cannot influence the React-rendered markup. But a theme's
+   * `libraries-extend` only applies while that theme is the ACTIVE one, so
+   * Jarvis's entries never fired again: the `overlay` prop fell back to a bare
+   * number spinner and the WCAG badge vanished with it, on every
+   * overlay-bearing component at once.
+   *
+   * Hence a module, for the same reason as hook_page_attachments() above. The
+   * libraries themselves stay in the theme, beside the js/wcag.js engine they
+   * share with the theme-settings contrast badges.
+   */
+  #[Hook('library_info_alter')]
+  public function libraryInfoAlter(array &$libraries, string $extension): void {
+    if ($extension !== 'canvas' || !isset($libraries['canvas-ui'])) {
+      return;
+    }
+    // The libraries belong to the theme: never reference them when it is not
+    // installed, or dependency resolution fails on a missing library.
+    if (!\Drupal::service('theme_handler')->themeExists('jarvis')) {
+      return;
+    }
+    foreach (['jarvis/canvas-overlay', 'jarvis/canvas-tray-autoexpand'] as $library) {
+      if (!in_array($library, $libraries['canvas-ui']['dependencies'] ?? [], TRUE)) {
+        $libraries['canvas-ui']['dependencies'][] = $library;
+      }
+    }
+  }
+
+  /**
    * Implements hook_canvas_storable_prop_shape_alter().
    *
    * Canvas hardwires every block rich-text prop to its locked canvas_html_block
