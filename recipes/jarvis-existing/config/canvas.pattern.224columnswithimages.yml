@@ -4,12 +4,7 @@ dependencies:
   config:
     - canvas.component.sdc.jarvis.image
     - canvas.component.sdc.jarvis.two-column
-    - field.field.media.image.field_media_image
-    - image.style.canvas_parametrized_width
-    - media.type.image
   module:
-    - file
-    - media
     - options
 id: 224columnswithimages
 label: '2-2-4 columns with images'
@@ -43,8 +38,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       full_width: true
       priority: true
       vertical_padding: false
@@ -55,8 +48,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '19'
       image_style: medium
       full_width: true
       priority: true
@@ -68,8 +59,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       image_style: medium
       full_width: true
       priority: true
@@ -81,8 +70,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '19'
       image_style: medium
       full_width: true
       priority: true
@@ -94,8 +81,6 @@ component_tree:
     component_id: sdc.jarvis.image
     component_version: 753d37868a34a78b
     inputs:
-      image:
-        target_id: '18'
       full_width: false
       priority: true
       vertical_padding: true
