@@ -13,8 +13,9 @@ component library and **changes nothing you already had**.
 This recipe is published as a composer package —
 `imrodmartin/jarvis-install-recipe`, `"type": "drupal-recipe"`. It pulls the
 theme and the `jarvis_canvas` glue module with it, so there is nothing to clone.
-None of the Jarvis packages are on Packagist or drupal.org, so register their
-repositories first, in your project root:
+All the Jarvis packages are on Packagist, so a stock
+`drupal/recommended-project` needs no extra repositories. If your host cannot
+reach Packagist, register them as VCS repositories first, in your project root:
 
 ```bash
 composer config repositories.jarvis-theme '{"type":"vcs","url":"https://github.com/imrodmartin/jarvis","no-api":true}'
@@ -57,7 +58,7 @@ files in place. On a stock `drupal/recommended-project` the pieces land here:
 `themes/contrib` is correct, not a mistake: the theme declares
 `"type": "drupal-theme"`, and stock installer-paths route that to contrib.
 Drupal finds it either way. To keep it under `themes/custom` instead, add
-`"drupal/jarvis"` to the `web/themes/custom/{$name}` entry in your
+`"imrodmartin/jarvis"` to the `web/themes/custom/{$name}` entry in your
 `extra.installer-paths` **and move that entry above** `web/themes/contrib/{$name}`
 — composer/installers takes the first matching entry in file order, so a later
 package-name match loses to an earlier `type:drupal-theme`.
