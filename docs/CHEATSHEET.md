@@ -123,7 +123,7 @@ config.
 | Media reference field accepts nothing | its `target_bundles` was emptied by a media type deletion — see below |
 | AI features do nothing | no API keys ship in the repo; by design |
 | composer prompts for a GitHub token | `"no-api": true` missing from a repositories entry |
-| `composer update` stops: *found drupal/jarvis[v4.4.1] in the lock file but not in remote repositories* | the theme was renamed to `imrodmartin/jarvis` in 4.5.0. Switch once, see "Updating later" |
+| `composer update` stops: *found drupal/jarvis[v4.4.x] in the lock file but not in remote repositories* | the theme was renamed to `imrodmartin/jarvis` in 4.5.0. Switch once, see "Updating later" |
 | `composer update` ran clean but the theme is still 3.x | your root `composer.json` holds `drupal/jarvis ^3.x`, which stops short of 4.0. Use `composer require`, see "Updating later" |
 | `drush updb` refuses: `jarvis_blocks` is missing | upgraded from modules 1.x, which shipped it; 2.x dropped it. Uninstall it — see INSTALL.md "Coming from modules 1.x" |
 | Video component renders nothing | since theme 3.0 `video_url` is files-only; hosted players come from the media library's Remote video field |

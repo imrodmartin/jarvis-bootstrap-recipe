@@ -212,7 +212,7 @@ Installing the theme on its own pulls the module with it, both from Packagist:
 composer require imrodmartin/jarvis
 ```
 
-The theme was `drupal/jarvis` up to 4.4.1. Packagist does not accept the
+The theme was `drupal/jarvis` up to 4.4.4. Packagist does not accept the
 `drupal/` vendor, so 4.5.0 renamed it and added `"replace": {"drupal/jarvis":
 "self.version"}`. A site whose root `composer.json` still requires
 `drupal/jarvis` switches once — see docs/INSTALL.md, "Renamed in 4.5.0".

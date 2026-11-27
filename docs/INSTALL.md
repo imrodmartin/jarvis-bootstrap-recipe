@@ -13,7 +13,7 @@ interchangeable.
 All four packages (the theme `imrodmartin/jarvis`, `imrodmartin/jarvis-modules`
 and the two recipes) are on Packagist, so a stock `drupal/recommended-project`
 finds them with no extra setup. The theme was called `drupal/jarvis` up to
-4.4.1; a site that still requires that name switches once, see
+4.4.4; a site that still requires that name switches once, see
 [Renamed in 4.5.0](#renamed-in-450-drupaljarvis-is-now-imrodmartinjarvis).
 
 ---
@@ -273,7 +273,7 @@ ordinary theme update. Two things to know:
 
 - Until you switch, `composer install` keeps working from your lock file, but
   any `composer update` that touches the theme stops with *found
-  drupal/jarvis[v4.4.1] in the lock file but not in remote repositories*.
+  drupal/jarvis[v4.4.x] in the lock file but not in remote repositories*.
   Composer reads a GitHub repository's package name from its default branch,
   so the old name no longer exists anywhere. That message means "switch now".
 - If you added `"drupal/jarvis"` to `extra.installer-paths` to keep the theme
@@ -459,7 +459,7 @@ release adds config, re-apply the recipe.
 
 | Package | What it is |
 |---|---|
-| `imrodmartin/jarvis` | The theme (called `drupal/jarvis` up to 4.4.1). Repo: `imrodmartin/jarvis`. |
+| `imrodmartin/jarvis` | The theme (called `drupal/jarvis` up to 4.4.4). Repo: `imrodmartin/jarvis`. |
 | `imrodmartin/jarvis-modules` | `jarvis_canvas` glue module. |
 | `imrodmartin/jarvis-recipe` | Full-site recipe (new sites). |
 | `imrodmartin/jarvis-install-recipe` | Existing-site recipe. |
