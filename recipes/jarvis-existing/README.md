@@ -187,6 +187,11 @@ Specifically **not** done, unlike `recipes/jarvis`:
 - No content types and no Canvas content templates.
 - No `canvas.page_region.*` — see below, this is the important one.
 - No AI stack, no webform/metatag/workflows, no editorial or UX contrib.
+- Pathauto, Redirect and CAPTCHA are installed, but with their own defaults:
+  no Pathauto patterns ship (add them for your content types at
+  `/admin/config/search/path/patterns`), and a math CAPTCHA is added to user
+  registration and the site-wide contact form only where you have no CAPTCHA
+  point for them yet.
 
 ## Page regions: why they are not here
 

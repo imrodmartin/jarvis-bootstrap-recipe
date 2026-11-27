@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'User registration form'
+formId: user_register_form
+captchaType: default

@@ -77,6 +77,11 @@ install:
   - metatag
   - metatag_open_graph
   - metatag_twitter_cards
+  # Clean URLs: pathauto generates aliases from the patterns in config/
+  # (pathauto.pattern.jarvis_*), and redirect adds a 301 from the old alias
+  # whenever one changes, so renaming a post never breaks a link.
+  - pathauto
+  - redirect
   # Forms.
   - webform
   - webform_node
@@ -84,6 +89,14 @@ install:
   - webform_submission_export_import
   # UX/editor helpers.
   - antibot
+  # Math CAPTCHA (no external keys) on the contact webform and on user
+  # registration; see config/captcha.captcha_point.*. Standard 11.4 leaves
+  # registration admin_only, so that CAPTCHA only shows once you open it to
+  # visitors. Core's contact module is not installed here (the webform is
+  # the contact form), so no point ships for contact_message_feedback_form.
+  # Antibot stops most bots silently; this catches the ones that run
+  # JavaScript.
+  - captcha
   - extlink
   - back_to_top
   - coffee
@@ -144,6 +157,8 @@ config:
     editoria11y: '*'
     backup_migrate: '*'
     linkit: '*'
+    # views.view.redirect is the admin list at /admin/config/search/redirect.
+    redirect: '*'
     user:
       # Explicit: user/optional also ships search.page.user_search, whose
       # search-module dependency is not installed here.
@@ -232,6 +247,14 @@ config:
         # Canvas home page ("Jarvis Drupal Theme…", uuid c59c9f00…) — imported
         # after Component Examples, so it gets canvas_page ID 2, matching the reference site.
         page.front: /page/2
+    # Both are already the modules' install defaults; set explicitly so the
+    # behaviour this recipe promises does not depend on upstream defaults.
+    redirect.settings:
+      simpleConfigUpdate:
+        auto_redirect: true
+    captcha.settings:
+      simpleConfigUpdate:
+        default_challenge: 'captcha/Math'
     core.entity_view_mode.node.full:
       simpleConfigUpdate:
         # Standard ships the Full content view mode DISABLED. Enable it so the

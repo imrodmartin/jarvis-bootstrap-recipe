@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.blog
+  module:
+    - node
+id: jarvis_blog
+label: 'Blog posts'
+type: 'canonical_entities:node'
+pattern: 'blog/[node:title]'
+selection_criteria:
+  235d76d8-12a7-402c-a462-c19fe6011829:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 235d76d8-12a7-402c-a462-c19fe6011829
+    context_mapping:
+      node: node
+    bundles:
+      blog: blog
+selection_logic: and
+weight: -5
+relationships: {  }

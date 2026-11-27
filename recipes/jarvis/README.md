@@ -43,6 +43,10 @@ repository-root README for the quick start.
 - **Site features**: webform stack (contact form included), workflows +
   content_moderation (Editorial workflow ships unassigned), metatag
   (+ Open Graph/Twitter Cards) with module defaults, editoria11y, antibot,
+  captcha (math challenge on the contact webform at `/form/contact`, and on
+  user registration once you open registration to visitors), pathauto
+  (`blog/[node:title]` for Blog, `[node:title]` for Basic) with redirect
+  creating a 301 whenever an alias changes,
   extlink, back_to_top, coffee, save_edit, better_exposed_filters,
   field_ui/views_ui, big_pipe, automated_cron. Share buttons come from the
   theme's Share component, not a module.

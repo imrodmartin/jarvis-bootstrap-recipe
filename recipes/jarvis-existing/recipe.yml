@@ -41,6 +41,18 @@ install:
   # Installed, NOT enabled as default. Switch over yourself when ready:
   #   drush config:set system.theme default jarvis
   - jarvis
+  # --- Clean URLs and spam protection ---------------------------------------
+  # Installed with their own defaults. Redirect's default auto_redirect is on,
+  # so a changed alias leaves a 301 behind. No pathauto patterns ship here:
+  # this recipe does not know your content types, so add patterns at
+  # /admin/config/search/path/patterns. If a module is already installed,
+  # its settings are left as they are.
+  - pathauto
+  - redirect
+  # Math CAPTCHA (no external keys) on user registration and core's site-wide
+  # contact form; see config/captcha.captcha_point.*. Where your site already
+  # has a CAPTCHA point for one of those forms, yours is kept.
+  - captcha
   #
   # Deliberately NOT installed, unlike recipes/jarvis:
   #   default_content and the demo nodes/media/pages.
@@ -110,6 +122,8 @@ config:
     media_library: '*'
     image: '*'
     canvas: '*'
+    # views.view.redirect is the admin list at /admin/config/search/redirect.
+    redirect: '*'
   actions:
     # `strict: false` means config the site already owns is left alone. On any
     # site that already has core's Image media type -- which is the whole point
